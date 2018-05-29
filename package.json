@@ -1,0 +1,47 @@
+{
+  "name": "flutter-react-json-form",
+  "version": "1.0.0",
+  "description": "Flutter - JSON schema form",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/eonsequeira/flutter-react-json-form.git"
+  },
+  "keywords": [
+    "react-json-form",
+    "react-json-schema-form",
+    "json-schema-form",
+    "json-form",
+    "form",
+    "validation",
+    "bootstrap"
+  ],
+  "author": "“Eon <“eons@yahoo.com”> (http:/www.fluttercms.com)",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/eonsequeira/flutter-react-json-form#readme",
+  "peerDependencies": {
+    "react": ">=16.3.0",
+    "react-dom": ">=16.3.0",
+    "formik": "^0.11.11"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "react": ">=16.3.0",
+    "react-dom": ">=16.3.0",
+    "formik": "^0.11.11"
+  },
+  "dependencies": {
+    "webpack": "^2.6.1",
+    "react-quill": "^1.2.7"
+  }
+}
