@@ -108,18 +108,18 @@ var Registry = function () {
 
 var fieldRegistry = new Registry();
 var registerField = exports.registerField = fieldRegistry.register.bind(fieldRegistry);
-var createField = exports.createField = function createField(config, params) {
+var createField = exports.createField = function createField(config, formikProps) {
     var Field = fieldRegistry.get(config.type);
-    return React.createElement(Field, { config: config, params: params });
+    return React.createElement(Field, { config: config, formikProps: formikProps });
 };
 
 var rendererRegistry = new Registry();
 var registerRenderer = exports.registerRenderer = rendererRegistry.register.bind(rendererRegistry);
-var formRenderer = exports.formRenderer = function formRenderer(schema) {
-    return function (params) {
-        var defaultRenderer = 'flutter-form';
+var renderForm = exports.renderForm = function renderForm(schema) {
+    return function (formikProps) {
+        var defaultRenderer = 'default';
         var Renderer = schema.form && schema.form.renderer || defaultRenderer;
-        return React.createElement(Renderer, { schema: schema, params: params });
+        return React.createElement(Renderer, { schema: schema, formikProps: formikProps });
     };
 };
 
