@@ -1,6 +1,8 @@
+import React, { Component } from 'react';
+
 const Text = ({ config, params }) => {
     const { name, type, attributes } = config;
-    const { values } = params;
+    const { values, setFieldValue } = params;
 
     return <input
                 id={ name }
@@ -8,6 +10,7 @@ const Text = ({ config, params }) => {
                 type={ type }
                 className="form-control"
                 value={ values[config.name] }
+                onChange={ setFieldValue }
                 { ...attributes } />
 
 }

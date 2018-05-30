@@ -1,8 +1,10 @@
+import React, { Component } from 'react';
+
 const Checkbox = ({ config, params }) => {
     const { name, type, attributes, description } = config;
     const { values } = params;
 
-    return
+    return (
         <div className="form-check">
             <label className="form-check-label">
                 <input
@@ -13,6 +15,7 @@ const Checkbox = ({ config, params }) => {
                     { ...attributes } /> { description }
             </label>
         </div>
+    );
 }
 
 export default Checkbox;

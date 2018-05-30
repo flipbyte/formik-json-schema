@@ -18,8 +18,23 @@ module.exports = {
             presets: ['env']
           }
         }
-      }
+    },
+    {
+      test: /\.css$/,
+      include: /node_modules/,
+      use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" }
+        ]
+    }
     ]
+  },
+  resolve: {
+      alias: {
+          'react': path.resolve(__dirname, './node_modules/react') ,
+          'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
+          'formik': path.resolve(__dirname, './node_modules/formik'),
+      }
   },
   externals: {
     'react': 'commonjs react',

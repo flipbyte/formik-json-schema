@@ -1,9 +1,10 @@
+import React, { Component } from 'react';
 import { Formik } from 'formik';
 import { renderForm } from './registry';
 
-const Form = () =>
+const Form = ( props ) =>
     <Formik
-      { ...this.props }
-      render={ renderForm(this.props.schema) } />
+      { ...props }
+      render={ renderForm(props.schema) } />
 
 export default Form;

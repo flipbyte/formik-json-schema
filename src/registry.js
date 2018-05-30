@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 class Registry {
     constructor() {
         this.mapping = {};
@@ -18,14 +20,16 @@ const fieldRegistry = new Registry();
 export const registerField = fieldRegistry.register.bind(fieldRegistry);
 export const createField = ( config, formikProps ) => {
     const Field = fieldRegistry.get(config.type);
-    return <Field config={ config } formikProps={ formikProps } />;
+    return <Field config={ config } params={ formikProps } />;
 }
 
 
 const rendererRegistry = new Registry();
 export const registerRenderer = rendererRegistry.register.bind(rendererRegistry);
 export const renderForm = ( schema ) => ( formikProps ) => {
-    const defaultRenderer = 'default';
-    const Renderer = (schema.form && schema.form.renderer) || defaultRenderer;
-    return <Renderer schema={ schema } formikProps={ formikProps } />
+    const defaultRendererId = 'default';
+    const rendererId = (schema.form && schema.form.renderer) || defaultRendererId;
+    return rendererRegistry.get(rendererId)(schema)(formikProps);
 };
+
+export default Registry;

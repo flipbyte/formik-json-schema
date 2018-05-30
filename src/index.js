@@ -1,3 +1,6 @@
-export { Form } from './Form';
-export * from './registry';
-// export * from './renderers/bs4/horizontal';
+import Form from './Form';
+import './field';
+import './renderer'
+import * as registry from './registry';
+
+export { Form, registry }

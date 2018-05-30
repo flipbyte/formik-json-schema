@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 const Radio = ({ config, params }) => {
     const { name, type, attributes, options } = config;
     const { values } = params;

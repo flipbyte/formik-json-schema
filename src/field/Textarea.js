@@ -1,6 +1,8 @@
+import React, { Component } from 'react';
+
 const Textarea = ({ config, params }) => {
     const { name, type, attributes, rows } = config;
-    const { values } = params;
+    const { values, setFieldValue } = params;
 
     return <textarea
                 id={ name }
@@ -8,6 +10,7 @@ const Textarea = ({ config, params }) => {
                 className="form-control"
                 value={ values[name] }
                 rows={ rows || 3 }
+                onChange={ setFieldValue }
                 { ...attributes } />
 
 }
