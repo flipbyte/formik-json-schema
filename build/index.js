@@ -14247,6 +14247,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -14259,51 +14261,129 @@ __webpack_require__(181);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var defaultOptions = {
-    modules: {
-        toolbar: [['bold', 'italic', 'underline', 'strike'], // toggled buttons
-        ['blockquote', 'code-block'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
-        [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
-        [{ 'direction': 'rtl' }], // text direction
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-        [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }], [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
-        [{ 'font': [] }], [{ 'align': [] }], ['clean']],
-        clipboard: {
-            matchVisual: false
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Wysiwyg = function (_React$Component) {
+    _inherits(Wysiwyg, _React$Component);
+
+    function Wysiwyg(props) {
+        _classCallCheck(this, Wysiwyg);
+
+        var _this = _possibleConstructorReturn(this, (Wysiwyg.__proto__ || Object.getPrototypeOf(Wysiwyg)).call(this, props));
+
+        _this.state = {
+            showHtml: false,
+            html: ''
+        };
+
+        var defaultOptions = {
+            modules: {
+                toolbar: [['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                ['blockquote', 'code-block'], [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                // [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+                [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
+                // [{ 'direction': 'rtl' }],                         // text direction
+
+                [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }], [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+                [{ 'font': [] }], [{ 'align': [] }], ['clean']],
+                clipboard: {
+                    matchVisual: false
+                }
+            },
+            formats: ['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'video']
+        };
+
+        _this.toolbarOptions = Object.assign({}, _this.props.options ? _this.props.options : defaultOptions);
+        return _this;
+    }
+
+    _createClass(Wysiwyg, [{
+        key: '_setFieldValue',
+        value: function _setFieldValue(content) {
+            var _props = this.props,
+                name = _props.config.name,
+                setFieldValue = _props.formikProps.setFieldValue;
+
+
+            setFieldValue(name, content);
+
+            // if(content) {
+            //     content = pretty(content);
+            // }
+            this.setState({ html: content });
         }
-    },
-    formats: ['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'video']
-};
-
-var _handleChange = function _handleChange(name, value, setFieldValue) {
-    setFieldValue(name, value);
-};
-
-var Wysiwyg = function Wysiwyg(_ref) {
-    var config = _ref.config,
-        formikProps = _ref.formikProps;
-    var name = config.name,
-        type = config.type,
-        attributes = config.attributes,
-        options = config.options,
-        rows = config.rows;
-    var values = formikProps.values,
-        handleChange = formikProps.handleChange,
-        setFieldValue = formikProps.setFieldValue;
-
-
-    var toolbarOptions = options ? options : defaultOptions;
-    // console.log('Options', options);
-    // console.log('toolbarOptions', toolbarOptions);
-    return _react2.default.createElement(_reactQuill2.default, _extends({
-        id: name,
-        value: values[name],
-        onChange: function onChange(value) {
-            return _handleChange(name, value, setFieldValue);
+    }, {
+        key: '_handleChange',
+        value: function _handleChange(content) {
+            this._setFieldValue(content);
         }
-    }, toolbarOptions, attributes));
-};
+    }, {
+        key: '_toggleEditor',
+        value: function _toggleEditor(event) {
+            this.setState({ showHtml: !this.state.showHtml });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props2 = this.props,
+                _props2$config = _props2.config,
+                name = _props2$config.name,
+                type = _props2$config.type,
+                attributes = _props2$config.attributes,
+                options = _props2$config.options,
+                rows = _props2$config.rows,
+                values = _props2.formikProps.values;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'row ql-container-wysiwyg ql-container-wysiwyg-' + name },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    _react2.default.createElement(
+                        'button',
+                        {
+                            type: 'button',
+                            className: 'btn btn-primary',
+                            onClick: function onClick(event) {
+                                return _this2._toggleEditor(event);
+                            } },
+                        this.state.showHtml ? 'Show Editor' : 'View Source'
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col-md-12' },
+                    !this.state.showHtml && _react2.default.createElement(_reactQuill2.default, _extends({
+                        id: name,
+                        value: values[name],
+                        onChange: function onChange(content) {
+                            return _this2._handleChange(content);
+                        }
+                    }, this.toolbarOptions, attributes)),
+                    this.state.showHtml && _react2.default.createElement('textarea', {
+                        id: 'ql-show-html-' + name,
+                        className: 'form-control',
+                        rows: '10',
+                        value: values[name],
+                        onChange: function onChange(event) {
+                            return _this2._handleChange(event.target.value);
+                        } })
+                )
+            );
+        }
+    }]);
+
+    return Wysiwyg;
+}(_react2.default.Component);
 
 exports.default = Wysiwyg;
 

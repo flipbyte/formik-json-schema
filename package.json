@@ -43,7 +43,7 @@
     "style-loader": "^0.13.2"
   },
   "dependencies": {
-    "webpack": "^2.6.1",
-    "react-quill": "^1.2.7"
+    "react-quill": "^1.2.7",
+    "webpack": "^2.6.1"
   }
 }

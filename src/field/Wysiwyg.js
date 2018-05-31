@@ -3,57 +3,108 @@ import React, { Component } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const defaultOptions = {
-    modules: {
-        toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote', 'code-block'],
+class Wysiwyg extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showHtml: false,
+            html: '',
+        };
 
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-            [{ 'direction': 'rtl' }],                         // text direction
+        const defaultOptions = {
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                    ['blockquote', 'code-block'],
 
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    // [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+                    // [{ 'direction': 'rtl' }],                         // text direction
 
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
+                    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-            ['clean']
-        ],
-        clipboard: {
-            matchVisual: false,
-        }
-    },
-    formats: [
-        'header', 'font', 'size',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent',
-        'link', 'image', 'video'
-    ]
-};
+                    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                    [{ 'font': [] }],
+                    [{ 'align': [] }],
 
+                    ['clean']
+                ],
+                clipboard: {
+                    matchVisual: false,
+                },
+            },
+            formats: [
+                'header', 'font', 'size',
+                'bold', 'italic', 'underline', 'strike', 'blockquote',
+                'list', 'bullet', 'indent',
+                'link', 'image', 'video'
+            ]
+        };
 
-const _handleChange = ( name, value, setFieldValue ) => {
-    setFieldValue(name, value);
-};
+        this.toolbarOptions = Object.assign({}, ( this.props.options ) ? this.props.options : defaultOptions);
+    }
 
-const Wysiwyg = ({ config, formikProps }) => {
-    const { name, type, attributes, options, rows } = config;
-    const { values, handleChange, setFieldValue } = formikProps;
+    _setFieldValue( content ) {
+        const {
+            config: { name },
+            formikProps: { setFieldValue }
+        } = this.props;
 
-    let toolbarOptions = ( options ) ? options : defaultOptions;
-    // console.log('Options', options);
-    // console.log('toolbarOptions', toolbarOptions);
-    return <ReactQuill
-                id={ name }
-                value={ values[name] }
-                onChange={ (value) =>  _handleChange(name, value, setFieldValue) }
-                { ...toolbarOptions }
-                { ... attributes } />
+        setFieldValue(name, content);
 
+        // if(content) {
+        //     content = pretty(content);
+        // }
+        this.setState({ html: content })
+
+    }
+
+    _handleChange( content ) {
+        this._setFieldValue(content);
+    }
+
+    _toggleEditor( event ) {
+        this.setState({ showHtml: !this.state.showHtml });
+    }
+
+    render() {
+        const {
+            config: { name, type, attributes, options, rows },
+            formikProps: { values }
+        } = this.props;
+
+        return (
+            <div className={ 'row ql-container-wysiwyg ql-container-wysiwyg-' + name }>
+                <div className="col-md-12">
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={ (event) => this._toggleEditor(event) }>
+                        { this.state.showHtml ? 'Show Editor' : 'View Source' }
+                    </button>
+                </div>
+                <div className="col-md-12">
+                    { !this.state.showHtml && <ReactQuill
+                        id={ name }
+                        value={ values[name] }
+                        onChange={ (content) =>  this._handleChange(content) }
+                        { ...this.toolbarOptions }
+                        { ... attributes } />
+                    }
+                    { this.state.showHtml &&
+                        <textarea
+                            id={ 'ql-show-html-' + name }
+                            className="form-control"
+                            rows="10"
+                            value={ values[name] }
+                            onChange={ (event) => this._handleChange(event.target.value) }/>
+                    }
+                </div>
+            </div>
+        );
+    }
 }
 
 export default Wysiwyg;
