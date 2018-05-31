@@ -20,7 +20,7 @@ const fieldRegistry = new Registry();
 export const registerField = fieldRegistry.register.bind(fieldRegistry);
 export const createField = ( config, formikProps ) => {
     const Field = fieldRegistry.get(config.type);
-    return <Field config={ config } params={ formikProps } />;
+    return <Field config={ config } formikProps={ formikProps } />;
 }
 
 

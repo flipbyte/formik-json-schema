@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-const Radio = ({ config, params }) => {
+const Radio = ({ config, formikProps }) => {
     const { name, type, attributes, options } = config;
-    const { values } = params;
+    const { values } = formikProps;
 
     return options.map(( option ) => (
         <div className="form-check" key={ option.value }>

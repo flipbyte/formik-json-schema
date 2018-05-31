@@ -3,11 +3,7 @@ import React, { Component } from 'react';
 import { registerRenderer } from '../registry';
 import { Form, Field } from './Element';
 
-// export const getRendererOption = ( schema, name, defaultValue ) => (
-//     schema && schema.form && schema.form.rendererOptions && schema.form.rendererOptions[name] || defaultValue
-// );
-
-const Default = ({ schema, formikProps }) => {
+const Tabs = ({ schema, formikProps }) => {
     const { title, fields } = schema;
 
     return (
@@ -28,5 +24,5 @@ const Default = ({ schema, formikProps }) => {
 }
 
 registerRenderer('default', ( schema ) => ( formikProps ) =>
-    <Default schema={ schema } formikProps={ formikProps } />
+    <Tabs schema={ schema } formikProps={ formikProps } />
 );

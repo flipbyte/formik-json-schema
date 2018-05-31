@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 
-const Text = ({ config, params }) => {
+const Text = ({ config, formikProps }) => {
     const { name, type, attributes } = config;
-    const { values, setFieldValue } = params;
+    const { values, handleChange } = formikProps;
 
     return <input
                 id={ name }
                 name={ name }
                 type={ type }
                 className="form-control"
-                value={ values[config.name] }
-                onChange={ setFieldValue }
+                value={ values[name] }
+                onChange={ handleChange }
                 { ...attributes } />
 
 }

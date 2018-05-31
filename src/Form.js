@@ -4,7 +4,7 @@ import { renderForm } from './registry';
 
 const Form = ( props ) =>
     <Formik
-      { ...props }
-      render={ renderForm(props.schema) } />
+        { ...props }
+        render={ renderForm(props.schema) } />
 
 export default Form;

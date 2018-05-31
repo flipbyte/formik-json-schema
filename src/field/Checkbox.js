@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-const Checkbox = ({ config, params }) => {
+const Checkbox = ({ config, formikProps }) => {
     const { name, type, attributes, description } = config;
-    const { values } = params;
+    const { values } = formikProps;
 
     return (
         <div className="form-check">
