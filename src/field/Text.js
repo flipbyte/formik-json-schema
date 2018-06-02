@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
 const Text = ({ config, formikProps }) => {
-    const { name, type, attributes } = config;
+    const { name, label, type, attributes } = config;
     const { values, handleChange } = formikProps;
 
-    return <input
+    return (
+        <div className="form-group">
+            { !!label && <label>{ label }</label> }
+            <input
                 id={ name }
                 name={ name }
                 type={ type }
@@ -12,7 +15,8 @@ const Text = ({ config, formikProps }) => {
                 value={ values[name] }
                 onChange={ handleChange }
                 { ...attributes } />
-
+        </div>
+    );
 }
 
 export default Text;

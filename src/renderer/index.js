@@ -1,2 +1,0 @@
-import './Default'
-import './Tabs'

@@ -1,6 +1,8 @@
 import Form from './Form';
 import './Field';
-import './Renderer'
+import './Container';
+
+// import './Renderer'
 import * as registry from './registry';
 
 export { Form, registry }

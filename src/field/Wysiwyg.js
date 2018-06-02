@@ -71,36 +71,39 @@ class Wysiwyg extends React.Component {
 
     render() {
         const {
-            config: { name, type, attributes, options, rows },
+            config: { name, label, type, attributes, options, rows },
             formikProps: { values }
         } = this.props;
 
         return (
-            <div className={ 'row ql-container-wysiwyg ql-container-wysiwyg-' + name }>
-                <div className="col-md-12">
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={ (event) => this._toggleEditor(event) }>
-                        { this.state.showHtml ? 'Show Editor' : 'View Source' }
-                    </button>
-                </div>
-                <div className="col-md-12">
-                    { !this.state.showHtml && <ReactQuill
-                        id={ name }
-                        value={ values[name] }
-                        onChange={ (content) =>  this._handleChange(content) }
-                        { ...this.toolbarOptions }
-                        { ... attributes } />
-                    }
-                    { this.state.showHtml &&
-                        <textarea
-                            id={ 'ql-show-html-' + name }
-                            className="form-control"
-                            rows="10"
+            <div className="form-group">
+                { !!label && <label>{ label }</label> }
+                <div className={ 'row ql-container-wysiwyg ql-container-wysiwyg-' + name }>
+                    <div className="col-md-12">
+                        <button
+                            type="button"
+                            className="btn btn-primary pull-right"
+                            onClick={ (event) => this._toggleEditor(event) }>
+                            { this.state.showHtml ? 'Show Editor' : 'View Source' }
+                        </button>
+                    </div>
+                    <div className="col-md-12">
+                        { !this.state.showHtml && <ReactQuill
+                            id={ name }
                             value={ values[name] }
-                            onChange={ (event) => this._handleChange(event.target.value) }/>
-                    }
+                            onChange={ (content) =>  this._handleChange(content) }
+                            { ...this.toolbarOptions }
+                            { ... attributes } />
+                        }
+                        { this.state.showHtml &&
+                            <textarea
+                                id={ 'ql-show-html-' + name }
+                                className="form-control"
+                                rows="10"
+                                value={ values[name] }
+                                onChange={ (event) => this._handleChange(event.target.value) }/>
+                        }
+                    </div>
                 </div>
             </div>
         );

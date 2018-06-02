@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+const CONTAINER = 'container';
+const FIELD = 'field';
+
 class Registry {
     constructor() {
         this.mapping = {};
@@ -18,18 +21,18 @@ class Registry {
 
 const fieldRegistry = new Registry();
 export const registerField = fieldRegistry.register.bind(fieldRegistry);
-export const createField = ( config, formikProps ) => {
-    const Field = fieldRegistry.get(config.type);
-    return <Field config={ config } formikProps={ formikProps } />;
+
+const containerRegistry = new Registry();
+export const registerContainer = containerRegistry.register.bind(containerRegistry);
+
+export const render = ( config, formikProps ) => {
+    let currentRegistry = containerRegistry;
+    if( config.type ==  FIELD ) {
+        currentRegistry = fieldRegistry;
+    }
+
+    const Renderer = currentRegistry.get(config.renderer);
+    return <Renderer config={ config } formikProps={ formikProps } />
 }
-
-
-const rendererRegistry = new Registry();
-export const registerRenderer = rendererRegistry.register.bind(rendererRegistry);
-export const renderForm = ( schema ) => ( formikProps ) => {
-    const defaultRendererId = 'default';
-    const rendererId = (schema.form && schema.form.renderer) || defaultRendererId;
-    return rendererRegistry.get(rendererId)(schema)(formikProps);
-};
 
 export default Registry;
