@@ -46,7 +46,7 @@ class Wysiwyg extends React.Component {
         this.toolbarOptions = Object.assign({}, ( this.props.options ) ? this.props.options : defaultOptions);
     }
 
-    _setFieldValue( content ) {
+    setValue( content ) {
         const {
             config: { name },
             formikProps: { setFieldValue }
@@ -61,11 +61,11 @@ class Wysiwyg extends React.Component {
 
     }
 
-    _handleChange( content ) {
-        this._setFieldValue(content);
+    handleChange( content ) {
+        this.setValue(content);
     }
 
-    _toggleEditor( event ) {
+    toggleEditor( event ) {
         this.setState({ showHtml: !this.state.showHtml });
     }
 
@@ -83,7 +83,7 @@ class Wysiwyg extends React.Component {
                         <button
                             type="button"
                             className="btn btn-primary pull-right"
-                            onClick={ (event) => this._toggleEditor(event) }>
+                            onClick={ (event) => this.toggleEditor(event) }>
                             { this.state.showHtml ? 'Show Editor' : 'View Source' }
                         </button>
                     </div>
@@ -91,7 +91,7 @@ class Wysiwyg extends React.Component {
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
                             value={ values[name] }
-                            onChange={ (content) =>  this._handleChange(content) }
+                            onChange={ (content) =>  this.handleChange(content) }
                             { ...this.toolbarOptions }
                             { ... attributes } />
                         }
@@ -101,7 +101,7 @@ class Wysiwyg extends React.Component {
                                 className="form-control"
                                 rows="10"
                                 value={ values[name] }
-                                onChange={ (event) => this._handleChange(event.target.value) }/>
+                                onChange={ (event) => this.handleChange(event.target.value) }/>
                         }
                     </div>
                 </div>

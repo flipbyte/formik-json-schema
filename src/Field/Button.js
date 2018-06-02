@@ -5,9 +5,9 @@ const Button = ({ config, formikProps }) => {
     const { values } = formikProps;
 
     let onClickHandler = (onClick && formikProps.hasOwnProperty(onClick)) ? formikProps[onClick] : null;
-    
-    console.log('BUTTON', onClickHandler);
-    console.log('BUTTON', formikProps);
+
+    // console.log('BUTTON', onClickHandler);
+    // console.log('BUTTON', formikProps);
 
     return <button
         type="button"

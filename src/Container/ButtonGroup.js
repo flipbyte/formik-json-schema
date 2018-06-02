@@ -6,8 +6,8 @@ const ButtonGroup = ({ config, formikProps }) => {
     const { title, elements } = config;
 
     return (
-        <div className="buttons-container">
-            <div className="btn-group">
+        <div className="buttons-container clearfix">
+            <div className="btn-group pull-right">
                 { Object.keys(elements).map( (key) =>
                     <Element key={ key } config={ elements[key] } formikProps={ formikProps } />)
                 }
