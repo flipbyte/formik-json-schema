@@ -14272,11 +14272,12 @@ var Form = function Form(_ref) {
     var config = _ref.config,
         formikProps = _ref.formikProps;
     var elements = config.elements;
-
+    var handleSubmit = formikProps.handleSubmit,
+        handleReset = formikProps.handleReset;
 
     return _react2.default.createElement(
         'form',
-        { className: 'form-horizontal', onSubmit: formikProps.handleSubmit },
+        { className: 'form-horizontal', onSubmit: handleSubmit, onReset: handleReset },
         Object.keys(elements).map(function (key) {
             return _react2.default.createElement(_Element2.default, { key: key, config: elements[key], formikProps: formikProps });
         })
@@ -14454,21 +14455,16 @@ var Button = function Button(_ref) {
         formikProps = _ref.formikProps;
     var label = config.label,
         htmlClass = config.htmlClass,
+        buttonType = config.buttonType,
         onClick = config.onClick;
     var values = formikProps.values;
 
 
-    var onClickHandler = onClick && formikProps.hasOwnProperty(onClick) ? formikProps[onClick] : null;
-
-    // console.log('BUTTON', onClickHandler);
-    // console.log('BUTTON', formikProps);
-
     return _react2.default.createElement(
         'button',
         {
-            type: 'button',
-            className: 'btn ' + htmlClass,
-            onClick: onClickHandler },
+            type: buttonType ? buttonType : 'button',
+            className: 'btn ' + htmlClass },
         label
     );
 };

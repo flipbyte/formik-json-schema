@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 
 const Button = ({ config, formikProps }) => {
-    const { label, htmlClass, onClick } = config;
+    const { label, htmlClass, buttonType, onClick } = config;
     const { values } = formikProps;
 
-    let onClickHandler = (onClick && formikProps.hasOwnProperty(onClick)) ? formikProps[onClick] : null;
-
-    // console.log('BUTTON', onClickHandler);
-    // console.log('BUTTON', formikProps);
-
     return <button
-        type="button"
-        className={ 'btn ' + htmlClass }
-        onClick={ onClickHandler }>{ label }</button>
+        type={ buttonType ? buttonType : 'button' }
+        className={ 'btn ' + htmlClass }>{ label }</button>
 }
 
 export default Button;
