@@ -25,14 +25,14 @@ export const registerField = fieldRegistry.register.bind(fieldRegistry);
 const containerRegistry = new Registry();
 export const registerContainer = containerRegistry.register.bind(containerRegistry);
 
-export const render = ( config, formikProps ) => {
+export const render = ( config, formikProps, rest ) => {
     let currentRegistry = containerRegistry;
     if( config.type ==  FIELD ) {
         currentRegistry = fieldRegistry;
     }
 
     const Renderer = currentRegistry.get(config.renderer);
-    return <Renderer config={ config } formikProps={ formikProps } />
+    return <Renderer config={ config } formikProps={ formikProps } { ...rest }/>
 }
 
 export default Registry;
