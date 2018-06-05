@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getIn } from 'formik';
 
 const Checkbox = ({ config, formikProps }) => {
     const { name, label, type, attributes, description } = config;
@@ -14,7 +15,7 @@ const Checkbox = ({ config, formikProps }) => {
                         name={ name }
                         className="form-check-input"
                         type="checkbox"
-                        checked={ values[name] }
+                        checked={ getIn(values, name) }
                         { ...attributes } /> { description }
                 </label>
             </div>

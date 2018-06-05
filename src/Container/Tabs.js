@@ -80,7 +80,10 @@ class Tabs extends React.Component {
                                     ( this.state.activeTab == tabKey ? 'active' : '' )
                                 }>
                                 { Object.keys(this.tabContent[tabKey]).map( (key) =>
-                                    <Element key={ key } config={ this.tabContent[tabKey][key] } formikProps={ formikProps } />
+                                    <Element
+                                        key={ key }
+                                        config={ this.tabContent[tabKey][key] }
+                                        formikProps={ formikProps } />
                                 ) }
                             </div>
                         ) }

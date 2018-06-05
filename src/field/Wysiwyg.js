@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getIn } from 'formik';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -90,7 +91,7 @@ class Wysiwyg extends React.Component {
                     <div className="col-md-12">
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
-                            value={ values[name] }
+                            value={ getIn(values, name) }
                             onChange={ (content) =>  this.handleChange(content) }
                             { ...this.toolbarOptions }
                             { ... attributes } />
@@ -100,8 +101,8 @@ class Wysiwyg extends React.Component {
                                 id={ 'ql-show-html-' + name }
                                 className="form-control"
                                 rows="10"
-                                value={ values[name] }
-                                onChange={ (event) => this.handleChange(event.target.value) }/>
+                                value={ getIn(values, name) }
+                                onChange={ (event) => this.handleChange(event.target.value) } />
                         }
                     </div>
                 </div>

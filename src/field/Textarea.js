@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getIn } from 'formik';
 
 const Textarea = ({ config, formikProps }) => {
     const { name, label, type, attributes, rows } = config;
@@ -11,7 +12,7 @@ const Textarea = ({ config, formikProps }) => {
                 id={ name }
                 name={ name }
                 className="form-control"
-                value={ values[name] }
+                value={ getIn(values, name) }
                 rows={ rows || 3 }
                 onChange={ setFieldValue }
                 { ...attributes } />

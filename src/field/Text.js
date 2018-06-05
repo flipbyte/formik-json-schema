@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getIn } from 'formik';
 
 const Text = ({ config, formikProps }) => {
     const { name, label, type, attributes } = config;
@@ -12,7 +13,7 @@ const Text = ({ config, formikProps }) => {
                 name={ name }
                 type={ type }
                 className="form-control"
-                value={ values[name] }
+                value={ getIn(values, name) }
                 onChange={ handleChange }
                 { ...attributes } />
         </div>

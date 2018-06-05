@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getIn } from 'formik';
 
 const Radio = ({ config, formikProps }) => {
     const { name, type, attributes, options } = config;
@@ -15,7 +16,7 @@ const Radio = ({ config, formikProps }) => {
                         className="form-check-input"
                         id={ name + '_' + option.value }
                         value={ option.value }
-                        checked={ values[name] === option.value }
+                        checked={ getIn(values, name) === option.value }
                         { ...attributes } /> { option.title }
                 </label>
             </div>
