@@ -28,16 +28,21 @@ class Fieldset extends React.Component {
         return (
             <div className="card flutter-fieldset">
                 { !!title &&
-                    <div
-                        className="card-header"
-                        onClick={ (event) => this.toggle(event) }>
-                        <strong>{ title }</strong>
+                    <div className="card-header">
+                        <button
+                            type="button"
+                            className="text-left m-0 p-0 btn btn-link btn-block"
+                            onClick={ (event) => this.toggle(event) }>
+                                <h5 className="m-0 p-0">{ title }</h5>
+                        </button>
                     </div>
                 }
-                <div className={ 'card-block ' + ( this.state.collapsed ? 'collapse' : '' )}>
-                    { Object.keys(elements).map( (key) =>
-                        <Element key={ key } config={ elements[key] } formikProps={ formikProps } />)
-                    }
+                <div className={ 'collapse' + ( !this.state.collapsed ? 'show' : '' ) }>
+                    <div className="card-block">
+                        { Object.keys(elements).map( (key) =>
+                            <Element key={ key } config={ elements[key] } formikProps={ formikProps } />)
+                        }
+                    </div>
                 </div>
             </div>
         );
