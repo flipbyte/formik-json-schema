@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-const Button = ({ config, formikProps, actions }) => {
-    const { label, htmlClass, buttonType, action } = config;
+const Button = ({ config, formikProps }) => {
+    const { label, htmlClass, buttonType } = config;
     const { values } = formikProps;
 
     let buttonProps = {
@@ -9,8 +9,8 @@ const Button = ({ config, formikProps, actions }) => {
         className: 'btn ' + htmlClass
     }
 
-    let onClick = (action && formikProps.hasOwnProperty(action)) ? formikProps[action] : '';
-    if(onClick) buttonProps.onClick = onClick;
+    // let onClick = (action && formikProps.hasOwnProperty(action)) ? formikProps[action] : '';
+    // if(onClick) buttonProps.onClick = onClick;
 
     return <button { ...buttonProps }>{ label }</button>
 }

@@ -3,7 +3,7 @@ import { getIn } from 'formik';
 
 const Textarea = ({ config, formikProps }) => {
     const { name, label, type, attributes, rows } = config;
-    const { values, setFieldValue } = formikProps;
+    const { values, handleChange } = formikProps;
 
     return (
         <div className="form-group">
@@ -13,8 +13,7 @@ const Textarea = ({ config, formikProps }) => {
                 name={ name }
                 className="form-control"
                 value={ getIn(values, name) }
-                rows={ rows || 3 }
-                onChange={ setFieldValue }
+                onChange={ handleChange }
                 { ...attributes } />
         </div>
     );

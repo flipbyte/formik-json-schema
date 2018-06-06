@@ -3,7 +3,7 @@ import { getIn } from 'formik';
 
 const Checkbox = ({ config, formikProps }) => {
     const { name, label, type, attributes, description } = config;
-    const { values } = formikProps;
+    const { values, handleChange } = formikProps;
 
     return (
         <div className="form-group">
@@ -16,6 +16,7 @@ const Checkbox = ({ config, formikProps }) => {
                         className="form-check-input"
                         type="checkbox"
                         checked={ getIn(values, name) }
+                        onChange={ handleChange }
                         { ...attributes } /> { description }
                 </label>
             </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getIn } from 'formik';
 
 const Text = ({ config, formikProps }) => {
-    const { name, label, type, attributes } = config;
+    const { name, label, type, renderer, attributes, fieldType } = config;
     const { values, handleChange } = formikProps;
 
     return (
@@ -11,7 +11,7 @@ const Text = ({ config, formikProps }) => {
             <input
                 id={ name }
                 name={ name }
-                type={ type }
+                type={ fieldType }
                 className="form-control"
                 value={ getIn(values, name) }
                 onChange={ handleChange }

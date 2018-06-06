@@ -14259,13 +14259,18 @@ var EditableGrid = function EditableGrid(_ref) {
         arrayActions = _ref.arrayActions;
     var header = config.header,
         fields = config.fields,
-        add = config.add;
+        buttons = config.buttons;
     var values = formikProps.values,
         errors = formikProps.errors,
         touched = formikProps.touched;
+    var insert = arrayActions.insert,
+        remove = arrayActions.remove,
+        push = arrayActions.push;
 
 
     var arrayFields = Object.assign({}, fields);
+    setNull(arrayFields);
+
     var hasValue = values.hasOwnProperty(fieldArrayName) && values[fieldArrayName].length > 0;
 
     return _react2.default.createElement(
@@ -14302,12 +14307,23 @@ var EditableGrid = function EditableGrid(_ref) {
                             { key: key },
                             _react2.default.createElement(_Element2.default, {
                                 config: element,
-                                formikProps: formikProps,
-                                arrayActions: arrayActions,
-                                index: index,
-                                fieldArrayName: name })
+                                formikProps: formikProps })
                         );
-                    })
+                    }),
+                    !!buttons.remove && _react2.default.createElement(
+                        'td',
+                        null,
+                        _react2.default.createElement(
+                            'button',
+                            {
+                                type: 'button',
+                                className: 'btn btn-danger',
+                                onClick: function onClick() {
+                                    return remove(index);
+                                } },
+                            buttons.remove
+                        )
+                    )
                 );
             })
         ),
@@ -14317,14 +14333,19 @@ var EditableGrid = function EditableGrid(_ref) {
             _react2.default.createElement(
                 'tr',
                 null,
-                _react2.default.createElement(
+                !!buttons.add && _react2.default.createElement(
                     'td',
                     null,
-                    _react2.default.createElement(_Element2.default, {
-                        key: "addButton",
-                        config: add,
-                        formikProps: formikProps,
-                        onClick: setNull(arrayFields) })
+                    _react2.default.createElement(
+                        'button',
+                        {
+                            type: 'button',
+                            className: 'btn btn-secondary',
+                            onClick: function onClick() {
+                                return push(arrayFields);
+                            } },
+                        buttons.add
+                    )
                 )
             )
         )
@@ -14636,24 +14657,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Button = function Button(_ref) {
     var config = _ref.config,
-        formikProps = _ref.formikProps,
-        actions = _ref.actions;
+        formikProps = _ref.formikProps;
     var label = config.label,
         htmlClass = config.htmlClass,
-        buttonType = config.buttonType,
-        action = config.action;
+        buttonType = config.buttonType;
     var values = formikProps.values;
 
 
     var buttonProps = {
         type: buttonType ? buttonType : 'button',
         className: 'btn ' + htmlClass
-    };
 
-    var onClick = action && formikProps.hasOwnProperty(action) ? formikProps[action] : '';
-    if (onClick) buttonProps.onClick = onClick;
+        // let onClick = (action && formikProps.hasOwnProperty(action)) ? formikProps[action] : '';
+        // if(onClick) buttonProps.onClick = onClick;
 
-    return _react2.default.createElement(
+    };return _react2.default.createElement(
         'button',
         buttonProps,
         label
@@ -14691,7 +14709,8 @@ var Checkbox = function Checkbox(_ref) {
         type = config.type,
         attributes = config.attributes,
         description = config.description;
-    var values = formikProps.values;
+    var values = formikProps.values,
+        handleChange = formikProps.handleChange;
 
 
     return _react2.default.createElement(
@@ -14713,7 +14732,8 @@ var Checkbox = function Checkbox(_ref) {
                     name: name,
                     className: 'form-check-input',
                     type: 'checkbox',
-                    checked: (0, _formik.getIn)(values, name)
+                    checked: (0, _formik.getIn)(values, name),
+                    onChange: handleChange
                 }, attributes)),
                 ' ',
                 description
@@ -14752,7 +14772,8 @@ var Radio = function Radio(_ref) {
         type = config.type,
         attributes = config.attributes,
         options = config.options;
-    var values = formikProps.values;
+    var values = formikProps.values,
+        handleChange = formikProps.handleChange;
 
 
     return options.map(function (option) {
@@ -14776,7 +14797,8 @@ var Radio = function Radio(_ref) {
                         className: 'form-check-input',
                         id: name + '_' + option.value,
                         value: option.value,
-                        checked: (0, _formik.getIn)(values, name) === option.value
+                        checked: (0, _formik.getIn)(values, name) === option.value,
+                        onChange: handleChange
                     }, attributes)),
                     ' ',
                     option.title
@@ -14815,7 +14837,9 @@ var Text = function Text(_ref) {
     var name = config.name,
         label = config.label,
         type = config.type,
-        attributes = config.attributes;
+        renderer = config.renderer,
+        attributes = config.attributes,
+        fieldType = config.fieldType;
     var values = formikProps.values,
         handleChange = formikProps.handleChange;
 
@@ -14831,7 +14855,7 @@ var Text = function Text(_ref) {
         _react2.default.createElement('input', _extends({
             id: name,
             name: name,
-            type: type,
+            type: fieldType,
             className: 'form-control',
             value: (0, _formik.getIn)(values, name),
             onChange: handleChange
@@ -14871,7 +14895,7 @@ var Textarea = function Textarea(_ref) {
         attributes = config.attributes,
         rows = config.rows;
     var values = formikProps.values,
-        setFieldValue = formikProps.setFieldValue;
+        handleChange = formikProps.handleChange;
 
 
     return _react2.default.createElement(
@@ -14887,8 +14911,7 @@ var Textarea = function Textarea(_ref) {
             name: name,
             className: 'form-control',
             value: (0, _formik.getIn)(values, name),
-            rows: rows || 3,
-            onChange: setFieldValue
+            onChange: handleChange
         }, attributes))
     );
 };

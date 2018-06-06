@@ -3,7 +3,7 @@ import { getIn } from 'formik';
 
 const Radio = ({ config, formikProps }) => {
     const { name, type, attributes, options } = config;
-    const { values } = formikProps;
+    const { values, handleChange } = formikProps;
 
     return options.map(( option ) => (
         <div className="form-group">
@@ -17,6 +17,7 @@ const Radio = ({ config, formikProps }) => {
                         id={ name + '_' + option.value }
                         value={ option.value }
                         checked={ getIn(values, name) === option.value }
+                        onChange={ handleChange }
                         { ...attributes } /> { option.title }
                 </label>
             </div>
