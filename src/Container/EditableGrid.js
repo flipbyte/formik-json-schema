@@ -15,7 +15,7 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
     const hasValue = values.hasOwnProperty(fieldArrayName) && values[fieldArrayName].length > 0;
 
     return (
-        <table className="table table-bordered">
+        <table className="table table-bordered flutter-table">
             <thead>
                 <tr>
                     { Object.keys(header).map( (key) =>

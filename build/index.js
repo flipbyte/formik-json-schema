@@ -14280,7 +14280,7 @@ var EditableGrid = function EditableGrid(_ref) {
 
     return _react2.default.createElement(
         'table',
-        { className: 'table table-bordered' },
+        { className: 'table table-bordered flutter-table' },
         _react2.default.createElement(
             'thead',
             null,
