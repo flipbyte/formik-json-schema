@@ -50,43 +50,40 @@ class Tabs extends React.Component {
         } = this.props;
 
         return (
-            <div className="row flutter-tabs-container">
-                <div className="col-3">
-                    <div
-                        className="nav flex-column nav-pills"
-                        id="v-pills-tab"
-                        role="tablist"
-                        aria-orientation="vertical">
-                            { Object.keys(this.tabs).map( (key) =>
-                                <a
-                                    key={ key }
-                                    className={
-                                        'nav-link ' +
-                                        ( this.state.activeTab == key ? 'active' : '' )
-                                    }
-                                    href="#"
-                                    onClick={ () => this.toggle(key) }>{ this.tabs[key] }
-                                </a>
-                            ) }
-                    </div>
-                </div>
-                <div className="col-9">
-                    <div className="tab-content" id="v-pills-tabContent">
-                        { Object.keys(this.tabContent).map( (tabKey) =>
-                            <div
-                                key={ tabKey }
-                                className={
-                                    'tab-pane ' +
-                                    ( this.state.activeTab == tabKey ? 'active' : '' )
-                                }>
-                                { Object.keys(this.tabContent[tabKey]).map( (key) =>
-                                    <Element
-                                        key={ key }
-                                        config={ this.tabContent[tabKey][key] }
-                                        formikProps={ formikProps } />
+            <div className="card">
+                <div className="card-block">
+                    <div className="row">
+                        <div className="col-sm-12 col-md-3">
+                            <ul id="list-tab" className="list-group">
+                                { Object.keys(this.tabs).map( (key) =>
+                                    <li className={
+                                            'list-group-item-action list-group-item ' +
+                                            ( this.state.activeTab == key ? 'active' : '' )
+                                        }
+                                        onClick={ () => this.toggle(key) }>{ this.tabs[key] }
+                                    </li>
+                                ) }
+                            </ul>
+                        </div>
+                        <div className="col-sm-12 col-md-9">
+                            <div className="tab-content" id="v-pills-tabContent">
+                                { Object.keys(this.tabContent).map( (tabKey) =>
+                                    <div
+                                        key={ tabKey }
+                                        className={
+                                            'tab-pane ' +
+                                            ( this.state.activeTab == tabKey ? 'active' : '' )
+                                        }>
+                                        { Object.keys(this.tabContent[tabKey]).map( (key) =>
+                                            <Element
+                                                key={ key }
+                                                config={ this.tabContent[tabKey][key] }
+                                                formikProps={ formikProps } />
+                                        ) }
+                                    </div>
                                 ) }
                             </div>
-                        ) }
+                        </div>
                     </div>
                 </div>
             </div>

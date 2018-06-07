@@ -14427,19 +14427,18 @@ var Fieldset = function (_React$Component) {
                 { className: 'card flutter-fieldset' },
                 !!title && _react2.default.createElement(
                     'div',
-                    { className: 'card-header' },
+                    { className: 'card-header', onClick: function onClick(event) {
+                            return _this2.toggle(event);
+                        } },
+                    _react2.default.createElement('i', { className: 'fa fa-align-justify' }),
+                    title,
                     _react2.default.createElement(
-                        'button',
-                        {
-                            type: 'button',
-                            className: 'text-left m-0 p-0 btn btn-link btn-block',
-                            onClick: function onClick(event) {
-                                return _this2.toggle(event);
-                            } },
+                        'div',
+                        { className: 'card-actions' },
                         _react2.default.createElement(
-                            'h5',
-                            { className: 'm-0 p-0' },
-                            title
+                            'a',
+                            { className: 'card-header-action btn btn-minimize' },
+                            _react2.default.createElement('i', { className: this.state.collapsed ? 'icon-arrow-down' : 'icon-arrow-up' })
                         )
                     )
                 ),
@@ -14595,52 +14594,53 @@ var Tabs = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'row flutter-tabs-container' },
+                { className: 'card' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'col-3' },
+                    { className: 'card-block' },
                     _react2.default.createElement(
                         'div',
-                        {
-                            className: 'nav flex-column nav-pills',
-                            id: 'v-pills-tab',
-                            role: 'tablist',
-                            'aria-orientation': 'vertical' },
-                        Object.keys(this.tabs).map(function (key) {
-                            return _react2.default.createElement(
-                                'a',
-                                {
-                                    key: key,
-                                    className: 'nav-link ' + (_this3.state.activeTab == key ? 'active' : ''),
-                                    href: '#',
-                                    onClick: function onClick() {
-                                        return _this3.toggle(key);
-                                    } },
-                                _this3.tabs[key]
-                            );
-                        })
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'col-9' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'tab-content', id: 'v-pills-tabContent' },
-                        Object.keys(this.tabContent).map(function (tabKey) {
-                            return _react2.default.createElement(
-                                'div',
-                                {
-                                    key: tabKey,
-                                    className: 'tab-pane ' + (_this3.state.activeTab == tabKey ? 'active' : '') },
-                                Object.keys(_this3.tabContent[tabKey]).map(function (key) {
-                                    return _react2.default.createElement(_Element2.default, {
-                                        key: key,
-                                        config: _this3.tabContent[tabKey][key],
-                                        formikProps: formikProps });
+                        { className: 'row' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-12 col-md-3' },
+                            _react2.default.createElement(
+                                'ul',
+                                { id: 'list-tab', className: 'list-group' },
+                                Object.keys(this.tabs).map(function (key) {
+                                    return _react2.default.createElement(
+                                        'li',
+                                        { className: 'list-group-item-action list-group-item ' + (_this3.state.activeTab == key ? 'active' : ''),
+                                            onClick: function onClick() {
+                                                return _this3.toggle(key);
+                                            } },
+                                        _this3.tabs[key]
+                                    );
                                 })
-                            );
-                        })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-12 col-md-9' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tab-content', id: 'v-pills-tabContent' },
+                                Object.keys(this.tabContent).map(function (tabKey) {
+                                    return _react2.default.createElement(
+                                        'div',
+                                        {
+                                            key: tabKey,
+                                            className: 'tab-pane ' + (_this3.state.activeTab == tabKey ? 'active' : '') },
+                                        Object.keys(_this3.tabContent[tabKey]).map(function (key) {
+                                            return _react2.default.createElement(_Element2.default, {
+                                                key: key,
+                                                config: _this3.tabContent[tabKey][key],
+                                                formikProps: formikProps });
+                                        })
+                                    );
+                                })
+                            )
+                        )
                     )
                 )
             );
@@ -14835,8 +14835,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -14845,78 +14843,44 @@ var _formik = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Switch = function (_React$Component) {
-    _inherits(Switch, _React$Component);
-
-    function Switch(props) {
-        _classCallCheck(this, Switch);
-
-        var _this = _possibleConstructorReturn(this, (Switch.__proto__ || Object.getPrototypeOf(Switch)).call(this, props));
-
-        _this.state = {
-            value: (0, _formik.getIn)(_this.props.formikProps.values, _this.props.config.name)
-        };
-        return _this;
-    }
-
-    _createClass(Switch, [{
-        key: 'setValue',
-        value: function setValue() {
-            var _props = this.props,
-                name = _props.config.name,
-                setFieldValue = _props.formikProps.setFieldValue;
+var Switch = function Switch(_ref) {
+    var config = _ref.config,
+        formikProps = _ref.formikProps;
+    var name = config.name,
+        label = config.label,
+        attributes = config.attributes,
+        htmlClass = config.htmlClass,
+        dataOn = config.dataOn,
+        dataOff = config.dataOff;
+    var values = formikProps.values,
+        setFieldValue = formikProps.setFieldValue;
 
 
-            this.setState({ value: !this.state.value });
-            setFieldValue(name, this.state.value);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var _props$config = this.props.config,
-                name = _props$config.name,
-                label = _props$config.label,
-                attributes = _props$config.attributes,
-                htmlClass = _props$config.htmlClass,
-                dataOn = _props$config.dataOn,
-                dataOff = _props$config.dataOff;
-
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                !!label && _react2.default.createElement(
-                    'label',
-                    null,
-                    label
-                ),
-                _react2.default.createElement(
-                    'label',
-                    { className: 'switch ' + htmlClass },
-                    _react2.default.createElement('input', { type: 'checkbox', className: 'switch-input', defaultChecked: this.state.value }),
-                    _react2.default.createElement('span', {
-                        className: 'switch-label',
-                        'data-on': dataOn,
-                        'data-off': dataOff,
-                        onClick: function onClick(event) {
-                            return _this2.setValue();
-                        } }),
-                    _react2.default.createElement('span', { className: 'switch-handle' })
-                )
-            );
-        }
-    }]);
-
-    return Switch;
-}(_react2.default.Component);
+    return _react2.default.createElement(
+        'div',
+        { className: 'form-group' },
+        !!label && _react2.default.createElement(
+            'label',
+            null,
+            label
+        ),
+        _react2.default.createElement(
+            'label',
+            { className: 'switch ' + htmlClass },
+            _react2.default.createElement('input', { type: 'checkbox',
+                className: 'switch-input',
+                defaultChecked: (0, _formik.getIn)(values, name),
+                onClick: function onClick() {
+                    return setFieldValue(name, !(0, _formik.getIn)(values, name));
+                } }),
+            _react2.default.createElement('span', {
+                className: 'switch-label',
+                'data-on': dataOn,
+                'data-off': dataOff }),
+            _react2.default.createElement('span', { className: 'switch-handle' })
+        )
+    );
+};
 
 exports.default = Switch;
 
