@@ -7,7 +7,7 @@ const ButtonGroup = ({ config, formikProps }) => {
 
     return (
         <div className="buttons-container clearfix">
-            <div className="btn-group pull-right">
+            <div className="btn-group d-flex justify-content-end">
                 { Object.keys(elements).map( (key) =>
                     <Element key={ key } config={ elements[key] } formikProps={ formikProps } />)
                 }

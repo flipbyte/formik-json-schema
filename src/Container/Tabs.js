@@ -56,7 +56,9 @@ class Tabs extends React.Component {
                         <div className="col-sm-12 col-md-3">
                             <ul id="list-tab" className="list-group">
                                 { Object.keys(this.tabs).map( (key) =>
-                                    <li className={
+                                    <li
+                                        key={ key }
+                                        className={
                                             'list-group-item-action list-group-item ' +
                                             ( this.state.activeTab == key ? 'active' : '' )
                                         }

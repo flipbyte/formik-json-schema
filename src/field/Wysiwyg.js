@@ -80,7 +80,7 @@ class Wysiwyg extends React.Component {
             <div className="form-group">
                 { !!label && <label>{ label }</label> }
                 <div className={ 'row ql-container-wysiwyg ql-container-wysiwyg-' + name }>
-                    <div className="col-md-12">
+                    <div className="col-md-12 d-flex justify-content-end">
                         <button
                             type="button"
                             className="btn btn-primary pull-right"
