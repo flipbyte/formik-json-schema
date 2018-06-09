@@ -3,19 +3,28 @@ import React, { Component } from 'react';
 import Element from '../Element';
 
 class Fieldset extends React.Component {
-    constructor(props) {
+    constructor( props ) {
         super(props);
 
-        const {
-            config: { collapsed }
-        } = this.props;
-
         this.state = {
-            collapsed: (collapsed) ? true : false,
+            collapsed: this.collapsible && this.collapsed ? true : false,
         };
     }
 
+    get collapsible() {
+        return this.props.config.collapsible;
+    }
+
+    get collapsed() {
+        return this.props.config.collpased;
+    }
+
     toggle( event ) {
+        if(false === this.collapsible) {
+            event.preventDefault();
+            return;
+        }
+
         this.setState({ collapsed: !this.state.collapsed });
     }
 

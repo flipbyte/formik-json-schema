@@ -7,13 +7,15 @@ import Switch from './Switch';
 import Wysiwyg from './Wysiwyg';
 import Textarea from './Textarea';
 import Checkbox from './Checkbox';
+import ReactSelect from './ReactSelect';
 
 [
     'text',
     'email',
     'password',
     'number',
-    'url'
+    'url',
+    'date'
 ].map(( type ) => registerField(type, Text));
 
 registerField('radio', Radio);
@@ -22,3 +24,4 @@ registerField('switch', Switch);
 registerField('wysiwyg', Wysiwyg);
 registerField('textarea', Textarea);
 registerField('checkbox', Checkbox);
+registerField('react-select', ReactSelect);

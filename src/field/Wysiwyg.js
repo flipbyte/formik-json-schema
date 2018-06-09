@@ -72,14 +72,14 @@ class Wysiwyg extends React.Component {
 
     render() {
         const {
-            config: { name, label, type, attributes, options, rows },
+            config: { name, label, type, attributes, options, rows, htmlClass },
             formikProps: { values }
         } = this.props;
 
         return (
             <div className="form-group">
                 { !!label && <label>{ label }</label> }
-                <div className={ 'row ql-container-wysiwyg ql-container-wysiwyg-' + name }>
+                <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name} ${htmlClass}` }>
                     <div className="col-md-12 d-flex justify-content-end">
                         <button
                             type="button"

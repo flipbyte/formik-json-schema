@@ -68,21 +68,19 @@ class Tabs extends React.Component {
                             </ul>
                         </div>
                         <div className="col-sm-12 col-md-9">
-                            <div className="tab-content" id="v-pills-tabContent">
+                            <div className="tab-content">
                                 { Object.keys(this.tabContent).map( (tabKey) =>
-                                    <div
-                                        key={ tabKey }
-                                        className={
-                                            'tab-pane ' +
-                                            ( this.state.activeTab == tabKey ? 'active' : '' )
-                                        }>
-                                        { Object.keys(this.tabContent[tabKey]).map( (key) =>
-                                            <Element
-                                                key={ key }
-                                                config={ this.tabContent[tabKey][key] }
-                                                formikProps={ formikProps } />
-                                        ) }
-                                    </div>
+                                    this.state.activeTab == tabKey &&
+                                        <div
+                                            key={ tabKey }
+                                            className="tab-pane active">
+                                            { Object.keys(this.tabContent[tabKey]).map( (key) =>
+                                                <Element
+                                                    key={ key }
+                                                    config={ this.tabContent[tabKey][key] }
+                                                    formikProps={ formikProps } />
+                                            ) }
+                                        </div>
                                 ) }
                             </div>
                         </div>

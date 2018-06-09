@@ -7,7 +7,7 @@ const Switch = ({ config, formikProps }) => {
 
     return (
         <div className="form-group">
-            { !!label && <label>{ label }</label> }
+            { !!label && <label className="mr-2">{ label }</label> }
             <label className={ 'switch ' + htmlClass }>
                 <input type="checkbox"
                     className="switch-input"
