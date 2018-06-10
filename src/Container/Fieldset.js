@@ -12,11 +12,11 @@ class Fieldset extends React.Component {
     }
 
     get collapsible() {
-        return this.props.config.collapsible;
+        return this.props.config.collapsible !== false
     }
 
     get collapsed() {
-        return this.props.config.collpased;
+        return !!this.props.config.collapsed
     }
 
     toggle( event ) {
@@ -47,10 +47,14 @@ class Fieldset extends React.Component {
                         </div>
                     </div>
                 }
-                <div className={ 'collapse' + ( !this.state.collapsed ? 'show' : '' ) }>
+                <div className={ 'collapse ' + (!this.state.collapsed ? 'show': '') }>
                     <div className="card-block">
                         { Object.keys(elements).map( (key) =>
-                            <Element key={ key } config={ elements[key] } formikProps={ formikProps } />)
+                            <Element
+                                key={ key }
+                                config={ elements[key] }
+                                formikProps={ formikProps }
+                                update={ !this.state.collapsed }/>)
                         }
                     </div>
                 </div>

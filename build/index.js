@@ -327,6 +327,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -337,13 +339,52 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-var Element = function Element(_ref) {
-    var config = _ref.config,
-        formikProps = _ref.formikProps,
-        rest = _objectWithoutProperties(_ref, ['config', 'formikProps']);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    return (0, _registry.render)(config, formikProps, rest);
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Element = function (_Component) {
+    _inherits(Element, _Component);
+
+    function Element(props) {
+        _classCallCheck(this, Element);
+
+        var _this = _possibleConstructorReturn(this, (Element.__proto__ || Object.getPrototypeOf(Element)).call(this, props));
+
+        _this.state = { hasMounted: _this.props.update !== false };
+        return _this;
+    }
+
+    _createClass(Element, [{
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            var canUpdate = !!nextProps.update;
+            if (false == canUpdate) {
+                return false;
+            }
+
+            if (!this.state.hasMounted) {
+                this.setState({ hasMounted: canUpdate });
+            }
+
+            return true;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                config = _props.config,
+                formikProps = _props.formikProps,
+                rest = _objectWithoutProperties(_props, ['config', 'formikProps']);
+
+            return this.state.hasMounted && (0, _registry.render)(config, formikProps, rest);
+        }
+    }]);
+
+    return Element;
+}(_react.Component);
 
 exports.default = Element;
 
@@ -14809,12 +14850,16 @@ var Fieldset = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'collapse' + (!this.state.collapsed ? 'show' : '') },
+                    { className: 'collapse ' + (!this.state.collapsed ? 'show' : '') },
                     _react2.default.createElement(
                         'div',
                         { className: 'card-block' },
                         Object.keys(elements).map(function (key) {
-                            return _react2.default.createElement(_Element2.default, { key: key, config: elements[key], formikProps: formikProps });
+                            return _react2.default.createElement(_Element2.default, {
+                                key: key,
+                                config: elements[key],
+                                formikProps: formikProps,
+                                update: !_this2.state.collapsed });
                         })
                     )
                 )
@@ -14823,12 +14868,12 @@ var Fieldset = function (_React$Component) {
     }, {
         key: 'collapsible',
         get: function get() {
-            return this.props.config.collapsible;
+            return this.props.config.collapsible !== false;
         }
     }, {
         key: 'collapsed',
         get: function get() {
-            return this.props.config.collpased;
+            return !!this.props.config.collapsed;
         }
     }]);
 
@@ -15003,16 +15048,17 @@ var Tabs = function (_React$Component) {
                                 'div',
                                 { className: 'tab-content' },
                                 Object.keys(this.tabContent).map(function (tabKey) {
-                                    return _this3.state.activeTab == tabKey && _react2.default.createElement(
+                                    return _react2.default.createElement(
                                         'div',
                                         {
                                             key: tabKey,
-                                            className: 'tab-pane active' },
+                                            className: 'tab-pane ' + (_this3.state.activeTab == tabKey ? 'active' : '') },
                                         Object.keys(_this3.tabContent[tabKey]).map(function (key) {
                                             return _react2.default.createElement(_Element2.default, {
                                                 key: key,
                                                 config: _this3.tabContent[tabKey][key],
-                                                formikProps: formikProps });
+                                                formikProps: formikProps,
+                                                update: _this3.state.activeTab == tabKey });
                                         })
                                     );
                                 })
