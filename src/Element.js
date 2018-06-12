@@ -8,8 +8,8 @@ class Element extends Component {
     }
 
     shouldComponentUpdate( nextProps, nextState ) {
-        const canUpdate = !!nextProps.update;
-        if( false == canUpdate) {
+        const canUpdate = nextProps.update !== false;
+        if( false === canUpdate ) {
             return false;
         }
 
