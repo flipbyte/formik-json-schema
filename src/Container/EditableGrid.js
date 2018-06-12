@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getIn } from 'formik';
 
 import Element from '../Element';
 
@@ -12,7 +13,8 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
     const arrayFields = Object.assign({}, fields);
     setNull(arrayFields);
 
-    const hasValue = values.hasOwnProperty(fieldArrayName) && values[fieldArrayName].length > 0;
+    const arrayValues = getIn(values, fieldArrayName);
+    const hasValue = arrayValues && arrayValues.length > 0;
 
     return (
         <table className="table table-bordered flutter-table">
@@ -24,7 +26,7 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                 </tr>
             </thead>
             <tbody>
-                { hasValue && values[fieldArrayName].map( (data, index) =>
+                { hasValue && arrayValues.map( (data, index) =>
                     <tr key={ index }>
                         { Object.keys(fields).map( (key) => {
                             let element = Object.assign({}, fields[key]);
