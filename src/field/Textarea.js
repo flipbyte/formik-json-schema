@@ -3,7 +3,9 @@ import { getIn } from 'formik';
 
 const Textarea = ({ config, formikProps }) => {
     const { name, label, type, attributes, rows } = config;
-    const { values, handleChange } = formikProps;
+    const { values, errors, handleChange } = formikProps;
+
+    const error = getIn(errors, name);
 
     return (
         <div className="form-group">
@@ -11,10 +13,16 @@ const Textarea = ({ config, formikProps }) => {
             <textarea
                 id={ name }
                 name={ name }
-                className="form-control"
+                className={ 'form-control ' + (!!error ? 'is-invalid': '') }
                 value={ getIn(values, name) }
                 onChange={ handleChange }
                 { ...attributes } />
+
+            { !!error && (
+                <div className="invalid-feedback">
+                    { error }
+                </div>
+            ) }
         </div>
     );
 }

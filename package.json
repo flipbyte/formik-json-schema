@@ -45,7 +45,6 @@
   "dependencies": {
     "react-quill": "^1.2.7",
     "react-select": "^1.2.1",
-    "sync-exec": "^0.6.2",
     "webpack": "^2.6.1"
   }
 }

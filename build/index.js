@@ -75,6 +75,12 @@ module.exports = require("react");
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("formik");
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var freeGlobal = __webpack_require__(44);
@@ -89,7 +95,7 @@ module.exports = root;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 /**
@@ -121,7 +127,7 @@ module.exports = isArray;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -311,12 +317,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("formik");
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -360,8 +360,8 @@ var Element = function (_Component) {
     _createClass(Element, [{
         key: 'shouldComponentUpdate',
         value: function shouldComponentUpdate(nextProps, nextState) {
-            var canUpdate = !!nextProps.update;
-            if (false == canUpdate) {
+            var canUpdate = nextProps.update !== false;
+            if (false === canUpdate) {
                 return false;
             }
 
@@ -446,7 +446,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 7 */
@@ -755,7 +755,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = warning;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 14 */
@@ -799,7 +799,7 @@ module.exports = ListCache;
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(1);
+var root = __webpack_require__(2);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -1144,7 +1144,7 @@ if (process.env.NODE_ENV !== 'production') {
   module.exports = __webpack_require__(184)();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 25 */
@@ -1168,14 +1168,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(1);
+    root = __webpack_require__(2);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -1262,7 +1262,7 @@ module.exports = baseIsEqual;
 var baseMatches = __webpack_require__(115),
     baseMatchesProperty = __webpack_require__(116),
     identity = __webpack_require__(174),
-    isArray = __webpack_require__(2),
+    isArray = __webpack_require__(3),
     property = __webpack_require__(176);
 
 /**
@@ -1327,7 +1327,7 @@ module.exports = isIndex;
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(2),
+var isArray = __webpack_require__(3),
     isSymbol = __webpack_require__(21);
 
 /** Used to match property names within property paths. */
@@ -1723,7 +1723,7 @@ module.exports = baseGet;
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(2),
+var isArray = __webpack_require__(3),
     isKey = __webpack_require__(31),
     stringToPath = __webpack_require__(170),
     toString = __webpack_require__(183);
@@ -2019,7 +2019,7 @@ module.exports = isArguments;
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(1),
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(2),
     stubFalse = __webpack_require__(179);
 
 /** Detect free variable `exports`. */
@@ -2242,7 +2242,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 55 */
@@ -14485,7 +14485,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 var _registry = __webpack_require__(8);
 
@@ -14523,7 +14523,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 var _Element = __webpack_require__(5);
 
@@ -14649,6 +14649,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _formik = __webpack_require__(1);
+
 var _Element = __webpack_require__(5);
 
 var _Element2 = _interopRequireDefault(_Element);
@@ -14680,7 +14682,8 @@ var EditableGrid = function EditableGrid(_ref) {
     var arrayFields = Object.assign({}, fields);
     setNull(arrayFields);
 
-    var hasValue = values.hasOwnProperty(fieldArrayName) && values[fieldArrayName].length > 0;
+    var arrayValues = (0, _formik.getIn)(values, fieldArrayName);
+    var hasValue = arrayValues && arrayValues.length > 0;
 
     return _react2.default.createElement(
         'table',
@@ -14703,7 +14706,7 @@ var EditableGrid = function EditableGrid(_ref) {
         _react2.default.createElement(
             'tbody',
             null,
-            hasValue && values[fieldArrayName].map(function (data, index) {
+            hasValue && arrayValues.map(function (data, index) {
                 return _react2.default.createElement(
                     'tr',
                     { key: index },
@@ -15134,7 +15137,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15147,8 +15150,11 @@ var Checkbox = function Checkbox(_ref) {
         attributes = config.attributes,
         description = config.description;
     var values = formikProps.values,
+        errors = formikProps.errors,
         handleChange = formikProps.handleChange;
 
+
+    var error = (0, _formik.getIn)(errors, name);
 
     return _react2.default.createElement(
         'div',
@@ -15167,13 +15173,18 @@ var Checkbox = function Checkbox(_ref) {
                 _react2.default.createElement('input', _extends({
                     id: name,
                     name: name,
-                    className: 'form-check-input',
+                    className: 'form-check-input ' + (!!error ? 'is-invalid' : ''),
                     type: 'checkbox',
                     checked: (0, _formik.getIn)(values, name),
                     onChange: handleChange
                 }, attributes)),
                 ' ',
                 description
+            ),
+            !!error && _react2.default.createElement(
+                'div',
+                { className: 'invalid-feedback' },
+                error
             )
         )
     );
@@ -15198,7 +15209,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15262,7 +15273,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 var _reactSelect = __webpack_require__(192);
 
@@ -15301,6 +15312,7 @@ var ReactSelect = function ReactSelect(_ref) {
             id: name,
             name: name,
             options: options,
+            className: !!error ? 'is-invalid' : '',
             multi: multi,
             onChange: function onChange(value) {
                 return setFieldValue(name, value);
@@ -15335,7 +15347,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15397,7 +15409,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15409,10 +15421,15 @@ var Text = function Text(_ref) {
         type = config.type,
         renderer = config.renderer,
         attributes = config.attributes,
-        fieldType = config.fieldType;
+        fieldType = config.fieldType,
+        defaultValue = config.defaultValue;
     var values = formikProps.values,
+        errors = formikProps.errors,
+        setFieldValue = formikProps.setFieldValue,
         handleChange = formikProps.handleChange;
 
+
+    var error = (0, _formik.getIn)(errors, name);
 
     return _react2.default.createElement(
         'div',
@@ -15426,10 +15443,15 @@ var Text = function Text(_ref) {
             id: name,
             name: name,
             type: fieldType,
-            className: 'form-control',
+            className: 'form-control ' + (!!error ? 'is-invalid' : ''),
             value: (0, _formik.getIn)(values, name),
             onChange: handleChange
-        }, attributes))
+        }, attributes)),
+        !!error && _react2.default.createElement(
+            'div',
+            { className: 'invalid-feedback' },
+            error
+        )
     );
 };
 
@@ -15452,7 +15474,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15465,8 +15487,11 @@ var Textarea = function Textarea(_ref) {
         attributes = config.attributes,
         rows = config.rows;
     var values = formikProps.values,
+        errors = formikProps.errors,
         handleChange = formikProps.handleChange;
 
+
+    var error = (0, _formik.getIn)(errors, name);
 
     return _react2.default.createElement(
         'div',
@@ -15479,10 +15504,15 @@ var Textarea = function Textarea(_ref) {
         _react2.default.createElement('textarea', _extends({
             id: name,
             name: name,
-            className: 'form-control',
+            className: 'form-control ' + (!!error ? 'is-invalid' : ''),
             value: (0, _formik.getIn)(values, name),
             onChange: handleChange
-        }, attributes))
+        }, attributes)),
+        !!error && _react2.default.createElement(
+            'div',
+            { className: 'invalid-feedback' },
+            error
+        )
     );
 };
 
@@ -15507,7 +15537,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(4);
+var _formik = __webpack_require__(1);
 
 var _reactQuill = __webpack_require__(190);
 
@@ -15597,8 +15627,12 @@ var Wysiwyg = function (_React$Component) {
                 options = _props2$config.options,
                 rows = _props2$config.rows,
                 htmlClass = _props2$config.htmlClass,
-                values = _props2.formikProps.values;
+                _props2$formikProps = _props2.formikProps,
+                values = _props2$formikProps.values,
+                errors = _props2$formikProps.errors;
 
+
+            var error = (0, _formik.getIn)(errors, name);
 
             return _react2.default.createElement(
                 'div',
@@ -15627,10 +15661,11 @@ var Wysiwyg = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-md-12' },
+                        { className: 'col-md-12 ' + (!!error ? 'is-invalid' : '') },
                         !this.state.showHtml && _react2.default.createElement(_reactQuill2.default, _extends({
                             id: name,
                             value: (0, _formik.getIn)(values, name),
+                            className: !!error ? 'is-invalid' : '',
                             onChange: function onChange(content) {
                                 return _this2.handleChange(content);
                             }
@@ -15642,7 +15677,12 @@ var Wysiwyg = function (_React$Component) {
                             value: (0, _formik.getIn)(values, name),
                             onChange: function onChange(event) {
                                 return _this2.handleChange(event.target.value);
-                            } })
+                            } }),
+                        !!error && _react2.default.createElement(
+                            'div',
+                            { className: 'invalid-feedback' },
+                            error
+                        )
                     )
                 )
             );
@@ -18631,7 +18671,7 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 
 module.exports = factory;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 85 */
@@ -18881,7 +18921,7 @@ module.exports = Array.isArray || function (arr) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(1);
+    root = __webpack_require__(2);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -18932,7 +18972,7 @@ module.exports = Hash;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(1);
+    root = __webpack_require__(2);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -18945,7 +18985,7 @@ module.exports = Promise;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(1);
+    root = __webpack_require__(2);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -18990,7 +19030,7 @@ module.exports = SetCache;
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(1);
+var root = __webpack_require__(2);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -19003,7 +19043,7 @@ module.exports = Uint8Array;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(1);
+    root = __webpack_require__(2);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -19048,7 +19088,7 @@ module.exports = arrayFilter;
 
 var baseTimes = __webpack_require__(120),
     isArguments = __webpack_require__(49),
-    isArray = __webpack_require__(2),
+    isArray = __webpack_require__(3),
     isBuffer = __webpack_require__(50),
     isIndex = __webpack_require__(30),
     isTypedArray = __webpack_require__(53);
@@ -19249,7 +19289,7 @@ module.exports = baseForOwn;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayPush = __webpack_require__(102),
-    isArray = __webpack_require__(2);
+    isArray = __webpack_require__(3);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -19322,7 +19362,7 @@ var Stack = __webpack_require__(39),
     equalByTag = __webpack_require__(128),
     equalObjects = __webpack_require__(129),
     getTag = __webpack_require__(134),
-    isArray = __webpack_require__(2),
+    isArray = __webpack_require__(3),
     isBuffer = __webpack_require__(50),
     isTypedArray = __webpack_require__(53);
 
@@ -19794,7 +19834,7 @@ module.exports = baseTimes;
 
 var Symbol = __webpack_require__(15),
     arrayMap = __webpack_require__(101),
-    isArray = __webpack_require__(2),
+    isArray = __webpack_require__(3),
     isSymbol = __webpack_require__(21);
 
 /** Used as references for various `Number` constants. */
@@ -19874,7 +19914,7 @@ module.exports = cacheHas;
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(1);
+var root = __webpack_require__(2);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -20424,7 +20464,7 @@ module.exports = getValue;
 
 var castPath = __webpack_require__(42),
     isArguments = __webpack_require__(49),
-    isArray = __webpack_require__(2),
+    isArray = __webpack_require__(3),
     isIndex = __webpack_require__(30),
     isLength = __webpack_require__(33),
     toKey = __webpack_require__(19);
@@ -21642,7 +21682,7 @@ module.exports = property;
 var arraySome = __webpack_require__(40),
     baseIteratee = __webpack_require__(29),
     baseSome = __webpack_require__(119),
-    isArray = __webpack_require__(2),
+    isArray = __webpack_require__(3),
     isIterateeCall = __webpack_require__(142);
 
 /**
@@ -22554,7 +22594,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 186 */
@@ -25300,7 +25340,7 @@ module.exports = server_browser;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 187 */
@@ -25363,7 +25403,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports = __webpack_require__(186);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 189 */

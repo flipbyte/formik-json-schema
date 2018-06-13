@@ -3,7 +3,9 @@ import { getIn } from 'formik';
 
 const Checkbox = ({ config, formikProps }) => {
     const { name, label, type, attributes, description } = config;
-    const { values, handleChange } = formikProps;
+    const { values, errors, handleChange } = formikProps;
+
+    const error = getIn(errors, name);
 
     return (
         <div className="form-group">
@@ -13,12 +15,17 @@ const Checkbox = ({ config, formikProps }) => {
                     <input
                         id={ name }
                         name={ name }
-                        className="form-check-input"
+                        className={ 'form-check-input ' + (!!error ? 'is-invalid': '') }
                         type="checkbox"
                         checked={ getIn(values, name) }
                         onChange={ handleChange }
                         { ...attributes } /> { description }
                 </label>
+                { !!error && (
+                    <div className="invalid-feedback">
+                        { error }
+                    </div>
+                ) }
             </div>
         </div>
     );

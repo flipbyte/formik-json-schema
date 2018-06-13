@@ -73,8 +73,10 @@ class Wysiwyg extends React.Component {
     render() {
         const {
             config: { name, label, type, attributes, options, rows, htmlClass },
-            formikProps: { values }
+            formikProps: { values, errors }
         } = this.props;
+
+        const error = getIn(errors, name);
 
         return (
             <div className="form-group">
@@ -88,10 +90,11 @@ class Wysiwyg extends React.Component {
                             { this.state.showHtml ? 'Show Editor' : 'View Source' }
                         </button>
                     </div>
-                    <div className="col-md-12">
+                    <div className={ 'col-md-12 ' + (!!error ? 'is-invalid': '') }>
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
                             value={ getIn(values, name) }
+                            className={ (!!error ? 'is-invalid': '') }
                             onChange={ (content) =>  this.handleChange(content) }
                             { ...this.toolbarOptions }
                             { ... attributes } />
@@ -104,6 +107,11 @@ class Wysiwyg extends React.Component {
                                 value={ getIn(values, name) }
                                 onChange={ (event) => this.handleChange(event.target.value) } />
                         }
+                        { !!error && (
+                            <div className="invalid-feedback">
+                                { error }
+                            </div>
+                        ) }
                     </div>
                 </div>
             </div>

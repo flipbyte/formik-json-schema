@@ -18,12 +18,13 @@ const ReactSelect = ({ config, formikProps }) => {
                 id={ name }
                 name={ name }
                 options={ options }
+                className={ (!!error ? 'is-invalid': '') }
                 multi={ multi }
                 onChange={ (value) => setFieldValue(name, value) }
                 onBlur={ (value) => setFieldTouched(name, value) }
                 value={ getIn(values, name) }
             />
-            { !!error && blur && (
+            { !!error && (
                 <div className="invalid-feedback">
                     { error }
                 </div>
