@@ -31,7 +31,12 @@ export const render = ( config, formikProps, rest ) => {
         currentRegistry = fieldRegistry;
     }
 
-    const Renderer = currentRegistry.get(config.renderer);
+    let Renderer = config.renderer;
+    if(typeof config.renderer == 'function') {
+        return <Renderer { ...config.props } />
+    }
+
+    Renderer = currentRegistry.get(config.renderer);
     return <Renderer config={ config } formikProps={ formikProps } { ...rest }/>
 }
 
