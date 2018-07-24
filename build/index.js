@@ -534,7 +534,12 @@ var render = exports.render = function render(config, formikProps, rest) {
         currentRegistry = fieldRegistry;
     }
 
-    var Renderer = currentRegistry.get(config.renderer);
+    var Renderer = config.renderer;
+    if (typeof config.renderer == 'function') {
+        return _react2.default.createElement(Renderer, config.props);
+    }
+
+    Renderer = currentRegistry.get(config.renderer);
     return _react2.default.createElement(Renderer, _extends({ config: config, formikProps: formikProps }, rest));
 };
 
@@ -15322,7 +15327,7 @@ var ReactSelect = function ReactSelect(_ref) {
             },
             value: (0, _formik.getIn)(values, name)
         }),
-        !!error && blur && _react2.default.createElement(
+        !!error && _react2.default.createElement(
             'div',
             { className: 'invalid-feedback' },
             error
@@ -15422,7 +15427,10 @@ var Text = function Text(_ref) {
         renderer = config.renderer,
         attributes = config.attributes,
         fieldType = config.fieldType,
-        defaultValue = config.defaultValue;
+        defaultValue = config.defaultValue,
+        icon = config.icon,
+        _config$wrapperClass = config.wrapperClass,
+        wrapperClass = _config$wrapperClass === undefined ? 'form-group' : _config$wrapperClass;
     var values = formikProps.values,
         errors = formikProps.errors,
         setFieldValue = formikProps.setFieldValue,
@@ -15433,11 +15441,16 @@ var Text = function Text(_ref) {
 
     return _react2.default.createElement(
         'div',
-        { className: 'form-group' },
+        { className: wrapperClass },
         !!label && _react2.default.createElement(
             'label',
             null,
             label
+        ),
+        !!icon && _react2.default.createElement(
+            'span',
+            { className: 'input-group-addon' },
+            _react2.default.createElement('i', { className: icon })
         ),
         _react2.default.createElement('input', _extends({
             id: name,
