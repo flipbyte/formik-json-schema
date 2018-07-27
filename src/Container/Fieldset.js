@@ -40,7 +40,7 @@ class Fieldset extends React.Component {
                     <div className="card-header" onClick={ (event) => this.toggle(event) }>
                         <i className="fa fa-align-justify"></i>
                         { title }
-                        <div className="card-actions">
+                        <div className="card-header-actions">
                             <a className="card-header-action btn btn-minimize">
                                 <i className={ this.state.collapsed ? 'icon-arrow-down' : 'icon-arrow-up' }></i>
                             </a>
@@ -48,7 +48,7 @@ class Fieldset extends React.Component {
                     </div>
                 }
                 <div className={ 'collapse ' + (!this.state.collapsed ? 'show': '') }>
-                    <div className="card-block">
+                    <div className="card-body">
                         { Object.keys(elements).map( (key) =>
                             <Element
                                 key={ key }

@@ -11,28 +11,42 @@ const Text = ({ config, formikProps }) => {
         fieldType,
         defaultValue,
         icon,
-        wrapperClass = 'form-group'
+        formGroupClass = 'form-group',
+        inputGroupClass = 'input-group'
     } = config;
-    const { values, errors, setFieldValue, handleChange } = formikProps;
 
+    const { values, errors, setFieldValue, handleChange } = formikProps;
     const error = getIn(errors, name);
+    const isInputGroup = icon ? true : false;
 
     return (
-        <div className={ wrapperClass }>
+        <div className={ formGroupClass }>
             { !!label && <label>{ label }</label> }
-            { !!icon &&
-                <span className="input-group-addon">
-                    <i className={ icon }></i>
-                </span>
+            { isInputGroup ?
+                <div className={ inputGroupClass }>
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">
+                            <i className={ icon }></i>
+                        </span>
+                    </div>
+                    <input
+                        id={ name }
+                        name={ name }
+                        type={ fieldType }
+                        className={ 'form-control ' + (!!error ? 'is-invalid': '') }
+                        value={ getIn(values, name) }
+                        onChange={ handleChange }
+                        { ...attributes } />
+                </div> :
+                <input
+                    id={ name }
+                    name={ name }
+                    type={ fieldType }
+                    className={ 'form-control ' + (!!error ? 'is-invalid': '') }
+                    value={ getIn(values, name) }
+                    onChange={ handleChange }
+                    { ...attributes } />
             }
-            <input
-                id={ name }
-                name={ name }
-                type={ fieldType }
-                className={ 'form-control ' + (!!error ? 'is-invalid': '') }
-                value={ getIn(values, name) }
-                onChange={ handleChange }
-                { ...attributes } />
 
             { !!error && (
                 <div className="invalid-feedback">

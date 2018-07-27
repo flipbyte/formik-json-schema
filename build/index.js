@@ -14848,7 +14848,7 @@ var Fieldset = function (_React$Component) {
                     title,
                     _react2.default.createElement(
                         'div',
-                        { className: 'card-actions' },
+                        { className: 'card-header-actions' },
                         _react2.default.createElement(
                             'a',
                             { className: 'card-header-action btn btn-minimize' },
@@ -14861,7 +14861,7 @@ var Fieldset = function (_React$Component) {
                     { className: 'collapse ' + (!this.state.collapsed ? 'show' : '') },
                     _react2.default.createElement(
                         'div',
-                        { className: 'card-block' },
+                        { className: 'card-body' },
                         Object.keys(elements).map(function (key) {
                             return _react2.default.createElement(_Element2.default, {
                                 key: key,
@@ -15025,7 +15025,7 @@ var Tabs = function (_React$Component) {
                 { className: 'card' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'card-block' },
+                    { className: 'card-body' },
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
@@ -15054,7 +15054,7 @@ var Tabs = function (_React$Component) {
                             { className: 'col-sm-12 col-md-9' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'tab-content' },
+                                { className: 'tab-content flutter-rjf-tab-content' },
                                 Object.keys(this.tabContent).map(function (tabKey) {
                                     return _react2.default.createElement(
                                         'div',
@@ -15106,20 +15106,26 @@ var Button = function Button(_ref) {
     var label = config.label,
         htmlClass = config.htmlClass,
         buttonType = config.buttonType;
-    var values = formikProps.values;
+    var values = formikProps.values,
+        isSubmitting = formikProps.isSubmitting,
+        errors = formikProps.errors;
 
 
     var buttonProps = {
         type: buttonType ? buttonType : 'button',
-        className: 'btn ' + htmlClass
+        className: 'btn ' + htmlClass,
+        disabled: isSubmitting
+    };
 
-        // let onClick = (action && formikProps.hasOwnProperty(action)) ? formikProps[action] : '';
-        // if(onClick) buttonProps.onClick = onClick;
+    // let onClick = (action && formikProps.hasOwnProperty(action)) ? formikProps[action] : '';
+    // if(onClick) buttonProps.onClick = onClick;
 
-    };return _react2.default.createElement(
+    return _react2.default.createElement(
         'button',
         buttonProps,
-        label
+        label,
+        ' ',
+        isSubmitting && _react2.default.createElement('i', { className: 'fa fa-spinner fa-spin' })
     );
 };
 
@@ -15429,30 +15435,47 @@ var Text = function Text(_ref) {
         fieldType = config.fieldType,
         defaultValue = config.defaultValue,
         icon = config.icon,
-        _config$wrapperClass = config.wrapperClass,
-        wrapperClass = _config$wrapperClass === undefined ? 'form-group' : _config$wrapperClass;
+        _config$formGroupClas = config.formGroupClass,
+        formGroupClass = _config$formGroupClas === undefined ? 'form-group' : _config$formGroupClas,
+        _config$inputGroupCla = config.inputGroupClass,
+        inputGroupClass = _config$inputGroupCla === undefined ? 'input-group' : _config$inputGroupCla;
     var values = formikProps.values,
         errors = formikProps.errors,
         setFieldValue = formikProps.setFieldValue,
         handleChange = formikProps.handleChange;
 
-
     var error = (0, _formik.getIn)(errors, name);
+    var isInputGroup = icon ? true : false;
 
     return _react2.default.createElement(
         'div',
-        { className: wrapperClass },
+        { className: formGroupClass },
         !!label && _react2.default.createElement(
             'label',
             null,
             label
         ),
-        !!icon && _react2.default.createElement(
-            'span',
-            { className: 'input-group-addon' },
-            _react2.default.createElement('i', { className: icon })
-        ),
-        _react2.default.createElement('input', _extends({
+        isInputGroup ? _react2.default.createElement(
+            'div',
+            { className: inputGroupClass },
+            _react2.default.createElement(
+                'div',
+                { className: 'input-group-prepend' },
+                _react2.default.createElement(
+                    'span',
+                    { className: 'input-group-text' },
+                    _react2.default.createElement('i', { className: icon })
+                )
+            ),
+            _react2.default.createElement('input', _extends({
+                id: name,
+                name: name,
+                type: fieldType,
+                className: 'form-control ' + (!!error ? 'is-invalid' : ''),
+                value: (0, _formik.getIn)(values, name),
+                onChange: handleChange
+            }, attributes))
+        ) : _react2.default.createElement('input', _extends({
             id: name,
             name: name,
             type: fieldType,

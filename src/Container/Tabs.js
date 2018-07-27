@@ -51,7 +51,7 @@ class Tabs extends React.Component {
 
         return (
             <div className="card">
-                <div className="card-block">
+                <div className="card-body">
                     <div className="row">
                         <div className="col-sm-12 col-md-3">
                             <ul id="list-tab" className="list-group">
@@ -68,7 +68,7 @@ class Tabs extends React.Component {
                             </ul>
                         </div>
                         <div className="col-sm-12 col-md-9">
-                            <div className="tab-content">
+                            <div className="tab-content flutter-rjf-tab-content">
                                 { Object.keys(this.tabContent).map( (tabKey) =>
                                     <div
                                         key={ tabKey }
