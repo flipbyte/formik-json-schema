@@ -14,7 +14,7 @@ const Textarea = ({ config, formikProps }) => {
                 id={ name }
                 name={ name }
                 className={ 'form-control ' + (!!error ? 'is-invalid': '') }
-                value={ getIn(values, name) }
+                value={ getIn(values, name, '') }
                 onChange={ handleChange }
                 { ...attributes } />
 

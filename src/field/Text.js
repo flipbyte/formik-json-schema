@@ -34,7 +34,7 @@ const Text = ({ config, formikProps }) => {
                         name={ name }
                         type={ fieldType }
                         className={ 'form-control ' + (!!error ? 'is-invalid': '') }
-                        value={ getIn(values, name) }
+                        value={ getIn(values, name, '') }
                         onChange={ handleChange }
                         { ...attributes } />
                 </div> :
@@ -43,7 +43,7 @@ const Text = ({ config, formikProps }) => {
                     name={ name }
                     type={ fieldType }
                     className={ 'form-control ' + (!!error ? 'is-invalid': '') }
-                    value={ getIn(values, name) }
+                    value={ getIn(values, name, '') }
                     onChange={ handleChange }
                     { ...attributes } />
             }

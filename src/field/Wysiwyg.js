@@ -63,6 +63,8 @@ class Wysiwyg extends React.Component {
     }
 
     handleChange( content ) {
+        console.log(content);
+
         this.setValue(content);
     }
 
@@ -93,7 +95,7 @@ class Wysiwyg extends React.Component {
                     <div className={ 'col-md-12 ' + (!!error ? 'is-invalid': '') }>
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
-                            value={ getIn(values, name) }
+                            value={ getIn(values, name, '') }
                             className={ (!!error ? 'is-invalid': '') }
                             onChange={ (content) =>  this.handleChange(content) }
                             { ...this.toolbarOptions }
@@ -104,7 +106,7 @@ class Wysiwyg extends React.Component {
                                 id={ 'ql-show-html-' + name }
                                 className="form-control"
                                 rows="10"
-                                value={ getIn(values, name) }
+                                value={ getIn(values, name, '') }
                                 onChange={ (event) => this.handleChange(event.target.value) } />
                         }
                         { !!error && (

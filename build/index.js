@@ -15472,7 +15472,7 @@ var Text = function Text(_ref) {
                 name: name,
                 type: fieldType,
                 className: 'form-control ' + (!!error ? 'is-invalid' : ''),
-                value: (0, _formik.getIn)(values, name),
+                value: (0, _formik.getIn)(values, name, ''),
                 onChange: handleChange
             }, attributes))
         ) : _react2.default.createElement('input', _extends({
@@ -15480,7 +15480,7 @@ var Text = function Text(_ref) {
             name: name,
             type: fieldType,
             className: 'form-control ' + (!!error ? 'is-invalid' : ''),
-            value: (0, _formik.getIn)(values, name),
+            value: (0, _formik.getIn)(values, name, ''),
             onChange: handleChange
         }, attributes)),
         !!error && _react2.default.createElement(
@@ -15541,7 +15541,7 @@ var Textarea = function Textarea(_ref) {
             id: name,
             name: name,
             className: 'form-control ' + (!!error ? 'is-invalid' : ''),
-            value: (0, _formik.getIn)(values, name),
+            value: (0, _formik.getIn)(values, name, ''),
             onChange: handleChange
         }, attributes)),
         !!error && _react2.default.createElement(
@@ -15642,6 +15642,8 @@ var Wysiwyg = function (_React$Component) {
     }, {
         key: 'handleChange',
         value: function handleChange(content) {
+            console.log(content);
+
             this.setValue(content);
         }
     }, {
@@ -15700,7 +15702,7 @@ var Wysiwyg = function (_React$Component) {
                         { className: 'col-md-12 ' + (!!error ? 'is-invalid' : '') },
                         !this.state.showHtml && _react2.default.createElement(_reactQuill2.default, _extends({
                             id: name,
-                            value: (0, _formik.getIn)(values, name),
+                            value: (0, _formik.getIn)(values, name, ''),
                             className: !!error ? 'is-invalid' : '',
                             onChange: function onChange(content) {
                                 return _this2.handleChange(content);
@@ -15710,7 +15712,7 @@ var Wysiwyg = function (_React$Component) {
                             id: 'ql-show-html-' + name,
                             className: 'form-control',
                             rows: '10',
-                            value: (0, _formik.getIn)(values, name),
+                            value: (0, _formik.getIn)(values, name, ''),
                             onChange: function onChange(event) {
                                 return _this2.handleChange(event.target.value);
                             } }),
