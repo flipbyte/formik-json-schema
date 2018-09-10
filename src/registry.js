@@ -19,6 +19,10 @@ class Registry {
     }
 }
 
+const configRegistry = new Registry();
+export const setConfig = configRegistry.register.bind(configRegistry);
+export const getConfig = configRegistry.get.bind(configRegistry);
+
 const fieldRegistry = new Registry();
 export const registerField = fieldRegistry.register.bind(fieldRegistry);
 

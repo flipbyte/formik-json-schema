@@ -63,8 +63,6 @@ class Wysiwyg extends React.Component {
     }
 
     handleChange( content ) {
-        console.log(content);
-
         this.setValue(content);
     }
 

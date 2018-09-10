@@ -43,6 +43,9 @@
     "style-loader": "^0.13.2"
   },
   "dependencies": {
+    "object-assign-deep": "^0.4.0",
+    "path-parser": "^4.2.0",
+    "qs": "^6.5.2",
     "react-quill": "^1.2.7",
     "react-select": "^1.2.1",
     "webpack": "^2.6.1"

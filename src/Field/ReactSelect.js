@@ -5,7 +5,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
 const ReactSelect = ({ config, formikProps }) => {
-    const { name, label, options, multi } = config;
+    const { name, label, options, defaultValue, multi } = config;
     const { values, errors, touched, setFieldValue, setFieldTouched } = formikProps;
 
     const error = getIn(errors, name);
@@ -20,9 +20,9 @@ const ReactSelect = ({ config, formikProps }) => {
                 options={ options }
                 className={ (!!error ? 'is-invalid': '') }
                 multi={ multi }
-                onChange={ (value) => setFieldValue(name, value) }
-                onBlur={ (value) => setFieldTouched(name, value) }
-                value={ getIn(values, name) }
+                onChange={ (value) => setFieldValue(name, value.value) }
+                onBlur={ (value) => setFieldTouched(name, value.value) }
+                value={ getIn(values, name, defaultValue) }
             />
             { !!error && (
                 <div className="invalid-feedback">
