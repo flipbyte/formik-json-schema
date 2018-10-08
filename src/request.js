@@ -1,6 +1,6 @@
 import qs from 'qs';
 import Path from 'path-parser';
-import objectAssignDeep from 'object-assign-deep';
+import _ from 'lodash';
 
 const request = ( url ) => ( route = '', params = {}, method = 'get', headers = {}, responseType = 'json' ) => {
     const defaultHeaders = {
@@ -8,7 +8,7 @@ const request = ( url ) => ( route = '', params = {}, method = 'get', headers = 
     };
 
     method = method.toLowerCase();
-    headers = objectAssignDeep({}, defaultHeaders, headers);
+    headers = _.merge({}, defaultHeaders, headers);
 
     let request = { route, params, method, headers, responseType };
     request.getRoute = () => {

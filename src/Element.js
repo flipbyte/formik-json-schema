@@ -24,6 +24,12 @@ class Element extends Component {
             this.setState({ hasMounted: canUpdate });
         }
 
+        if(nextProps.formikProps.initialValues !== this.props.formikProps.initialValues
+            && this.state.hasLoadedData
+        ) {
+            this.loadData(name, loadData, formikProps);
+        }
+
         if( this.state.hasMounted && !this.state.hasLoadedData ) {
             this.loadData(name, loadData, formikProps);
         }

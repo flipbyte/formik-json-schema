@@ -1,5 +1,6 @@
 var path = require('path');
 module.exports = {
+  // mode: 'production',
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -33,12 +34,14 @@ module.exports = {
       alias: {
           'react': path.resolve(__dirname, './node_modules/react') ,
           'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
-          'formik': path.resolve(__dirname, './node_modules/formik')
+          'formik': path.resolve(__dirname, './node_modules/formik'),
+          'lodash': path.resolve(__dirname, './node_modules/lodash'),
       }
   },
   externals: {
     'react': 'commonjs react',
     'react-dom': 'commonjs react-dom',
-    'formik': 'commonjs formik'
+    'formik': 'commonjs formik',
+    'lodash': 'commonjs lodash'
   }
 };

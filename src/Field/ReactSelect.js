@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { getIn } from 'formik';
 
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 
 const ReactSelect = ({ config, formikProps }) => {
     const { name, label, options, defaultValue, multi } = config;
@@ -10,6 +9,9 @@ const ReactSelect = ({ config, formikProps }) => {
 
     const error = getIn(errors, name);
     const blur = getIn(touched, name);
+
+    const selectedValue = getIn(values, name, defaultValue);
+    const selectedOption = options.filter(option => option.value == selectedValue);
 
     return (
         <div className="form-group">
@@ -22,7 +24,7 @@ const ReactSelect = ({ config, formikProps }) => {
                 multi={ multi }
                 onChange={ (value) => setFieldValue(name, value.value) }
                 onBlur={ (value) => setFieldTouched(name, value.value) }
-                value={ getIn(values, name, defaultValue) }
+                value={ selectedOption }
             />
             { !!error && (
                 <div className="invalid-feedback">
