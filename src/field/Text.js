@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getIn } from 'formik';
+import _ from 'lodash';
 
 const Text = ({ config, formikProps }) => {
     const {
@@ -16,7 +16,7 @@ const Text = ({ config, formikProps }) => {
     } = config;
 
     const { values, errors, setFieldValue, handleChange } = formikProps;
-    const error = getIn(errors, name);
+    const error = _.get(errors, name, false);
     const isInputGroup = icon ? true : false;
 
     return (
@@ -34,7 +34,7 @@ const Text = ({ config, formikProps }) => {
                         name={ name }
                         type={ fieldType }
                         className={ 'form-control ' + (!!error ? 'is-invalid': '') }
-                        value={ getIn(values, name, '') }
+                        value={ _.get(values, name, '') }
                         onChange={ handleChange }
                         { ...attributes } />
                 </div> :
@@ -43,7 +43,7 @@ const Text = ({ config, formikProps }) => {
                     name={ name }
                     type={ fieldType }
                     className={ 'form-control ' + (!!error ? 'is-invalid': '') }
-                    value={ getIn(values, name, '') }
+                    value={ _.get(values, name, '') }
                     onChange={ handleChange }
                     { ...attributes } />
             }

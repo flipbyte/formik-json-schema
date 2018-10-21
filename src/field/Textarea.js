@@ -1,11 +1,11 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { getIn } from 'formik';
 
 const Textarea = ({ config, formikProps }) => {
     const { name, label, type, attributes, rows } = config;
     const { values, errors, handleChange } = formikProps;
 
-    const error = getIn(errors, name);
+    const error = _.get(errors, name, false);
 
     return (
         <div className="form-group">
@@ -14,7 +14,7 @@ const Textarea = ({ config, formikProps }) => {
                 id={ name }
                 name={ name }
                 className={ 'form-control ' + (!!error ? 'is-invalid': '') }
-                value={ getIn(values, name, '') }
+                value={ _.get(values, name, '') }
                 onChange={ handleChange }
                 { ...attributes } />
 

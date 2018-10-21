@@ -36,12 +36,14 @@ module.exports = {
           'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
           'formik': path.resolve(__dirname, './node_modules/formik'),
           'lodash': path.resolve(__dirname, './node_modules/lodash'),
+          'validatorjs': path.resolve(__dirname, './node_modules/validatorjs'),
       }
   },
   externals: {
     'react': 'commonjs react',
     'react-dom': 'commonjs react-dom',
     'formik': 'commonjs formik',
-    'lodash': 'commonjs lodash'
+    'lodash': 'commonjs lodash',
+    'validatorjs': 'commonjs validatorjs'
   }
 };

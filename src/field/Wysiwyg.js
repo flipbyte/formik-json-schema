@@ -1,6 +1,5 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { getIn } from 'formik';
-
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -76,7 +75,7 @@ class Wysiwyg extends React.Component {
             formikProps: { values, errors }
         } = this.props;
 
-        const error = getIn(errors, name);
+        const error = _.get(errors, name, false);
 
         return (
             <div className="form-group">
@@ -93,7 +92,7 @@ class Wysiwyg extends React.Component {
                     <div className={ 'col-md-12 ' + (!!error ? 'is-invalid': '') }>
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
-                            value={ getIn(values, name, '') }
+                            value={ _.get(values, name, '') }
                             className={ (!!error ? 'is-invalid': '') }
                             onChange={ (content) =>  this.handleChange(content) }
                             { ...this.toolbarOptions }
@@ -104,7 +103,7 @@ class Wysiwyg extends React.Component {
                                 id={ 'ql-show-html-' + name }
                                 className="form-control"
                                 rows="10"
-                                value={ getIn(values, name, '') }
+                                value={ _.get(values, name, '') }
                                 onChange={ (event) => this.handleChange(event.target.value) } />
                         }
                         { !!error && (

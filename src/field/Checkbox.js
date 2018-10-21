@@ -1,11 +1,11 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { getIn } from 'formik';
 
 const Checkbox = ({ config, formikProps }) => {
     const { name, label, type, attributes, description } = config;
     const { values, errors, handleChange } = formikProps;
 
-    const error = getIn(errors, name);
+    const error = _.get(errors, name, false);
 
     return (
         <div className="form-group">
@@ -17,7 +17,7 @@ const Checkbox = ({ config, formikProps }) => {
                         name={ name }
                         className={ 'form-check-input ' + (!!error ? 'is-invalid': '') }
                         type="checkbox"
-                        checked={ getIn(values, name) }
+                        checked={ _.get(values, name) }
                         onChange={ handleChange }
                         { ...attributes } /> { description }
                 </label>
