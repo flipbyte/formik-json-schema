@@ -11,8 +11,6 @@ const ReactSelect = ({ config, formikProps }) => {
     const selectedValue = _.get(values, name, defaultValue);
     const selectedOption = options.filter(option => option.value == selectedValue);
 
-    // setFieldValue(name, selectedValue);
-
     return (
         <div className="form-group">
             { !!label && <label>{ label }</label> }
@@ -24,6 +22,7 @@ const ReactSelect = ({ config, formikProps }) => {
                 multi={ multi }
                 onChange={ (value) => setFieldValue(name, value.value) }
                 onBlur={ (value) => setFieldTouched(name, value.value) }
+                value={ selectedOption }
             />
             { !!error && (
                 <div className="invalid-feedback">

@@ -17053,8 +17053,6 @@ var ReactSelect = function ReactSelect(_ref) {
         return option.value == selectedValue;
     });
 
-    // setFieldValue(name, selectedValue);
-
     return _react2.default.createElement(
         'div',
         { className: 'form-group' },
@@ -17074,7 +17072,8 @@ var ReactSelect = function ReactSelect(_ref) {
             },
             onBlur: function onBlur(value) {
                 return setFieldTouched(name, value.value);
-            }
+            },
+            value: selectedOption
         }),
         !!error && _react2.default.createElement(
             'div',
