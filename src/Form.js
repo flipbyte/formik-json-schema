@@ -23,6 +23,8 @@ const Form = ({
     setConfig('apiUrl', apiUrl);
     return <Formik
         { ...props }
+        validateOnBlur={ false }
+        validateOnChange={ false }
         validate={ validate.bind(this, validation ? validation : {}) }
         render={ render.bind(this, form) } />
 }

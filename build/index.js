@@ -15491,6 +15491,8 @@ var Form = function Form(_ref) {
 
     (0, _registry.setConfig)('apiUrl', apiUrl);
     return _react2.default.createElement(_formik.Formik, _extends({}, props, {
+        validateOnBlur: false,
+        validateOnChange: false,
         validate: validate.bind(undefined, validation ? validation : {}),
         render: _registry.render.bind(undefined, form) }));
 };
