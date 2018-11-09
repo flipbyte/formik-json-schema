@@ -17033,12 +17033,24 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var prepareOptions = function prepareOptions(options) {
+    return _lodash2.default.reduce(options, function (result, value) {
+        if (!_lodash2.default.isObject(value)) {
+            result.push({ value: value, label: value });
+        } else {
+            result.push(value);
+        }
+
+        return result;
+    }, []);
+};
+
 var ReactSelect = function ReactSelect(_ref) {
     var config = _ref.config,
         formikProps = _ref.formikProps;
     var name = config.name,
         label = config.label,
-        options = config.options,
+        initialOptions = config.options,
         defaultValue = config.defaultValue,
         multi = config.multi;
     var values = formikProps.values,
@@ -17047,6 +17059,8 @@ var ReactSelect = function ReactSelect(_ref) {
         setFieldValue = formikProps.setFieldValue,
         setFieldTouched = formikProps.setFieldTouched;
 
+
+    var options = prepareOptions(initialOptions);
 
     var error = _lodash2.default.get(errors, name, false);
 

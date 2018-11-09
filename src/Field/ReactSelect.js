@@ -2,9 +2,22 @@ import _ from 'lodash';
 import Select from 'react-select';
 import React, { Component } from 'react';
 
+const prepareOptions = ( options ) =>
+    _.reduce(options, (result, value) => {
+        if(!_.isObject(value)) {
+            result.push({ value: value, label: value })
+        } else {
+            result.push(value);
+        }
+
+        return result;
+    }, [])
+
 const ReactSelect = ({ config, formikProps }) => {
-    const { name, label, options, defaultValue, multi } = config;
+    const { name, label, options: initialOptions, defaultValue, multi } = config;
     const { values, errors, touched, setFieldValue, setFieldTouched } = formikProps;
+
+    const options = prepareOptions(initialOptions);
 
     const error = _.get(errors, name, false);
 
