@@ -16250,7 +16250,7 @@ var EditableGrid = function EditableGrid(_ref) {
                     null,
                     !!buttons.add && _react2.default.createElement(
                         'td',
-                        { colspan: _lodash2.default.size(header) },
+                        { colSpan: _lodash2.default.size(header) },
                         _react2.default.createElement(
                             'button',
                             {
