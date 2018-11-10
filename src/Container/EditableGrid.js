@@ -62,7 +62,7 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                 <tfoot>
                     <tr>
                         { !!buttons.add &&
-                            <td colspan={ _.size(header) }>
+                            <td colSpan={ _.size(header) }>
                                 <button
                                     type="button"
                                     className="btn btn-secondary"
