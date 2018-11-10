@@ -1,7 +1,6 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { render as renderElement, getConfig } from './registry';
-import { getIn } from 'formik';
-import request from './request';
 
 class Element extends Component {
     constructor( props ) {
@@ -24,6 +23,10 @@ class Element extends Component {
             this.setState({ hasMounted: canUpdate });
         }
 
+        if(!_.isObject(loadData)) {
+            return;
+        }
+
         if(nextProps.formikProps.initialValues !== this.props.formikProps.initialValues
             && this.state.hasLoadedData
         ) {
@@ -35,37 +38,29 @@ class Element extends Component {
         }
     }
 
-    loadData( name, config, formikProps ) {
+    loadData( name, { route, handler, params, resultPath }, formikProps ) {
         var self = this;
-        if(!config || !config.route) {
-            return false;
-        }
 
         const { initialValues, setFieldValue } = formikProps;
 
-        var params = {};
-        for( var key in config.params ) {
-            let value = getIn(initialValues, config.params[key]);
+        var processedParams = _.reduce(params, (processedParams, param, key) => {
+            let value = _.get(initialValues, config.params[key]);
             if(!value) {
-                return false;
+                return;
             }
 
-            params[key] = value;
-        }
+            processedParams[key] = value;
+        }, {})
 
-        var loadRequest = request(getConfig('apiUrl'))(config.route, params);
-        fetch(loadRequest.getUrl(), {
-            method: loadRequest.method,
-            headers: loadRequest.headers,
-        }).then(
-            response => response.json()
-        ).then( response => {
-            var value = getIn(response, config.resultPath);
-            if(value) {
-                self.setState({ hasLoadedData: true });
-                setFieldValue(name, value);
+        handler.get(route, processedParams).subscribe(
+            response => {
+                var value = _.get(response, resultPath, '');
+                if(value) {
+                    self.setState({ hasLoadedData: true });
+                    setFieldValue(name, value);
+                }
             }
-        });
+        )
     }
 
     // Keep this code to test whether components are renderer even when

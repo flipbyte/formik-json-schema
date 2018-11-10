@@ -17,10 +17,8 @@ const validate = ( validationSchema = {}, values ) => {
 
 const Form = ({
     schema: { validation, form },
-    apiUrl,
     ...props
 }) => {
-    setConfig('apiUrl', apiUrl);
     return <Formik
         { ...props }
         validateOnBlur={ false }
@@ -28,8 +26,5 @@ const Form = ({
         validate={ validate.bind(this, validation ? validation : {}) }
         render={ render.bind(this, form) } />
 }
-
-/*const Form = ({ schema, ...formikProps }) =>
-    withFormik({ ...formikProps })(render(schema, formikProps));*/
 
 export default Form;

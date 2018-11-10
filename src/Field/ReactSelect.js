@@ -31,7 +31,7 @@ const ReactSelect = ({ config, formikProps }) => {
                 id={ name }
                 name={ name }
                 options={ options }
-                className={ (!!error ? 'is-invalid': '') }
+                className={ !!error ? 'is-invalid': '' }
                 multi={ multi }
                 onChange={ (value) => setFieldValue(name, value.value) }
                 onBlur={ (value) => setFieldTouched(name, value.value) }
