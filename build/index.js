@@ -358,19 +358,41 @@ var Element = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Element.__proto__ || Object.getPrototypeOf(Element)).call(this, props));
 
         _this.state = {
+            hasLoadedConfig: false,
             hasLoadedData: _this.props.config.loadData ? false : true,
             hasMounted: _this.props.update !== false
         };
+
+        _this.loadDataAfter = _this.loadDataAfter.bind(_this);
+        _this.loadConfigAfter = _this.loadConfigAfter.bind(_this);
         return _this;
     }
 
     _createClass(Element, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _props = this.props,
+                configSource = _props.config.configSource,
+                formikProps = _props.formikProps;
+
+
+            if (!this.state.hasLoadedConfig && configSource && _lodash2.default.isFunction(configSource)) {
+                configSource(formikProps, this.props.config).then(this.loadConfigAfter).catch(function (err) {});
+            }
+        }
+    }, {
+        key: 'loadConfigAfter',
+        value: function loadConfigAfter(config) {
+            var fullConfig = _lodash2.default.assign({}, this.props.config, config);
+            this.setState({ hasLoadedConfig: true, loadedConfig: fullConfig });
+        }
+    }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
             var update = nextProps.update,
                 _nextProps$config = nextProps.config,
                 name = _nextProps$config.name,
-                loadData = _nextProps$config.loadData,
+                dataSource = _nextProps$config.dataSource,
                 formikProps = nextProps.formikProps;
 
 
@@ -383,84 +405,30 @@ var Element = function (_Component) {
                 this.setState({ hasMounted: canUpdate });
             }
 
-            if (!_lodash2.default.isObject(loadData)) {
-                return;
-            }
+            if (dataSource && _lodash2.default.isFunction(dataSource)) {
+                if (formikProps.initialValues !== this.props.formikProps.initialValues && this.state.hasLoadedData) {
+                    dataSource(formikProps, nextProps.config).then(this.loadDataAfter).catch(function (err) {});
+                }
 
-            if (nextProps.formikProps.initialValues !== this.props.formikProps.initialValues && this.state.hasLoadedData) {
-                this.loadData(name, loadData, formikProps);
-            }
-
-            if (this.state.hasMounted && !this.state.hasLoadedData) {
-                this.loadData(name, loadData, formikProps);
+                if (this.state.hasMounted && !this.state.hasLoadedData) {
+                    dataSource(formikProps, nextProps.config).then(this.loadDataAfter).catch(function (err) {});
+                }
             }
         }
     }, {
-        key: 'loadData',
-        value: function loadData(name, _ref, formikProps) {
-            var route = _ref.route,
-                handler = _ref.handler,
-                params = _ref.params,
-                resultPath = _ref.resultPath;
-
-            var self = this;
-
-            var initialValues = formikProps.initialValues,
-                setFieldValue = formikProps.setFieldValue;
-
-
-            var processedParams = _lodash2.default.reduce(params, function (processedParams, param, key) {
-                var value = _lodash2.default.get(initialValues, config.params[key]);
-                if (!value) {
-                    return;
-                }
-
-                processedParams[key] = value;
-            }, {});
-
-            handler.get(route, processedParams).subscribe(function (response) {
-                var value = _lodash2.default.get(response, resultPath, '');
-                if (value) {
-                    self.setState({ hasLoadedData: true });
-                    setFieldValue(name, value);
-                }
-            });
+        key: 'loadDataAfter',
+        value: function loadDataAfter(value) {
+            this.setState({ hasLoadedData: true });
         }
-
-        // Keep this code to test whether components are renderer even when
-        // they are collapsed. This was an earlier version of the code and it has
-        // now been moved to the above componentWillReceiveProps function
-        // shouldComponentUpdate( nextProps, nextState ) {
-        //     const { update, config: { name, loadData }, formikProps }  = nextProps;
-        //
-        //     const canUpdate = update !== false;
-        //     if( false === canUpdate ) {
-        //         return false;
-        //     }
-        //
-        //     if( !this.state.hasMounted ) {
-        //         this.setState({ hasMounted: canUpdate });
-        //     }
-        //
-        //     if( this.state.hasMounted && !this.state.hasLoadedData ) {
-        //         this.loadData(name, loadData, formikProps);
-        //     }
-        //
-        //     if(this.state.hasLoadedData && this.state.value) {
-        //         formikProps.setFieldValue(name, this.state.value);
-        //     }
-        //
-        //     return true;
-        // }
-
     }, {
         key: 'render',
         value: function render() {
-            var _props = this.props,
-                config = _props.config,
-                formikProps = _props.formikProps,
-                rest = _objectWithoutProperties(_props, ['config', 'formikProps']);
+            var _props2 = this.props,
+                initialConfig = _props2.config,
+                formikProps = _props2.formikProps,
+                rest = _objectWithoutProperties(_props2, ['config', 'formikProps']);
 
+            var config = this.state.loadedConfig || initialConfig;
             return this.state.hasMounted && (0, _registry.render)(config, formikProps, rest);
         }
     }]);
@@ -16779,6 +16747,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _lodash = __webpack_require__(4);
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -16795,7 +16765,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var prepareOptions = function prepareOptions(options) {
     return _lodash2.default.reduce(options, function (result, value) {
-        if (!_lodash2.default.isObject(value)) {
+        if (!_lodash2.default.isObject(value) && !_lodash2.default.isEmpty(value)) {
             result.push({ value: value, label: value });
         } else {
             result.push(value);
@@ -16812,7 +16782,8 @@ var ReactSelect = function ReactSelect(_ref) {
         label = config.label,
         initialOptions = config.options,
         defaultValue = config.defaultValue,
-        multi = config.multi;
+        multi = config.multi,
+        noOptionsMessage = config.noOptionsMessage;
     var values = formikProps.values,
         errors = formikProps.errors,
         touched = formikProps.touched,
@@ -16821,13 +16792,17 @@ var ReactSelect = function ReactSelect(_ref) {
 
 
     var options = prepareOptions(initialOptions);
-
     var error = _lodash2.default.get(errors, name, false);
 
     var selectedValue = _lodash2.default.get(values, name, defaultValue);
     var selectedOption = options.filter(function (option) {
         return option.value == selectedValue;
     });
+
+    var conditionalProps = {};
+    if (noOptionsMessage) {
+        conditionalProps[noOptionsMessage] = noOptionsMessage;
+    }
 
     return _react2.default.createElement(
         'div',
@@ -16837,7 +16812,7 @@ var ReactSelect = function ReactSelect(_ref) {
             null,
             label
         ),
-        _react2.default.createElement(_reactSelect2.default, {
+        _react2.default.createElement(_reactSelect2.default, _extends({
             id: name,
             name: name,
             options: options,
@@ -16849,8 +16824,9 @@ var ReactSelect = function ReactSelect(_ref) {
             onBlur: function onBlur(value) {
                 return setFieldTouched(name, value.value);
             },
-            value: selectedOption
-        }),
+            value: selectedOption,
+            noOptionsMessage: noOptionsMessage
+        }, conditionalProps)),
         !!error && _react2.default.createElement(
             'div',
             { className: 'invalid-feedback' },

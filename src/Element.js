@@ -6,13 +6,32 @@ class Element extends Component {
     constructor( props ) {
         super(props);
         this.state = {
+            hasLoadedConfig: false,
             hasLoadedData: this.props.config.loadData ? false : true,
             hasMounted: this.props.update !== false
         };
+
+        this.loadDataAfter = this.loadDataAfter.bind(this);
+        this.loadConfigAfter = this.loadConfigAfter.bind(this);
+    }
+
+    componentDidMount() {
+        const { config: { configSource }, formikProps }  = this.props;
+
+        if( !this.state.hasLoadedConfig && configSource && _.isFunction(configSource) ) {
+            configSource(formikProps, this.props.config)
+                .then(this.loadConfigAfter)
+                .catch((err) => {});
+        }
+    }
+
+    loadConfigAfter(config) {
+        let fullConfig = _.assign({}, this.props.config, config);
+        this.setState({ hasLoadedConfig: true, loadedConfig: fullConfig });
     }
 
     componentWillReceiveProps( nextProps ) {
-        const { update, config: { name, loadData }, formikProps }  = nextProps;
+        const { update, config: { name, dataSource }, formikProps }  = nextProps;
 
         if( !this.state.hasMounted ) {
             const canUpdate = update !== false;
@@ -23,74 +42,28 @@ class Element extends Component {
             this.setState({ hasMounted: canUpdate });
         }
 
-        if(!_.isObject(loadData)) {
-            return;
-        }
+        if(dataSource && _.isFunction(dataSource)) {
+            if(formikProps.initialValues !== this.props.formikProps.initialValues && this.state.hasLoadedData) {
+                dataSource(formikProps, nextProps.config)
+                    .then(this.loadDataAfter)
+                    .catch((err) => {});
+            }
 
-        if(nextProps.formikProps.initialValues !== this.props.formikProps.initialValues
-            && this.state.hasLoadedData
-        ) {
-            this.loadData(name, loadData, formikProps);
-        }
-
-        if( this.state.hasMounted && !this.state.hasLoadedData ) {
-            this.loadData(name, loadData, formikProps);
+            if( this.state.hasMounted && !this.state.hasLoadedData ) {
+                dataSource(formikProps, nextProps.config)
+                    .then(this.loadDataAfter)
+                    .catch((err) => {});
+            }
         }
     }
 
-    loadData( name, { route, handler, params, resultPath }, formikProps ) {
-        var self = this;
-
-        const { initialValues, setFieldValue } = formikProps;
-
-        var processedParams = _.reduce(params, (processedParams, param, key) => {
-            let value = _.get(initialValues, config.params[key]);
-            if(!value) {
-                return;
-            }
-
-            processedParams[key] = value;
-        }, {})
-
-        handler.get(route, processedParams).subscribe(
-            response => {
-                var value = _.get(response, resultPath, '');
-                if(value) {
-                    self.setState({ hasLoadedData: true });
-                    setFieldValue(name, value);
-                }
-            }
-        )
+    loadDataAfter(value) {
+        this.setState({ hasLoadedData: true });
     }
-
-    // Keep this code to test whether components are renderer even when
-    // they are collapsed. This was an earlier version of the code and it has
-    // now been moved to the above componentWillReceiveProps function
-    // shouldComponentUpdate( nextProps, nextState ) {
-    //     const { update, config: { name, loadData }, formikProps }  = nextProps;
-    //
-    //     const canUpdate = update !== false;
-    //     if( false === canUpdate ) {
-    //         return false;
-    //     }
-    //
-    //     if( !this.state.hasMounted ) {
-    //         this.setState({ hasMounted: canUpdate });
-    //     }
-    //
-    //     if( this.state.hasMounted && !this.state.hasLoadedData ) {
-    //         this.loadData(name, loadData, formikProps);
-    //     }
-    //
-    //     if(this.state.hasLoadedData && this.state.value) {
-    //         formikProps.setFieldValue(name, this.state.value);
-    //     }
-    //
-    //     return true;
-    // }
 
     render() {
-        const { config, formikProps, ...rest } = this.props;
+        const { config: initialConfig, formikProps, ...rest } = this.props;
+        const config = this.state.loadedConfig || initialConfig;
         return this.state.hasMounted && renderElement(config, formikProps, rest);
     }
 }
