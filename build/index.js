@@ -265,6 +265,12 @@ process.umask = function() { return 0; };
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var freeGlobal = __webpack_require__(45);
@@ -279,7 +285,7 @@ module.exports = root;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /**
@@ -311,12 +317,6 @@ module.exports = isArray;
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -329,7 +329,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _lodash = __webpack_require__(4);
+var _lodash = __webpack_require__(2);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -881,7 +881,7 @@ module.exports = ListCache;
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(2);
+var root = __webpack_require__(3);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -1280,7 +1280,7 @@ module.exports = warning;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(6),
-    root = __webpack_require__(2);
+    root = __webpack_require__(3);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -1367,7 +1367,7 @@ module.exports = baseIsEqual;
 var baseMatches = __webpack_require__(123),
     baseMatchesProperty = __webpack_require__(124),
     identity = __webpack_require__(182),
-    isArray = __webpack_require__(3),
+    isArray = __webpack_require__(4),
     property = __webpack_require__(184);
 
 /**
@@ -1432,7 +1432,7 @@ module.exports = isIndex;
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(3),
+var isArray = __webpack_require__(4),
     isSymbol = __webpack_require__(22);
 
 /** Used to match property names within property paths. */
@@ -1716,7 +1716,7 @@ module.exports = baseGet;
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(3),
+var isArray = __webpack_require__(4),
     isKey = __webpack_require__(34),
     stringToPath = __webpack_require__(178),
     toString = __webpack_require__(191);
@@ -2012,7 +2012,7 @@ module.exports = isArguments;
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(2),
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(3),
     stubFalse = __webpack_require__(187);
 
 /** Detect free variable `exports`. */
@@ -15164,7 +15164,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _lodash = __webpack_require__(4);
+var _lodash = __webpack_require__(2);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -16016,31 +16016,33 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(0);
+var _lodash = __webpack_require__(2);
 
-var _react2 = _interopRequireDefault(_react);
+var _lodash2 = _interopRequireDefault(_lodash);
 
 var _Element = __webpack_require__(5);
 
 var _Element2 = _interopRequireDefault(_Element);
 
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ButtonGroup = function ButtonGroup(_ref) {
-    var config = _ref.config,
+    var _ref$config = _ref.config,
+        title = _ref$config.title,
+        elements = _ref$config.elements,
         formikProps = _ref.formikProps;
-    var title = config.title,
-        elements = config.elements;
-
-
     return _react2.default.createElement(
         'div',
         { className: 'buttons-container clearfix' },
         _react2.default.createElement(
             'div',
             { className: 'btn-group d-flex justify-content-end' },
-            Object.keys(elements).map(function (key) {
-                return _react2.default.createElement(_Element2.default, { key: key, config: elements[key], formikProps: formikProps });
+            _lodash2.default.map(elements, function (element, key) {
+                return _react2.default.createElement(_Element2.default, { key: key, config: element, formikProps: formikProps });
             })
         )
     );
@@ -16059,28 +16061,30 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(0);
+var _lodash = __webpack_require__(2);
 
-var _react2 = _interopRequireDefault(_react);
+var _lodash2 = _interopRequireDefault(_lodash);
 
 var _Element = __webpack_require__(5);
 
 var _Element2 = _interopRequireDefault(_Element);
 
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Div = function Div(_ref) {
-    var config = _ref.config,
+    var _ref$config = _ref.config,
+        elements = _ref$config.elements,
+        htmlClass = _ref$config.htmlClass,
         formikProps = _ref.formikProps;
-    var elements = config.elements,
-        htmlClass = config.htmlClass;
-
-
     return _react2.default.createElement(
         'div',
         { className: htmlClass },
-        Object.keys(elements).map(function (key) {
-            return _react2.default.createElement(_Element2.default, { key: key, config: elements[key], formikProps: formikProps });
+        _lodash2.default.map(elements, function (element, key) {
+            return _react2.default.createElement(_Element2.default, { key: key, config: element, formikProps: formikProps });
         })
     );
 };
@@ -16098,7 +16102,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _lodash = __webpack_require__(4);
+var _lodash = __webpack_require__(2);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -16114,11 +16118,7 @@ var _Element2 = _interopRequireDefault(_Element);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var setNull = function setNull(obj) {
-    return Object.keys(obj).forEach(function (k) {
-        return obj[k] = '';
-    });
-};
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var EditableGrid = function EditableGrid(_ref) {
     var config = _ref.config,
@@ -16136,8 +16136,9 @@ var EditableGrid = function EditableGrid(_ref) {
         push = arrayActions.push;
 
 
-    var arrayFields = Object.assign({}, fields);
-    setNull(arrayFields);
+    var arrayFields = _lodash2.default.mapValues(_lodash2.default.assign({}, fields), function () {
+        return '';
+    });
 
     var arrayValues = (0, _formik.getIn)(values, fieldArrayName);
     var hasValue = arrayValues && arrayValues.length > 0;
@@ -16154,24 +16155,16 @@ var EditableGrid = function EditableGrid(_ref) {
                 _react2.default.createElement(
                     'tr',
                     null,
-                    _lodash2.default.map(header, function (item, key) {
-                        if (!_lodash2.default.isObject(item)) {
-                            return _react2.default.createElement(
-                                'th',
-                                { key: key },
-                                item
-                            );
-                        }
-
-                        var width = item.width,
-                            label = item.label;
-
+                    _lodash2.default.map(fields, function (_ref2, key) {
+                        var label = _ref2.label,
+                            width = _ref2.width;
                         return _react2.default.createElement(
                             'th',
                             { key: key, style: { width: width + 'px' } },
                             label
                         );
-                    })
+                    }),
+                    !!buttons.remove && _react2.default.createElement('th', null)
                 )
             ),
             _react2.default.createElement(
@@ -16181,9 +16174,14 @@ var EditableGrid = function EditableGrid(_ref) {
                     return _react2.default.createElement(
                         'tr',
                         { key: index },
-                        _lodash2.default.map(fields, function (field, key) {
-                            var element = Object.assign({}, field);
-                            element.name = fieldArrayName + '.' + index + '.' + field.name;
+                        _lodash2.default.map(fields, function (_ref3, key) {
+                            var label = _ref3.label,
+                                name = _ref3.name,
+                                width = _ref3.width,
+                                colProps = _objectWithoutProperties(_ref3, ['label', 'name', 'width']);
+
+                            var element = _lodash2.default.assign({}, colProps);
+                            element.name = fieldArrayName + '.' + index + '.' + name;
 
                             return _react2.default.createElement(
                                 'td',
@@ -16201,9 +16199,7 @@ var EditableGrid = function EditableGrid(_ref) {
                                 {
                                     type: 'button',
                                     className: 'btn btn-danger',
-                                    onClick: function onClick() {
-                                        return remove(index);
-                                    } },
+                                    onClick: remove.bind(undefined, index) },
                                 buttons.remove
                             )
                         )
@@ -16218,7 +16214,7 @@ var EditableGrid = function EditableGrid(_ref) {
                     null,
                     !!buttons.add && _react2.default.createElement(
                         'td',
-                        { colSpan: _lodash2.default.size(header) },
+                        { colSpan: _lodash2.default.size(fields) + 1 },
                         _react2.default.createElement(
                             'button',
                             {
@@ -16249,13 +16245,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(0);
+var _lodash = __webpack_require__(2);
 
-var _react2 = _interopRequireDefault(_react);
+var _lodash2 = _interopRequireDefault(_lodash);
 
 var _Element = __webpack_require__(5);
 
 var _Element2 = _interopRequireDefault(_Element);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16327,10 +16327,10 @@ var Fieldset = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'card-body' },
-                        Object.keys(elements).map(function (key) {
+                        _lodash2.default.map(elements, function (element, key) {
                             return _react2.default.createElement(_Element2.default, {
                                 key: key,
-                                config: elements[key],
+                                config: element,
                                 formikProps: formikProps,
                                 update: !_this2.state.collapsed });
                         })
@@ -16366,13 +16366,17 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(0);
+var _lodash = __webpack_require__(2);
 
-var _react2 = _interopRequireDefault(_react);
+var _lodash2 = _interopRequireDefault(_lodash);
 
 var _Element = __webpack_require__(5);
 
 var _Element2 = _interopRequireDefault(_Element);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16383,11 +16387,12 @@ var Form = function Form(_ref) {
     var handleSubmit = formikProps.handleSubmit,
         handleReset = formikProps.handleReset;
 
+
     return _react2.default.createElement(
         'form',
         { className: 'form-horizontal', onSubmit: handleSubmit, onReset: handleReset },
-        Object.keys(elements).map(function (key) {
-            return _react2.default.createElement(_Element2.default, { key: key, config: elements[key], formikProps: formikProps });
+        _lodash2.default.map(elements, function (element, key) {
+            return _react2.default.createElement(_Element2.default, { key: key, config: element, formikProps: formikProps });
         })
     );
 };
@@ -16407,13 +16412,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(0);
+var _lodash = __webpack_require__(2);
 
-var _react2 = _interopRequireDefault(_react);
+var _lodash2 = _interopRequireDefault(_lodash);
 
 var _Element = __webpack_require__(5);
 
 var _Element2 = _interopRequireDefault(_Element);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16436,6 +16445,8 @@ var Tabs = function (_React$Component) {
         _this.state = {
             activeTab: _this.defaultActiveTab
         };
+
+        _this.toggle = _this.toggle.bind(_this);
         return _this;
     }
 
@@ -16448,11 +16459,10 @@ var Tabs = function (_React$Component) {
             this.tabContent = {};
             this.defaultActiveTab = '';
 
-            Object.keys(tabs).map(function (key) {
-                var _tabs$key = tabs[key],
-                    label = _tabs$key.label,
-                    elements = _tabs$key.elements,
-                    active = _tabs$key.active;
+            _lodash2.default.map(tabs, function (tab, key) {
+                var label = tab.label,
+                    elements = tab.elements,
+                    active = tab.active;
 
 
                 _this2.tabs[key] = label;
@@ -16461,7 +16471,7 @@ var Tabs = function (_React$Component) {
             });
 
             if (!this.defaultActiveTab) {
-                this.defaultActiveTab = Object.keys(this.tabs)[0];
+                this.defaultActiveTab = _lodash2.default.first(_lodash2.default.keys(this.tabs));
             }
         }
     }, {
@@ -16500,16 +16510,14 @@ var Tabs = function (_React$Component) {
                             _react2.default.createElement(
                                 'ul',
                                 { id: 'list-tab', className: 'list-group' },
-                                Object.keys(this.tabs).map(function (key) {
+                                _lodash2.default.map(this.tabs, function (tab, key) {
                                     return _react2.default.createElement(
                                         'li',
                                         {
                                             key: key,
                                             className: 'list-group-item-action list-group-item ' + (_this3.state.activeTab == key ? 'active' : ''),
-                                            onClick: function onClick() {
-                                                return _this3.toggle(key);
-                                            } },
-                                        _this3.tabs[key]
+                                            onClick: _this3.toggle.bind(null, key) },
+                                        tab
                                     );
                                 })
                             )
@@ -16520,16 +16528,16 @@ var Tabs = function (_React$Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'tab-content flutter-rjf-tab-content' },
-                                Object.keys(this.tabContent).map(function (tabKey) {
+                                _lodash2.default.map(this.tabContent, function (tabContent, tabKey) {
                                     return _react2.default.createElement(
                                         'div',
                                         {
                                             key: tabKey,
                                             className: 'tab-pane ' + (_this3.state.activeTab == tabKey ? 'active' : '') },
-                                        Object.keys(_this3.tabContent[tabKey]).map(function (key) {
+                                        _lodash2.default.map(tabContent, function (content, key) {
                                             return _react2.default.createElement(_Element2.default, {
                                                 key: key,
-                                                config: _this3.tabContent[tabKey][key],
+                                                config: content,
                                                 formikProps: formikProps,
                                                 update: _this3.state.activeTab == tabKey });
                                         })
@@ -16609,7 +16617,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _lodash = __webpack_require__(4);
+var _lodash = __webpack_require__(2);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -16749,7 +16757,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _lodash = __webpack_require__(4);
+var _lodash = __webpack_require__(2);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -16914,7 +16922,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _lodash = __webpack_require__(4);
+var _lodash = __webpack_require__(2);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -17002,7 +17010,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _lodash = __webpack_require__(4);
+var _lodash = __webpack_require__(2);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -17067,7 +17075,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _lodash = __webpack_require__(4);
+var _lodash = __webpack_require__(2);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -17120,7 +17128,7 @@ var Wysiwyg = function (_React$Component) {
             formats: ['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'video']
         };
 
-        _this.toolbarOptions = Object.assign({}, _this.props.options ? _this.props.options : defaultOptions);
+        _this.toolbarOptions = _lodash2.default.assign({}, _this.props.options ? _this.props.options : defaultOptions);
         return _this;
     }
 
@@ -21031,7 +21039,7 @@ module.exports = Array.isArray || function (arr) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(6),
-    root = __webpack_require__(2);
+    root = __webpack_require__(3);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -21082,7 +21090,7 @@ module.exports = Hash;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(6),
-    root = __webpack_require__(2);
+    root = __webpack_require__(3);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -21095,7 +21103,7 @@ module.exports = Promise;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(6),
-    root = __webpack_require__(2);
+    root = __webpack_require__(3);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -21140,7 +21148,7 @@ module.exports = SetCache;
 /* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(2);
+var root = __webpack_require__(3);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -21153,7 +21161,7 @@ module.exports = Uint8Array;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(6),
-    root = __webpack_require__(2);
+    root = __webpack_require__(3);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -21198,7 +21206,7 @@ module.exports = arrayFilter;
 
 var baseTimes = __webpack_require__(128),
     isArguments = __webpack_require__(50),
-    isArray = __webpack_require__(3),
+    isArray = __webpack_require__(4),
     isBuffer = __webpack_require__(51),
     isIndex = __webpack_require__(33),
     isTypedArray = __webpack_require__(54);
@@ -21399,7 +21407,7 @@ module.exports = baseForOwn;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayPush = __webpack_require__(110),
-    isArray = __webpack_require__(3);
+    isArray = __webpack_require__(4);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -21472,7 +21480,7 @@ var Stack = __webpack_require__(40),
     equalByTag = __webpack_require__(136),
     equalObjects = __webpack_require__(137),
     getTag = __webpack_require__(142),
-    isArray = __webpack_require__(3),
+    isArray = __webpack_require__(4),
     isBuffer = __webpack_require__(51),
     isTypedArray = __webpack_require__(54);
 
@@ -21944,7 +21952,7 @@ module.exports = baseTimes;
 
 var Symbol = __webpack_require__(16),
     arrayMap = __webpack_require__(109),
-    isArray = __webpack_require__(3),
+    isArray = __webpack_require__(4),
     isSymbol = __webpack_require__(22);
 
 /** Used as references for various `Number` constants. */
@@ -22024,7 +22032,7 @@ module.exports = cacheHas;
 /* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(2);
+var root = __webpack_require__(3);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -22574,7 +22582,7 @@ module.exports = getValue;
 
 var castPath = __webpack_require__(43),
     isArguments = __webpack_require__(50),
-    isArray = __webpack_require__(3),
+    isArray = __webpack_require__(4),
     isIndex = __webpack_require__(33),
     isLength = __webpack_require__(36),
     toKey = __webpack_require__(20);
@@ -23792,7 +23800,7 @@ module.exports = property;
 var arraySome = __webpack_require__(41),
     baseIteratee = __webpack_require__(32),
     baseSome = __webpack_require__(127),
-    isArray = __webpack_require__(3),
+    isArray = __webpack_require__(4),
     isIterateeCall = __webpack_require__(150);
 
 /**

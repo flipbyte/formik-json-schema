@@ -43,7 +43,7 @@ class Wysiwyg extends React.Component {
             ]
         };
 
-        this.toolbarOptions = Object.assign({}, ( this.props.options ) ? this.props.options : defaultOptions);
+        this.toolbarOptions = _.assign({}, ( this.props.options ) ? this.props.options : defaultOptions);
     }
 
     setValue( content ) {

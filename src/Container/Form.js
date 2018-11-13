@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import _ from 'lodash';
 import Element from '../Element';
+import React, { Component } from 'react';
 
 const Form = ({ config, formikProps }) => {
     const { elements } = config;
     const { handleSubmit, handleReset } = formikProps;
+
     return(
         <form className="form-horizontal" onSubmit={ handleSubmit } onReset={ handleReset }>
-            { Object.keys(elements).map( (key) =>
-                <Element key={ key } config={ elements[key] } formikProps={ formikProps } />
+            { _.map(elements, ( element, key ) =>
+                <Element key={ key } config={ element } formikProps={ formikProps } />
             ) }
         </form>
     );

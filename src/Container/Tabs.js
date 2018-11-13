@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-
+import _ from 'lodash';
 import Element from '../Element';
+import React, { Component } from 'react';
 
 class Tabs extends React.Component {
     constructor(props) {
@@ -11,6 +11,8 @@ class Tabs extends React.Component {
         this.state = {
             activeTab: this.defaultActiveTab
         };
+
+        this.toggle = this.toggle.bind(this);
     }
 
     prepareTabs(tabs) {
@@ -18,10 +20,8 @@ class Tabs extends React.Component {
         this.tabContent = {}
         this.defaultActiveTab = '';
 
-        Object.keys(tabs).map( (key) => {
-            const {
-                label, elements, active
-            } = tabs[key];
+        _.map(tabs, ( tab, key ) => {
+            const { label, elements, active } = tab;
 
             this.tabs[key] = label;
             this.tabContent[key] = elements;
@@ -29,7 +29,7 @@ class Tabs extends React.Component {
         } )
 
         if( !this.defaultActiveTab ) {
-            this.defaultActiveTab = Object.keys(this.tabs)[0];
+            this.defaultActiveTab = _.first(_.keys(this.tabs));
         }
     }
 
@@ -55,28 +55,28 @@ class Tabs extends React.Component {
                     <div className="row">
                         <div className="col-sm-12 col-md-3">
                             <ul id="list-tab" className="list-group">
-                                { Object.keys(this.tabs).map( (key) =>
+                                { _.map(this.tabs, ( tab, key ) =>
                                     <li
                                         key={ key }
                                         className={
                                             'list-group-item-action list-group-item ' +
                                             ( this.state.activeTab == key ? 'active' : '' )
                                         }
-                                        onClick={ () => this.toggle(key) }>{ this.tabs[key] }
+                                        onClick={ this.toggle.bind(null, key) }>{ tab }
                                     </li>
                                 ) }
                             </ul>
                         </div>
                         <div className="col-sm-12 col-md-9">
                             <div className="tab-content flutter-rjf-tab-content">
-                                { Object.keys(this.tabContent).map( (tabKey) =>
+                                { _.map(this.tabContent, ( tabContent, tabKey ) =>
                                     <div
                                         key={ tabKey }
                                         className={ 'tab-pane ' + (this.state.activeTab == tabKey ? 'active' : '')}>
-                                        { Object.keys(this.tabContent[tabKey]).map( (key) =>
+                                        { _.map(tabContent, ( content, key ) =>
                                             <Element
                                                 key={ key }
-                                                config={ this.tabContent[tabKey][key] }
+                                                config={ content }
                                                 formikProps={ formikProps }
                                                 update={ this.state.activeTab == tabKey }/>
                                         ) }

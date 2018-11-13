@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-
+import _ from 'lodash';
 import Element from '../Element';
+import React, { Component } from 'react';
 
 class Fieldset extends React.Component {
     constructor( props ) {
@@ -49,10 +49,10 @@ class Fieldset extends React.Component {
                 }
                 <div className={ 'collapse ' + (!this.state.collapsed ? 'show': '') }>
                     <div className="card-body">
-                        { Object.keys(elements).map( (key) =>
+                        { _.map(elements, (element, key) =>
                             <Element
                                 key={ key }
-                                config={ elements[key] }
+                                config={ element }
                                 formikProps={ formikProps }
                                 update={ !this.state.collapsed }/>)
                         }
