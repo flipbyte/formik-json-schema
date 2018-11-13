@@ -32,12 +32,11 @@ export const render = ( config, formikProps, rest ) => {
     }
 
     let Renderer = config.renderer;
-    if(typeof config.renderer == 'function') {
-        return <Renderer { ...config.props } />
+    if(typeof config.renderer == 'string') {
+        Renderer = currentRegistry.get(config.renderer);
     }
 
-    Renderer = currentRegistry.get(config.renderer);
-    return <Renderer config={ config } formikProps={ formikProps } { ...rest }/>
+    return <Renderer config={ config } formikProps={ formikProps } { ...rest } />
 }
 
 export default Registry;

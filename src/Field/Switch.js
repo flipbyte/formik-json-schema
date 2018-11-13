@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Label from './Label';
 import { getIn } from 'formik';
+import ErrorMessage, { hasError } from './ErrorMessage';
 
 const Switch = ({ config, formikProps }) => {
     const { name, label, attributes, htmlClass, dataOn, dataOff } = config;
@@ -7,7 +9,7 @@ const Switch = ({ config, formikProps }) => {
 
     return (
         <div className="form-group">
-            { !!label && <label className="mr-2">{ label }</label> }
+            <Label htmlFor={ name } className="mr-2">{ label }</Label>
             <label className={ 'switch ' + htmlClass }>
                 <input type="checkbox"
                     className="switch-input"
@@ -19,6 +21,7 @@ const Switch = ({ config, formikProps }) => {
                     data-off={ dataOff }></span>
                 <span className="switch-handle"></span>
             </label>
+            <ErrorMessage name={ name } { ...formikProps } />
         </div>
     );
 }

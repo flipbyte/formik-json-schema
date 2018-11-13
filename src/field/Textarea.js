@@ -1,28 +1,24 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
+import Label from './Label';
+import ErrorMessage, { hasError } from './ErrorMessage';
 
 const Textarea = ({ config, formikProps }) => {
     const { name, label, type, attributes, rows } = config;
-    const { values, errors, handleChange } = formikProps;
-
-    const error = _.get(errors, name, false);
+    const { values, handleChange } = formikProps;
+    const error = hasError(name, formikProps);
 
     return (
         <div className="form-group">
-            { !!label && <label>{ label }</label> }
+            <Label htmlFor={ name }>{ label }</Label>
             <textarea
                 id={ name }
                 name={ name }
-                className={ 'form-control ' + (!!error ? 'is-invalid': '') }
+                className={ 'form-control ' + ( error ? 'is-invalid' : '' ) }
                 value={ _.get(values, name, '') }
                 onChange={ handleChange }
                 { ...attributes } />
-
-            { !!error && (
-                <div className="invalid-feedback">
-                    { error }
-                </div>
-            ) }
+            <ErrorMessage name={ name } { ...formikProps } />
         </div>
     );
 }

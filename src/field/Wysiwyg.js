@@ -1,7 +1,9 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
+import Label from './Label';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import ErrorMessage, { hasError } from './ErrorMessage';
 
 class Wysiwyg extends React.Component {
     constructor(props) {
@@ -44,6 +46,9 @@ class Wysiwyg extends React.Component {
         };
 
         this.toolbarOptions = _.assign({}, ( this.props.options ) ? this.props.options : defaultOptions);
+        this.toggleEditor = this.toggleEditor.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleTextareaChange = this.handleTextareaChange.bind(this);
     }
 
     setValue( content ) {
@@ -65,6 +70,10 @@ class Wysiwyg extends React.Component {
         this.setValue(content);
     }
 
+    handleTextareaChange( event ) {
+        this.setValue(event.target.value);
+    }
+
     toggleEditor( event ) {
         this.setState({ showHtml: !this.state.showHtml });
     }
@@ -72,29 +81,30 @@ class Wysiwyg extends React.Component {
     render() {
         const {
             config: { name, label, type, attributes, options, rows, htmlClass },
-            formikProps: { values, errors }
+            formikProps
         } = this.props;
 
-        const error = _.get(errors, name, false);
+        const value = _.get(formikProps.values, name, '');
+        const error = hasError(name, formikProps);
 
         return (
             <div className="form-group">
-                { !!label && <label>{ label }</label> }
+                <Label htmlFor={ name }>{ label }</Label>
                 <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name} ${htmlClass}` }>
                     <div className="col-md-12 d-flex justify-content-end">
                         <button
                             type="button"
                             className="btn btn-primary pull-right"
-                            onClick={ (event) => this.toggleEditor(event) }>
+                            onClick={ this.toggleEditor }>
                             { this.state.showHtml ? 'Show Editor' : 'View Source' }
                         </button>
                     </div>
-                    <div className={ 'col-md-12 ' + (!!error ? 'is-invalid': '') }>
+                    <div className={ 'col-md-12 ' + ( error ? 'is-invalid' : '' ) }>
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
-                            value={ _.get(values, name, '') }
-                            className={ (!!error ? 'is-invalid': '') }
-                            onChange={ (content) =>  this.handleChange(content) }
+                            value={ value }
+                            className={ error ? 'is-invalid' : '' }
+                            onChange={ this.handleChange }
                             { ...this.toolbarOptions }
                             { ... attributes } />
                         }
@@ -103,14 +113,10 @@ class Wysiwyg extends React.Component {
                                 id={ 'ql-show-html-' + name }
                                 className="form-control"
                                 rows="10"
-                                value={ _.get(values, name, '') }
-                                onChange={ (event) => this.handleChange(event.target.value) } />
+                                value={ value }
+                                onChange={ this.handleTextareaChange } />
                         }
-                        { !!error && (
-                            <div className="invalid-feedback">
-                                { error }
-                            </div>
-                        ) }
+                        <ErrorMessage name={ name } { ...formikProps } />
                     </div>
                 </div>
             </div>

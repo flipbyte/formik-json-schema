@@ -1,6 +1,6 @@
 import _ from 'lodash';
+import React from 'react';
 import Element from '../Element';
-import React, { Component } from 'react';
 
 const Form = ({ config, formikProps }) => {
     const { elements } = config;

@@ -1,31 +1,28 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
+import Label from './Label';
+import ErrorMessage, { hasError } from './ErrorMessage';
 
 const Checkbox = ({ config, formikProps }) => {
     const { name, label, type, attributes, description } = config;
-    const { values, errors, handleChange } = formikProps;
-
-    const error = _.get(errors, name, false);
+    const { values, handleChange } = formikProps;
+    const error = hasError(name, formikProps);
 
     return (
         <div className="form-group">
-            { !!label && <label>{ label }</label> }
+            <Label htmlFor={ name }>{ label }</Label>
             <div className="form-check">
                 <label htmlFor={ name } className="form-check-label">
                     <input
                         id={ name }
                         name={ name }
-                        className={ 'form-check-input ' + (!!error ? 'is-invalid': '') }
+                        className={ 'form-check-input ' + ( error ? 'is-invalid' : '' ) }
                         type="checkbox"
                         checked={ _.get(values, name) }
                         onChange={ handleChange }
                         { ...attributes } /> { description }
                 </label>
-                { !!error && (
-                    <div className="invalid-feedback">
-                        { error }
-                    </div>
-                ) }
+                <ErrorMessage name={ name } { ...formikProps } />
             </div>
         </div>
     );

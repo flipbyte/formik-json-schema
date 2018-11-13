@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { FieldArray } from 'formik';
-
+import React from 'react';
 import Element from '../Element';
+import { FieldArray } from 'formik';
 
 const Array = ({ config, formikProps }) => {
     const {
@@ -13,7 +12,7 @@ const Array = ({ config, formikProps }) => {
     return (
         <FieldArray
             name={ name }
-            render={ (arrayActions) =>
+            render={( arrayActions ) =>
                 <Element
                     fieldArrayName={ name }
                     config={ fields }

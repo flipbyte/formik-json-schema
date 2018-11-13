@@ -1,6 +1,8 @@
 import _ from 'lodash';
+import React from 'react';
+import Label from './Label';
 import Select from 'react-select';
-import React, { Component } from 'react';
+import ErrorMessage, { hasError } from './ErrorMessage';
 
 const prepareOptions = ( options ) =>
     _.reduce(options, (result, value) => {
@@ -15,10 +17,10 @@ const prepareOptions = ( options ) =>
 
 const ReactSelect = ({ config, formikProps }) => {
     const { name, label, options: initialOptions, defaultValue, multi, noOptionsMessage } = config;
-    const { values, errors, touched, setFieldValue, setFieldTouched } = formikProps;
+    const { values, setFieldValue, setFieldTouched } = formikProps;
+    const error = hasError(name, formikProps);
 
     const options = prepareOptions(initialOptions);
-    const error = _.get(errors, name, false);
 
     const selectedValue = _.get(values, name, defaultValue);
     const selectedOption = options.filter(option => option.value == selectedValue);
@@ -30,12 +32,12 @@ const ReactSelect = ({ config, formikProps }) => {
 
     return (
         <div className="form-group">
-            { !!label && <label>{ label }</label> }
+            <Label htmlFor={ name }>{ label }</Label>
             <Select
                 id={ name }
                 name={ name }
                 options={ options }
-                className={ !!error ? 'is-invalid': '' }
+                className={ error ? 'is-invalid' : '' }
                 multi={ multi }
                 onChange={ (value) => setFieldValue(name, value.value) }
                 onBlur={ (value) => setFieldTouched(name, value.value) }
@@ -43,11 +45,7 @@ const ReactSelect = ({ config, formikProps }) => {
                 noOptionsMessage={ noOptionsMessage }
                 { ...conditionalProps }
             />
-            { !!error && (
-                <div className="invalid-feedback">
-                    { error }
-                </div>
-            ) }
+            <ErrorMessage name={ name } { ...formikProps } />
         </div>
     );
 }

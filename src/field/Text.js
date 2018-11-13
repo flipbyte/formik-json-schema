@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
 import _ from 'lodash';
+import React from 'react';
+import Label from './Label';
+import ErrorMessage, { hasError } from './ErrorMessage';
 
 const Text = ({ config, formikProps }) => {
     const {
@@ -15,13 +17,13 @@ const Text = ({ config, formikProps }) => {
         inputGroupClass = 'input-group'
     } = config;
 
-    const { values, errors, setFieldValue, handleChange } = formikProps;
-    const error = _.get(errors, name, false);
+    const { values, setFieldValue, handleChange } = formikProps;
     const isInputGroup = icon ? true : false;
+    const error = hasError(name, formikProps);
 
     return (
         <div className={ formGroupClass }>
-            { !!label && <label>{ label }</label> }
+            <Label htmlFor={ name }>{ label }</Label>
             { isInputGroup ?
                 <div className={ inputGroupClass }>
                     <div className="input-group-prepend">
@@ -33,7 +35,7 @@ const Text = ({ config, formikProps }) => {
                         id={ name }
                         name={ name }
                         type={ fieldType }
-                        className={ 'form-control ' + (!!error ? 'is-invalid': '') }
+                        className={ 'form-control ' + ( error ? 'is-invalid' : '' ) }
                         value={ _.get(values, name, '') }
                         onChange={ handleChange }
                         { ...attributes } />
@@ -42,17 +44,12 @@ const Text = ({ config, formikProps }) => {
                     id={ name }
                     name={ name }
                     type={ fieldType }
-                    className={ 'form-control ' + (!!error ? 'is-invalid': '') }
+                    className={ 'form-control ' + ( error ? 'is-invalid' : '' ) }
                     value={ _.get(values, name, '') }
                     onChange={ handleChange }
                     { ...attributes } />
             }
-
-            { !!error && (
-                <div className="invalid-feedback">
-                    { error }
-                </div>
-            ) }
+            <ErrorMessage name={ name } { ...formikProps } />
         </div>
     );
 }
