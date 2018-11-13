@@ -11,8 +11,8 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
     const arrayFields = _.mapValues(_.assign({}, fields), () => '');
 
     const arrayValues = getIn(values, fieldArrayName);
-    const hasValue = arrayValues && arrayValues.length > 0;
-    
+    const hasValue = _.size(arrayValues) > 0;
+
     return (
         <div className="table-responsive">
             <table className="table table-bordered flutter-editable-grid">
@@ -25,7 +25,7 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                     </tr>
                 </thead>
                 <tbody>
-                    { hasValue && arrayValues.map( (data, index) =>
+                    { hasValue ? arrayValues.map( (data, index) =>
                         <tr key={ index }>
                             { _.map(fields, ({ label, name, width, ...colProps }, key) => {
                                 let element = _.assign({}, colProps);
@@ -49,7 +49,7 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                                 </td>
                             }
                         </tr>
-                    ) }
+                    ) : null }
                 </tbody>
                 <tfoot>
                     <tr>

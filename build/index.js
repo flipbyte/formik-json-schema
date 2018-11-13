@@ -16141,7 +16141,7 @@ var EditableGrid = function EditableGrid(_ref) {
     });
 
     var arrayValues = (0, _formik.getIn)(values, fieldArrayName);
-    var hasValue = arrayValues && arrayValues.length > 0;
+    var hasValue = _lodash2.default.size(arrayValues) > 0;
 
     return _react2.default.createElement(
         'div',
@@ -16170,7 +16170,7 @@ var EditableGrid = function EditableGrid(_ref) {
             _react2.default.createElement(
                 'tbody',
                 null,
-                hasValue && arrayValues.map(function (data, index) {
+                hasValue ? arrayValues.map(function (data, index) {
                     return _react2.default.createElement(
                         'tr',
                         { key: index },
@@ -16204,7 +16204,7 @@ var EditableGrid = function EditableGrid(_ref) {
                             )
                         )
                     );
-                })
+                }) : null
             ),
             _react2.default.createElement(
                 'tfoot',
