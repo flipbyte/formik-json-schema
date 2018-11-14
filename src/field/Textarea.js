@@ -18,7 +18,7 @@ const Textarea = ({ config, formikProps }) => {
                 value={ _.get(values, name, '') }
                 onChange={ handleChange }
                 { ...attributes } />
-            <ErrorMessage name={ name } { ...formikProps } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

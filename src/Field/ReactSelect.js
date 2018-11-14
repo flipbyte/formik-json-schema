@@ -45,7 +45,7 @@ const ReactSelect = ({ config, formikProps }) => {
                 noOptionsMessage={ noOptionsMessage }
                 { ...conditionalProps }
             />
-            <ErrorMessage name={ name } { ...formikProps } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

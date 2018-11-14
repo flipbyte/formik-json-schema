@@ -26,7 +26,7 @@ const Radio = ({ config, formikProps }) => {
                     </label>
                 </div>
             ) }
-            <ErrorMessage name={ name } { ...formikProps } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

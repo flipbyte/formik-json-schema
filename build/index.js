@@ -337,7 +337,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _registry = __webpack_require__(9);
+var _registry = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -458,29 +458,30 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _formik = __webpack_require__(9);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var hasError = exports.hasError = function hasError(name, _ref) {
     var errors = _ref.errors,
-        touched = _ref.touched;
-    return _lodash2.default.get(errors, name, false) && _lodash2.default.get(touched, name, false);
+        touched = _ref.touched,
+        submitCount = _ref.submitCount;
+    return _lodash2.default.get(errors, name, false) && (_lodash2.default.get(touched, name, false) || submitCount > 0);
 };
 
 var ErrorMessage = function ErrorMessage(_ref2) {
     var name = _ref2.name,
-        errors = _ref2.errors,
-        touched = _ref2.touched;
+        formik = _ref2.formik;
 
-    var error = _lodash2.default.get(errors, name, false);
-
-    return hasError(name, { errors: errors, touched: touched }) ? _react2.default.createElement(
+    var error = _lodash2.default.get(formik.errors, name, false);
+    return hasError(name, formik) ? _react2.default.createElement(
         'div',
         { className: 'invalid-feedback' },
         error
     ) : null;
 };
 
-exports.default = ErrorMessage;
+exports.default = (0, _formik.connect)(ErrorMessage);
 
 /***/ }),
 /* 7 */
@@ -539,6 +540,12 @@ module.exports = getNative;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+module.exports = require("formik");
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -611,7 +618,7 @@ var render = exports.render = function render(config, formikProps, rest) {
 exports.default = Registry;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(18),
@@ -645,7 +652,7 @@ module.exports = baseGetTag;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /**
@@ -682,7 +689,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /**
@@ -717,7 +724,7 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -814,7 +821,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -847,12 +854,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = require("formik");
 
 /***/ }),
 /* 16 */
@@ -1097,8 +1098,8 @@ module.exports = isArrayLike;
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(10),
-    isObjectLike = __webpack_require__(12);
+var baseGetTag = __webpack_require__(11),
+    isObjectLike = __webpack_require__(13);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -1406,7 +1407,7 @@ module.exports = MapCache;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqualDeep = __webpack_require__(120),
-    isObjectLike = __webpack_require__(12);
+    isObjectLike = __webpack_require__(13);
 
 /**
  * The base implementation of `_.isEqual` which supports partial comparisons
@@ -1918,7 +1919,7 @@ module.exports = freeGlobal;
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(11);
+var isObject = __webpack_require__(12);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -2046,7 +2047,7 @@ module.exports = find;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsArguments = __webpack_require__(119),
-    isObjectLike = __webpack_require__(12);
+    isObjectLike = __webpack_require__(13);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -2173,8 +2174,8 @@ module.exports = isEqual;
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(10),
-    isObject = __webpack_require__(11);
+var baseGetTag = __webpack_require__(11),
+    isObject = __webpack_require__(12);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -14240,7 +14241,7 @@ module.exports = QuillMixin;
 exports.__esModule = true;
 exports.default = exports.EXITING = exports.ENTERED = exports.ENTERING = exports.EXITED = exports.UNMOUNTED = void 0;
 
-var PropTypes = _interopRequireWildcard(__webpack_require__(14));
+var PropTypes = _interopRequireWildcard(__webpack_require__(15));
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
@@ -14849,7 +14850,7 @@ exports.default = _default;
 exports.__esModule = true;
 exports.default = void 0;
 
-var _propTypes = _interopRequireDefault(__webpack_require__(14));
+var _propTypes = _interopRequireDefault(__webpack_require__(15));
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
@@ -15052,7 +15053,7 @@ exports.__esModule = true;
 exports.transitionTimeout = transitionTimeout;
 exports.classNamesShape = exports.timeoutsShape = void 0;
 
-var _propTypes = _interopRequireDefault(__webpack_require__(14));
+var _propTypes = _interopRequireDefault(__webpack_require__(15));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15131,7 +15132,7 @@ module.exports = function(module) {
 "use strict";
 
 
-var _registry = __webpack_require__(9);
+var _registry = __webpack_require__(10);
 
 var _Div = __webpack_require__(74);
 
@@ -15178,7 +15179,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 "use strict";
 
 
-var _registry = __webpack_require__(9);
+var _registry = __webpack_require__(10);
 
 var _Text = __webpack_require__(84);
 
@@ -15247,9 +15248,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(15);
+var _formik = __webpack_require__(9);
 
-var _registry = __webpack_require__(9);
+var _registry = __webpack_require__(10);
 
 var _messages = __webpack_require__(88);
 
@@ -15280,7 +15281,7 @@ var Form = function Form(_ref) {
         props = _objectWithoutProperties(_ref, ['schema']);
 
     return _react2.default.createElement(_formik.Formik, _extends({}, props, {
-        validate: validate.bind(undefined, validation ? validation : {}),
+        validate: validate.bind(undefined, validation || {}),
         render: _registry.render.bind(undefined, form) }));
 };
 
@@ -16053,7 +16054,7 @@ var _Element = __webpack_require__(5);
 
 var _Element2 = _interopRequireDefault(_Element);
 
-var _formik = __webpack_require__(15);
+var _formik = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16183,7 +16184,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _formik = __webpack_require__(15);
+var _formik = __webpack_require__(9);
 
 var _Element = __webpack_require__(5);
 
@@ -16746,7 +16747,7 @@ var Checkbox = function Checkbox(_ref) {
                 ' ',
                 description
             ),
-            _react2.default.createElement(_ErrorMessage2.default, _extends({ name: name }, formikProps))
+            _react2.default.createElement(_ErrorMessage2.default, { name: name })
         )
     );
 };
@@ -16774,7 +16775,7 @@ var _Label = __webpack_require__(7);
 
 var _Label2 = _interopRequireDefault(_Label);
 
-var _formik = __webpack_require__(15);
+var _formik = __webpack_require__(9);
 
 var _ErrorMessage = __webpack_require__(6);
 
@@ -16823,7 +16824,7 @@ var Radio = function Radio(_ref) {
                 )
             );
         }),
-        _react2.default.createElement(_ErrorMessage2.default, _extends({ name: name }, formikProps))
+        _react2.default.createElement(_ErrorMessage2.default, { name: name })
     );
 };
 
@@ -16926,7 +16927,7 @@ var ReactSelect = function ReactSelect(_ref) {
             value: selectedOption,
             noOptionsMessage: noOptionsMessage
         }, conditionalProps)),
-        _react2.default.createElement(_ErrorMessage2.default, _extends({ name: name }, formikProps))
+        _react2.default.createElement(_ErrorMessage2.default, { name: name })
     );
 };
 
@@ -16943,8 +16944,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -16953,7 +16952,7 @@ var _Label = __webpack_require__(7);
 
 var _Label2 = _interopRequireDefault(_Label);
 
-var _formik = __webpack_require__(15);
+var _formik = __webpack_require__(9);
 
 var _ErrorMessage = __webpack_require__(6);
 
@@ -16997,7 +16996,7 @@ var Switch = function Switch(_ref) {
                 'data-off': dataOff }),
             _react2.default.createElement('span', { className: 'switch-handle' })
         ),
-        _react2.default.createElement(_ErrorMessage2.default, _extends({ name: name }, formikProps))
+        _react2.default.createElement(_ErrorMessage2.default, { name: name })
     );
 };
 
@@ -17051,7 +17050,8 @@ var Text = function Text(_ref) {
         inputGroupClass = _config$inputGroupCla === undefined ? 'input-group' : _config$inputGroupCla;
     var values = formikProps.values,
         setFieldValue = formikProps.setFieldValue,
-        handleChange = formikProps.handleChange;
+        handleChange = formikProps.handleChange,
+        handleBlur = formikProps.handleBlur;
 
     var isInputGroup = icon ? true : false;
     var error = (0, _ErrorMessage.hasError)(name, formikProps);
@@ -17092,7 +17092,7 @@ var Text = function Text(_ref) {
             value: _lodash2.default.get(values, name, ''),
             onChange: handleChange
         }, attributes)),
-        _react2.default.createElement(_ErrorMessage2.default, _extends({ name: name }, formikProps))
+        _react2.default.createElement(_ErrorMessage2.default, { name: name })
     );
 };
 
@@ -17157,7 +17157,7 @@ var Textarea = function Textarea(_ref) {
             value: _lodash2.default.get(values, name, ''),
             onChange: handleChange
         }, attributes)),
-        _react2.default.createElement(_ErrorMessage2.default, _extends({ name: name }, formikProps))
+        _react2.default.createElement(_ErrorMessage2.default, { name: name })
     );
 };
 
@@ -17332,7 +17332,7 @@ var Wysiwyg = function (_React$Component) {
                             rows: '10',
                             value: value,
                             onChange: this.handleTextareaChange }),
-                        _react2.default.createElement(_ErrorMessage2.default, _extends({ name: name }, formikProps))
+                        _react2.default.createElement(_ErrorMessage2.default, { name: name })
                     )
                 )
             );
@@ -17364,7 +17364,7 @@ __webpack_require__(66);
 
 __webpack_require__(65);
 
-var _registry = __webpack_require__(9);
+var _registry = __webpack_require__(10);
 
 var registry = _interopRequireWildcard(_registry);
 
@@ -19936,7 +19936,7 @@ function createEmotion(context, options) {
 
 
 
-var _assign = __webpack_require__(13);
+var _assign = __webpack_require__(14);
 
 var emptyObject = __webpack_require__(99);
 var _invariant = __webpack_require__(16);
@@ -21557,8 +21557,8 @@ module.exports = baseHasIn;
 /* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(10),
-    isObjectLike = __webpack_require__(12);
+var baseGetTag = __webpack_require__(11),
+    isObjectLike = __webpack_require__(13);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -21740,7 +21740,7 @@ module.exports = baseIsMatch;
 
 var isFunction = __webpack_require__(55),
     isMasked = __webpack_require__(154),
-    isObject = __webpack_require__(11),
+    isObject = __webpack_require__(12),
     toSource = __webpack_require__(50);
 
 /**
@@ -21791,9 +21791,9 @@ module.exports = baseIsNative;
 /* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(10),
+var baseGetTag = __webpack_require__(11),
     isLength = __webpack_require__(38),
-    isObjectLike = __webpack_require__(12);
+    isObjectLike = __webpack_require__(13);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -22608,7 +22608,7 @@ var DataView = __webpack_require__(102),
     Promise = __webpack_require__(104),
     Set = __webpack_require__(105),
     WeakMap = __webpack_require__(108),
-    baseGetTag = __webpack_require__(10),
+    baseGetTag = __webpack_require__(11),
     toSource = __webpack_require__(50);
 
 /** `Object#toString` result references. */
@@ -22872,7 +22872,7 @@ module.exports = hashSet;
 var eq = __webpack_require__(37),
     isArrayLike = __webpack_require__(23),
     isIndex = __webpack_require__(35),
-    isObject = __webpack_require__(11);
+    isObject = __webpack_require__(12);
 
 /**
  * Checks if the given arguments are from an iteratee call.
@@ -24103,7 +24103,7 @@ module.exports = toInteger;
 /* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(11),
+var isObject = __webpack_require__(12),
     isSymbol = __webpack_require__(24);
 
 /** Used as references for various `Number` constants. */
@@ -24442,7 +24442,7 @@ module.exports = function() {
 var emptyFunction = __webpack_require__(29);
 var invariant = __webpack_require__(16);
 var warning = __webpack_require__(30);
-var assign = __webpack_require__(13);
+var assign = __webpack_require__(14);
 
 var ReactPropTypesSecret = __webpack_require__(39);
 var checkPropTypes = __webpack_require__(196);
@@ -25079,7 +25079,7 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(13);
+var _assign = __webpack_require__(14);
 var React = __webpack_require__(0);
 var checkPropTypes = __webpack_require__(202);
 
@@ -28193,7 +28193,7 @@ module.exports = server_browser;
  * LICENSE file in the root directory of this source tree.
  */
 
-var p=__webpack_require__(13),q=__webpack_require__(0);function aa(a,b,d,c,k,f,h,l){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var D=[d,c,k,f,h,l],z=0;a=Error(b.replace(/%s/g,function(){return D[z++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
+var p=__webpack_require__(14),q=__webpack_require__(0);function aa(a,b,d,c,k,f,h,l){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var D=[d,c,k,f,h,l],z=0;a=Error(b.replace(/%s/g,function(){return D[z++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
 function r(a){for(var b=arguments.length-1,d="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=0;c<b;c++)d+="&args[]="+encodeURIComponent(arguments[c+1]);aa(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",d)}
 var x="function"===typeof Symbol&&Symbol.for,y=x?Symbol.for("react.portal"):60106,A=x?Symbol.for("react.fragment"):60107,B=x?Symbol.for("react.strict_mode"):60108,C=x?Symbol.for("react.profiler"):60114,E=x?Symbol.for("react.provider"):60109,F=x?Symbol.for("react.context"):60110,G=x?Symbol.for("react.async_mode"):60111,H=x?Symbol.for("react.forward_ref"):60112,ba=x?Symbol.for("react.placeholder"):60113;
 function I(a){if(null==a)return null;if("function"===typeof a)return a.displayName||a.name||null;if("string"===typeof a)return a;switch(a){case G:return"AsyncMode";case A:return"Fragment";case y:return"Portal";case C:return"Profiler";case B:return"StrictMode";case ba:return"Placeholder"}if("object"===typeof a){switch(a.$$typeof){case F:return"Context.Consumer";case E:return"Context.Provider";case H:var b=a.render;b=b.displayName||b.name||"";return a.displayName||(""!==b?"ForwardRef("+b+")":"ForwardRef")}if("function"===
@@ -34090,7 +34090,7 @@ var index$1 = manageState(Select);
 exports.__esModule = true;
 exports.default = void 0;
 
-var PropTypes = _interopRequireWildcard(__webpack_require__(14));
+var PropTypes = _interopRequireWildcard(__webpack_require__(15));
 
 var _addClass = _interopRequireDefault(__webpack_require__(95));
 
@@ -34394,7 +34394,7 @@ module.exports = exports["default"];
 exports.__esModule = true;
 exports.default = void 0;
 
-var _propTypes = _interopRequireDefault(__webpack_require__(14));
+var _propTypes = _interopRequireDefault(__webpack_require__(15));
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
@@ -34746,7 +34746,7 @@ module.exports = function() {
 
 
 
-var assign = __webpack_require__(13);
+var assign = __webpack_require__(14);
 
 var ReactPropTypesSecret = __webpack_require__(40);
 var checkPropTypes = __webpack_require__(213);

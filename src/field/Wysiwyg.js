@@ -116,7 +116,7 @@ class Wysiwyg extends React.Component {
                                 value={ value }
                                 onChange={ this.handleTextareaChange } />
                         }
-                        <ErrorMessage name={ name } { ...formikProps } />
+                        <ErrorMessage name={ name } />
                     </div>
                 </div>
             </div>

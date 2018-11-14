@@ -21,7 +21,7 @@ const Switch = ({ config, formikProps }) => {
                     data-off={ dataOff }></span>
                 <span className="switch-handle"></span>
             </label>
-            <ErrorMessage name={ name } { ...formikProps } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

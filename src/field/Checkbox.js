@@ -22,7 +22,7 @@ const Checkbox = ({ config, formikProps }) => {
                         onChange={ handleChange }
                         { ...attributes } /> { description }
                 </label>
-                <ErrorMessage name={ name } { ...formikProps } />
+                <ErrorMessage name={ name } />
             </div>
         </div>
     );

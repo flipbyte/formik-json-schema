@@ -17,7 +17,7 @@ const Text = ({ config, formikProps }) => {
         inputGroupClass = 'input-group'
     } = config;
 
-    const { values, setFieldValue, handleChange } = formikProps;
+    const { values, setFieldValue, handleChange, handleBlur } = formikProps;
     const isInputGroup = icon ? true : false;
     const error = hasError(name, formikProps);
 
@@ -49,7 +49,7 @@ const Text = ({ config, formikProps }) => {
                     onChange={ handleChange }
                     { ...attributes } />
             }
-            <ErrorMessage name={ name } { ...formikProps } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

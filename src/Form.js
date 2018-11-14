@@ -21,7 +21,7 @@ const Form = ({
 }) => {
     return <Formik
         { ...props }
-        validate={ validate.bind(this, validation ? validation : {}) }
+        validate={ validate.bind(this, validation || {}) }
         render={ render.bind(this, form) } />
 }
 
