@@ -15,10 +15,10 @@ const prepareOptions = ( options ) =>
         return result;
     }, [])
 
-const ReactSelect = ({ config, formikProps }) => {
+const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
     const { name, label, options: initialOptions, defaultValue, multi, noOptionsMessage } = config;
     const { values, setFieldValue, setFieldTouched } = formikProps;
-    const error = hasError(name, formikProps);
+    const error = hasError(name, submitCountToValidate, formikProps);
 
     const options = prepareOptions(initialOptions);
 
@@ -45,7 +45,7 @@ const ReactSelect = ({ config, formikProps }) => {
                 noOptionsMessage={ noOptionsMessage }
                 { ...conditionalProps }
             />
-            <ErrorMessage name={ name } />
+            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
         </div>
     );
 }

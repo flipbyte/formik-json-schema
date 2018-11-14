@@ -3,7 +3,7 @@ import React from 'react';
 import Label from './Label';
 import ErrorMessage, { hasError } from './ErrorMessage';
 
-const Text = ({ config, formikProps }) => {
+const Text = ({ config, formikProps, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -19,7 +19,7 @@ const Text = ({ config, formikProps }) => {
 
     const { values, setFieldValue, handleChange, handleBlur } = formikProps;
     const isInputGroup = icon ? true : false;
-    const error = hasError(name, formikProps);
+    const error = hasError(name, submitCountToValidate, formikProps);
 
     return (
         <div className={ formGroupClass }>
@@ -49,7 +49,7 @@ const Text = ({ config, formikProps }) => {
                     onChange={ handleChange }
                     { ...attributes } />
             }
-            <ErrorMessage name={ name } />
+            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
         </div>
     );
 }

@@ -5,10 +5,13 @@ import { render as renderElement, getConfig } from './registry';
 class Element extends Component {
     constructor( props ) {
         super(props);
+
+        const { config, update, formikProps } = this.props;
         this.state = {
             hasLoadedConfig: false,
-            hasLoadedData: this.props.config.loadData ? false : true,
-            hasMounted: this.props.update !== false
+            hasLoadedData: config.loadData ? false : true,
+            hasMounted: update !== false,
+            submitCountToValidate: formikProps.submitCount || 0
         };
 
         this.loadDataAfter = this.loadDataAfter.bind(this);
@@ -63,8 +66,9 @@ class Element extends Component {
 
     render() {
         const { config: initialConfig, formikProps, ...rest } = this.props;
-        const config = this.state.loadedConfig || initialConfig;
-        return this.state.hasMounted && renderElement(config, formikProps, rest);
+        const { loadedConfig, submitCountToValidate } = this.state;
+        const config = loadedConfig || initialConfig;
+        return this.state.hasMounted && renderElement(config, formikProps, submitCountToValidate, rest);
     }
 }
 

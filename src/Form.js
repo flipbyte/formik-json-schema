@@ -17,12 +17,13 @@ const validate = ( validationSchema = {}, values ) => {
 
 const Form = ({
     schema: { validation, form },
+    initialValues = {},
     ...props
-}) => {
-    return <Formik
+}) =>
+    <Formik
         { ...props }
+        initialValues={ initialValues }
         validate={ validate.bind(this, validation || {}) }
         render={ render.bind(this, form) } />
-}
 
 export default Form;

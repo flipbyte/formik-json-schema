@@ -3,7 +3,7 @@ import Label from './Label';
 import { getIn } from 'formik';
 import ErrorMessage, { hasError } from './ErrorMessage';
 
-const Switch = ({ config, formikProps }) => {
+const Switch = ({ config, formikProps, submitCountToValidate }) => {
     const { name, label, attributes, htmlClass, dataOn, dataOff } = config;
     const { values, setFieldValue } = formikProps;
 
@@ -21,7 +21,7 @@ const Switch = ({ config, formikProps }) => {
                     data-off={ dataOff }></span>
                 <span className="switch-handle"></span>
             </label>
-            <ErrorMessage name={ name } />
+            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
         </div>
     );
 }

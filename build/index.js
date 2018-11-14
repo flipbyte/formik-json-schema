@@ -357,10 +357,16 @@ var Element = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Element.__proto__ || Object.getPrototypeOf(Element)).call(this, props));
 
+        var _this$props = _this.props,
+            config = _this$props.config,
+            update = _this$props.update,
+            formikProps = _this$props.formikProps;
+
         _this.state = {
             hasLoadedConfig: false,
-            hasLoadedData: _this.props.config.loadData ? false : true,
-            hasMounted: _this.props.update !== false
+            hasLoadedData: config.loadData ? false : true,
+            hasMounted: update !== false,
+            submitCountToValidate: formikProps.submitCount || 0
         };
 
         _this.loadDataAfter = _this.loadDataAfter.bind(_this);
@@ -428,8 +434,12 @@ var Element = function (_Component) {
                 formikProps = _props2.formikProps,
                 rest = _objectWithoutProperties(_props2, ['config', 'formikProps']);
 
-            var config = this.state.loadedConfig || initialConfig;
-            return this.state.hasMounted && (0, _registry.render)(config, formikProps, rest);
+            var _state = this.state,
+                loadedConfig = _state.loadedConfig,
+                submitCountToValidate = _state.submitCountToValidate;
+
+            var config = loadedConfig || initialConfig;
+            return this.state.hasMounted && (0, _registry.render)(config, formikProps, submitCountToValidate, rest);
         }
     }]);
 
@@ -462,19 +472,22 @@ var _formik = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var hasError = exports.hasError = function hasError(name, _ref) {
+var hasError = exports.hasError = function hasError(name) {
+    var submitCountToValidate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var _ref = arguments[2];
     var errors = _ref.errors,
         touched = _ref.touched,
         submitCount = _ref.submitCount;
-    return _lodash2.default.get(errors, name, false) && (_lodash2.default.get(touched, name, false) || submitCount > 0);
+    return _lodash2.default.get(errors, name, false) && (_lodash2.default.get(touched, name, false) || submitCount > submitCountToValidate);
 };
 
 var ErrorMessage = function ErrorMessage(_ref2) {
     var name = _ref2.name,
+        submitCountToValidate = _ref2.submitCountToValidate,
         formik = _ref2.formik;
 
     var error = _lodash2.default.get(formik.errors, name, false);
-    return hasError(name, formik) ? _react2.default.createElement(
+    return hasError(name, submitCountToValidate, formik) ? _react2.default.createElement(
         'div',
         { className: 'invalid-feedback' },
         error
@@ -601,7 +614,7 @@ var registerField = exports.registerField = fieldRegistry.register.bind(fieldReg
 var containerRegistry = new Registry();
 var registerContainer = exports.registerContainer = containerRegistry.register.bind(containerRegistry);
 
-var render = exports.render = function render(config, formikProps, rest) {
+var render = exports.render = function render(config, formikProps, submitCountToValidate, rest) {
     var currentRegistry = containerRegistry;
     if (config.type == FIELD) {
         currentRegistry = fieldRegistry;
@@ -612,7 +625,11 @@ var render = exports.render = function render(config, formikProps, rest) {
         Renderer = currentRegistry.get(config.renderer);
     }
 
-    return _react2.default.createElement(Renderer, _extends({ config: config, formikProps: formikProps }, rest));
+    return _react2.default.createElement(Renderer, _extends({
+        config: config,
+        formikProps: formikProps,
+        submitCountToValidate: submitCountToValidate
+    }, rest));
 };
 
 exports.default = Registry;
@@ -15278,9 +15295,12 @@ var Form = function Form(_ref) {
     var _ref$schema = _ref.schema,
         validation = _ref$schema.validation,
         form = _ref$schema.form,
-        props = _objectWithoutProperties(_ref, ['schema']);
+        _ref$initialValues = _ref.initialValues,
+        initialValues = _ref$initialValues === undefined ? {} : _ref$initialValues,
+        props = _objectWithoutProperties(_ref, ['schema', 'initialValues']);
 
     return _react2.default.createElement(_formik.Formik, _extends({}, props, {
+        initialValues: initialValues,
         validate: validate.bind(undefined, validation || {}),
         render: _registry.render.bind(undefined, form) }));
 };
@@ -16711,7 +16731,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Checkbox = function Checkbox(_ref) {
     var config = _ref.config,
-        formikProps = _ref.formikProps;
+        formikProps = _ref.formikProps,
+        submitCountToValidate = _ref.submitCountToValidate;
     var name = config.name,
         label = config.label,
         type = config.type,
@@ -16720,7 +16741,7 @@ var Checkbox = function Checkbox(_ref) {
     var values = formikProps.values,
         handleChange = formikProps.handleChange;
 
-    var error = (0, _ErrorMessage.hasError)(name, formikProps);
+    var error = (0, _ErrorMessage.hasError)(name, submitCountToValidate, formikProps);
 
     return _react2.default.createElement(
         'div',
@@ -16747,7 +16768,7 @@ var Checkbox = function Checkbox(_ref) {
                 ' ',
                 description
             ),
-            _react2.default.createElement(_ErrorMessage2.default, { name: name })
+            _react2.default.createElement(_ErrorMessage2.default, { name: name, submitCountToValidate: submitCountToValidate })
         )
     );
 };
@@ -16785,7 +16806,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Radio = function Radio(_ref) {
     var config = _ref.config,
-        formikProps = _ref.formikProps;
+        formikProps = _ref.formikProps,
+        submitCountToValidate = _ref.submitCountToValidate;
     var name = config.name,
         type = config.type,
         attributes = config.attributes,
@@ -16793,7 +16815,7 @@ var Radio = function Radio(_ref) {
     var values = formikProps.values,
         handleChange = formikProps.handleChange;
 
-    var error = (0, _ErrorMessage.hasError)(name, formikProps);
+    var error = (0, _ErrorMessage.hasError)(name, submitCountToValidate, formikProps);
 
     return _react2.default.createElement(
         'div',
@@ -16824,7 +16846,7 @@ var Radio = function Radio(_ref) {
                 )
             );
         }),
-        _react2.default.createElement(_ErrorMessage2.default, { name: name })
+        _react2.default.createElement(_ErrorMessage2.default, { name: name, submitCountToValidate: submitCountToValidate })
     );
 };
 
@@ -16879,7 +16901,8 @@ var prepareOptions = function prepareOptions(options) {
 
 var ReactSelect = function ReactSelect(_ref) {
     var config = _ref.config,
-        formikProps = _ref.formikProps;
+        formikProps = _ref.formikProps,
+        submitCountToValidate = _ref.submitCountToValidate;
     var name = config.name,
         label = config.label,
         initialOptions = config.options,
@@ -16890,7 +16913,7 @@ var ReactSelect = function ReactSelect(_ref) {
         setFieldValue = formikProps.setFieldValue,
         setFieldTouched = formikProps.setFieldTouched;
 
-    var error = (0, _ErrorMessage.hasError)(name, formikProps);
+    var error = (0, _ErrorMessage.hasError)(name, submitCountToValidate, formikProps);
 
     var options = prepareOptions(initialOptions);
 
@@ -16927,7 +16950,7 @@ var ReactSelect = function ReactSelect(_ref) {
             value: selectedOption,
             noOptionsMessage: noOptionsMessage
         }, conditionalProps)),
-        _react2.default.createElement(_ErrorMessage2.default, { name: name })
+        _react2.default.createElement(_ErrorMessage2.default, { name: name, submitCountToValidate: submitCountToValidate })
     );
 };
 
@@ -16962,7 +16985,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Switch = function Switch(_ref) {
     var config = _ref.config,
-        formikProps = _ref.formikProps;
+        formikProps = _ref.formikProps,
+        submitCountToValidate = _ref.submitCountToValidate;
     var name = config.name,
         label = config.label,
         attributes = config.attributes,
@@ -16996,7 +17020,7 @@ var Switch = function Switch(_ref) {
                 'data-off': dataOff }),
             _react2.default.createElement('span', { className: 'switch-handle' })
         ),
-        _react2.default.createElement(_ErrorMessage2.default, { name: name })
+        _react2.default.createElement(_ErrorMessage2.default, { name: name, submitCountToValidate: submitCountToValidate })
     );
 };
 
@@ -17035,7 +17059,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Text = function Text(_ref) {
     var config = _ref.config,
-        formikProps = _ref.formikProps;
+        formikProps = _ref.formikProps,
+        submitCountToValidate = _ref.submitCountToValidate;
     var name = config.name,
         label = config.label,
         type = config.type,
@@ -17054,7 +17079,7 @@ var Text = function Text(_ref) {
         handleBlur = formikProps.handleBlur;
 
     var isInputGroup = icon ? true : false;
-    var error = (0, _ErrorMessage.hasError)(name, formikProps);
+    var error = (0, _ErrorMessage.hasError)(name, submitCountToValidate, formikProps);
 
     return _react2.default.createElement(
         'div',
@@ -17092,7 +17117,7 @@ var Text = function Text(_ref) {
             value: _lodash2.default.get(values, name, ''),
             onChange: handleChange
         }, attributes)),
-        _react2.default.createElement(_ErrorMessage2.default, { name: name })
+        _react2.default.createElement(_ErrorMessage2.default, { name: name, submitCountToValidate: submitCountToValidate })
     );
 };
 
@@ -17131,7 +17156,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Textarea = function Textarea(_ref) {
     var config = _ref.config,
-        formikProps = _ref.formikProps;
+        formikProps = _ref.formikProps,
+        submitCountToValidate = _ref.submitCountToValidate;
     var name = config.name,
         label = config.label,
         type = config.type,
@@ -17140,7 +17166,7 @@ var Textarea = function Textarea(_ref) {
     var values = formikProps.values,
         handleChange = formikProps.handleChange;
 
-    var error = (0, _ErrorMessage.hasError)(name, formikProps);
+    var error = (0, _ErrorMessage.hasError)(name, submitCountToValidate, formikProps);
 
     return _react2.default.createElement(
         'div',
@@ -17157,7 +17183,7 @@ var Textarea = function Textarea(_ref) {
             value: _lodash2.default.get(values, name, ''),
             onChange: handleChange
         }, attributes)),
-        _react2.default.createElement(_ErrorMessage2.default, { name: name })
+        _react2.default.createElement(_ErrorMessage2.default, { name: name, submitCountToValidate: submitCountToValidate })
     );
 };
 
@@ -17288,11 +17314,12 @@ var Wysiwyg = function (_React$Component) {
                 options = _props2$config.options,
                 rows = _props2$config.rows,
                 htmlClass = _props2$config.htmlClass,
-                formikProps = _props2.formikProps;
+                formikProps = _props2.formikProps,
+                submitCountToValidate = _props2.submitCountToValidate;
 
 
             var value = _lodash2.default.get(formikProps.values, name, '');
-            var error = (0, _ErrorMessage.hasError)(name, formikProps);
+            var error = (0, _ErrorMessage.hasError)(name, submitCountToValidate, formikProps);
 
             return _react2.default.createElement(
                 'div',
@@ -17332,7 +17359,7 @@ var Wysiwyg = function (_React$Component) {
                             rows: '10',
                             value: value,
                             onChange: this.handleTextareaChange }),
-                        _react2.default.createElement(_ErrorMessage2.default, { name: name })
+                        _react2.default.createElement(_ErrorMessage2.default, { name: name, submitCountToValidate: submitCountToValidate })
                     )
                 )
             );

@@ -3,10 +3,10 @@ import Label from './Label';
 import { getIn } from 'formik';
 import ErrorMessage, { hasError } from './ErrorMessage';
 
-const Radio = ({ config, formikProps }) => {
+const Radio = ({ config, formikProps, submitCountToValidate }) => {
     const { name, type, attributes, options } = config;
     const { values, handleChange } = formikProps;
-    const error = hasError(name, formikProps);
+    const error = hasError(name, submitCountToValidate, formikProps);
 
     return (
         <div className="form-group">
@@ -26,7 +26,7 @@ const Radio = ({ config, formikProps }) => {
                     </label>
                 </div>
             ) }
-            <ErrorMessage name={ name } />
+            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
         </div>
     );
 }

@@ -3,10 +3,10 @@ import React from 'react';
 import Label from './Label';
 import ErrorMessage, { hasError } from './ErrorMessage';
 
-const Checkbox = ({ config, formikProps }) => {
+const Checkbox = ({ config, formikProps, submitCountToValidate }) => {
     const { name, label, type, attributes, description } = config;
     const { values, handleChange } = formikProps;
-    const error = hasError(name, formikProps);
+    const error = hasError(name, submitCountToValidate, formikProps);
 
     return (
         <div className="form-group">
@@ -22,7 +22,7 @@ const Checkbox = ({ config, formikProps }) => {
                         onChange={ handleChange }
                         { ...attributes } /> { description }
                 </label>
-                <ErrorMessage name={ name } />
+                <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
             </div>
         </div>
     );

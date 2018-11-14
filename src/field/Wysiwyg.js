@@ -81,11 +81,12 @@ class Wysiwyg extends React.Component {
     render() {
         const {
             config: { name, label, type, attributes, options, rows, htmlClass },
-            formikProps
+            formikProps,
+            submitCountToValidate
         } = this.props;
 
         const value = _.get(formikProps.values, name, '');
-        const error = hasError(name, formikProps);
+        const error = hasError(name, submitCountToValidate, formikProps);
 
         return (
             <div className="form-group">
@@ -116,7 +117,7 @@ class Wysiwyg extends React.Component {
                                 value={ value }
                                 onChange={ this.handleTextareaChange } />
                         }
-                        <ErrorMessage name={ name } />
+                        <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
                     </div>
                 </div>
             </div>

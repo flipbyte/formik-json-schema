@@ -3,10 +3,10 @@ import React from 'react';
 import Label from './Label';
 import ErrorMessage, { hasError } from './ErrorMessage';
 
-const Textarea = ({ config, formikProps }) => {
+const Textarea = ({ config, formikProps, submitCountToValidate }) => {
     const { name, label, type, attributes, rows } = config;
     const { values, handleChange } = formikProps;
-    const error = hasError(name, formikProps);
+    const error = hasError(name, submitCountToValidate, formikProps);
 
     return (
         <div className="form-group">
@@ -18,7 +18,7 @@ const Textarea = ({ config, formikProps }) => {
                 value={ _.get(values, name, '') }
                 onChange={ handleChange }
                 { ...attributes } />
-            <ErrorMessage name={ name } />
+            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
         </div>
     );
 }
