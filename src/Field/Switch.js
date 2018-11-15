@@ -1,7 +1,8 @@
 import React from 'react';
 import Label from './Label';
 import { getIn } from 'formik';
-import ErrorMessage, { hasError } from './ErrorMessage';
+import ErrorMessage from './ErrorMessage';
+import { hasError, changeHandler, setFieldValueWrapper } from '../utils';
 
 const Switch = ({ config, formikProps, submitCountToValidate }) => {
     const { name, label, attributes, htmlClass, dataOn, dataOff } = config;
@@ -14,7 +15,9 @@ const Switch = ({ config, formikProps, submitCountToValidate }) => {
                 <input type="checkbox"
                     className="switch-input"
                     defaultChecked={ getIn(values, name) }
-                    onClick={ () => setFieldValue(name, !getIn(values, name)) } />
+                    onClick={
+                        () => changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, !getIn(values, name))
+                    } />
                 <span
                     className="switch-label"
                     data-on={ dataOn }

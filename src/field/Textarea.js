@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
 import Label from './Label';
-import ErrorMessage, { hasError } from './ErrorMessage';
+import ErrorMessage from './ErrorMessage';
+import { hasError, changeHandler } from '../utils';
 
 const Textarea = ({ config, formikProps, submitCountToValidate }) => {
     const { name, label, type, attributes, rows } = config;
@@ -16,7 +17,7 @@ const Textarea = ({ config, formikProps, submitCountToValidate }) => {
                 name={ name }
                 className={ 'form-control ' + ( error ? 'is-invalid' : '' ) }
                 value={ _.get(values, name, '') }
-                onChange={ handleChange }
+                onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
                 { ...attributes } />
             <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
         </div>

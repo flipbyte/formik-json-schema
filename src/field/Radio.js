@@ -1,7 +1,8 @@
 import React from 'react';
 import Label from './Label';
 import { getIn } from 'formik';
-import ErrorMessage, { hasError } from './ErrorMessage';
+import ErrorMessage from './ErrorMessage';
+import { hasError, changeHandler } from '../utils';
 
 const Radio = ({ config, formikProps, submitCountToValidate }) => {
     const { name, type, attributes, options } = config;
@@ -21,7 +22,7 @@ const Radio = ({ config, formikProps, submitCountToValidate }) => {
                             id={ name + '_' + option.value }
                             value={ option.value }
                             checked={ getIn(values, name) === option.value }
-                            onChange={ handleChange }
+                            onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
                             { ...attributes } /> { option.title }
                     </label>
                 </div>

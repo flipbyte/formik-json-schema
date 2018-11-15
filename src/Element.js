@@ -9,7 +9,7 @@ class Element extends Component {
         const { config, update, formikProps } = this.props;
         this.state = {
             hasLoadedConfig: false,
-            hasLoadedData: config.loadData ? false : true,
+            hasLoadedData: config.dataSource ? false : true,
             hasMounted: update !== false,
             submitCountToValidate: formikProps.submitCount || 0
         };

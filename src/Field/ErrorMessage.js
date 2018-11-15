@@ -1,9 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { connect } from 'formik';
-
-export const hasError = (name, submitCountToValidate = 0, { errors, touched, submitCount }) =>
-    _.get(errors, name, false) && ( _.get(touched, name, false) || submitCount > submitCountToValidate );
+import { hasError } from '../utils';
 
 const ErrorMessage = ({ name, submitCountToValidate, formik }) => {
     let error = _.get(formik.errors, name, false);
