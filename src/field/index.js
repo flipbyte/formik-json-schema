@@ -7,6 +7,7 @@ import Switch from './Switch';
 import Wysiwyg from './Wysiwyg';
 import Textarea from './Textarea';
 import Checkbox from './Checkbox';
+import CodeEditor from './CodeEditor';
 import ReactSelect from './ReactSelect';
 
 [
@@ -25,3 +26,4 @@ registerField('wysiwyg', Wysiwyg);
 registerField('textarea', Textarea);
 registerField('checkbox', Checkbox);
 registerField('react-select', ReactSelect);
+registerField('code-editor', CodeEditor);

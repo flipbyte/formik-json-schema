@@ -18,7 +18,7 @@ const prepareOptions = ( options ) =>
 
 const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
     const { name, label, options: initialOptions, defaultValue, multi, noOptionsMessage } = config;
-    const { values, setFieldValue, setFieldTouched } = formikProps;
+    const { values, setFieldValue } = formikProps;
 
     const error = hasError(name, submitCountToValidate, formikProps);
     const options = prepareOptions(initialOptions);
