@@ -45,39 +45,52 @@ class Tabs extends React.Component {
 
     render() {
         const {
-            config: { tabs },
+            config: {
+                name,
+                tabs,
+                cardClass = 'card',
+                cardBodyClass = 'card-body',
+                rowClass = 'row',
+                tabListClass = 'list-group',
+                tabListItemClass = 'list-group-item-action list-group-item',
+                tabContentClass = 'tab-content flutter-rjf-tab-content',
+                tabColumnClass = 'col-sm-12 col-md-3',
+                contentColumnClass = 'col-sm-12 col-md-9',
+                tabActiveClass = ' active ',
+                tabPaneClass = 'tab-pane',
+            },
             formikProps
         } = this.props;
 
         return (
-            <div className="card">
-                <div className="card-body">
-                    <div className="row">
-                        <div className="col-sm-12 col-md-3">
-                            <ul id="list-tab" className="list-group">
+            <div className={ cardClass }>
+                <div className={ cardBodyClass }>
+                    <div className={ rowClass }>
+                        <div className={ tabColumnClass }>
+                            <ul id="list-tab" className={ tabListClass }>
                                 { _.map(this.tabs, ( tab, key ) =>
                                     <li
                                         key={ key }
                                         className={
-                                            'list-group-item-action list-group-item ' +
-                                            ( this.state.activeTab == key ? 'active' : '' )
+                                            tabListItemClass + ( this.state.activeTab == key ? tabActiveClass : '' )
                                         }
                                         onClick={ this.toggle.bind(null, key) }>{ tab }
                                     </li>
                                 ) }
                             </ul>
                         </div>
-                        <div className="col-sm-12 col-md-9">
-                            <div className="tab-content flutter-rjf-tab-content">
+                        <div className={ contentColumnClass }>
+                            <div className={ tabContentClass }>
                                 { _.map(this.tabContent, ( tabContent, tabKey ) =>
                                     <div
                                         key={ tabKey }
-                                        className={ 'tab-pane ' + (this.state.activeTab == tabKey ? 'active' : '')}>
+                                        className={ tabPaneClass + ( this.state.activeTab == tabKey ? tabActiveClass : '' ) }>
                                         { _.map(tabContent, ( content, key ) =>
                                             <Element
                                                 key={ key }
                                                 config={ content }
                                                 formikProps={ formikProps }
+                                                containerName={ name }
                                                 update={ this.state.activeTab == tabKey }/>
                                         ) }
                                     </div>

@@ -2,16 +2,28 @@ import React from 'react';
 import Label from './Label';
 import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, setFieldValueWrapper } from '../utils';
+import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
-const Switch = ({ config, formikProps, submitCountToValidate }) => {
-    const { name, label, attributes, htmlClass, dataOn, dataOff } = config;
+const Switch = ({ config, formikProps, submitCountToValidate, containerName }) => {
+    const {
+        name: elementName,
+        label,
+        attributes,
+        dataOn,
+        dataOff,
+        prefixContainerName = false,
+        labelClass = '',
+        inputClass = 'switch',
+        formGroupClass = 'form-group'
+    } = config;
     const { values, setFieldValue } = formikProps;
+    const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
+    const error = hasError(name, submitCountToValidate, formikProps);
 
     return (
-        <div className="form-group">
-            <Label htmlFor={ name } className="mr-2">{ label }</Label>
-            <label className={ 'switch ' + htmlClass }>
+        <div className={ formGroupClass }>
+            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+            <label className={ inputClass + ( error ? ' is-invalid ' : '' ) }>
                 <input type="checkbox"
                     className="switch-input"
                     defaultChecked={ getIn(values, name) }

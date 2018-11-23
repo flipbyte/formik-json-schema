@@ -2,9 +2,16 @@ import _ from 'lodash';
 import React from 'react';
 import { getIn } from 'formik';
 import Element from '../Element';
+import { joinNames } from '../utils';
 
 const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => {
-    const { header, fields, buttons } = config;
+    const {
+        header,
+        fields,
+        buttons,
+        tableContainerClass = 'table-responsive',
+        tableClass = 'table table-bordered flutter-editable-grid'
+    } = config;
     const { values, errors, touched } = formikProps;
     const { insert, remove, push } = arrayActions;
 
@@ -14,8 +21,8 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
     const hasValue = _.size(arrayValues) > 0;
 
     return (
-        <div className="table-responsive">
-            <table className="table table-bordered flutter-editable-grid">
+        <div className={ tableContainerClass }>
+            <table className={ tableClass }>
                 <thead>
                     <tr>
                         { _.map(fields, ({ label, width }, key) =>
@@ -29,7 +36,7 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                         <tr key={ index }>
                             { _.map(fields, ({ label, name, width, ...colProps }, key) => {
                                 let element = _.assign({}, colProps);
-                                element.name = `${fieldArrayName}.${index}.` + name;
+                                element.name = joinNames(fieldArrayName, index, name);
 
                                 return (
                                     <td key={ key }>

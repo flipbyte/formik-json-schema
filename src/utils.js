@@ -10,3 +10,6 @@ export const changeHandler = ( handler, formikProps, { onChange, ...fieldConfig 
 
 export const setFieldValueWrapper = ( setFieldValue, name ) => ( value ) =>
     setFieldValue(name, value);
+
+export const joinNames = ( ...args ) => 
+    _.join(_.filter(args, arg => _.isString(arg) || _.isInteger(arg)), '.')

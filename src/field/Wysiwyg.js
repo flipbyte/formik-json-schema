@@ -4,7 +4,7 @@ import Label from './Label';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, setFieldValueWrapper } from '../utils';
+import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
 const defaultOptions = {
     modules: {
@@ -55,16 +55,29 @@ class Wysiwyg extends React.Component {
     }
 
     render() {
-        const { config, formikProps, submitCountToValidate } = this.props;
-        const { name, label, type, attributes, options, rows, htmlClass } = config;
+        const { config, formikProps, submitCountToValidate, containerName } = this.props;
+        const {
+            name: elementName,
+            label,
+            type,
+            attributes,
+            options,
+            rows,
+            prefixContainerName = false,
+            labelClass = '',
+            inputClass = 'form-control',
+            formGroupClass = 'form-group',
+            textareaClass = 'form-control'
+        } = config;
         const { setFieldValue, handleChange } = formikProps;
+        const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
         const value = _.get(formikProps.values, name, '');
         const error = hasError(name, submitCountToValidate, formikProps);
 
         return (
-            <div className="form-group">
-                <Label htmlFor={ name }>{ label }</Label>
-                <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name} ${htmlClass}` }>
+            <div className={ formGroupClass }>
+                <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+                <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name} ${inputClass}` }>
                     <div className="col-md-12 d-flex justify-content-end">
                         <button
                             type="button"
@@ -73,12 +86,14 @@ class Wysiwyg extends React.Component {
                             { this.state.showHtml ? 'Show Editor' : 'View Source' }
                         </button>
                     </div>
-                    <div className={ 'col-md-12 ' + ( error ? 'is-invalid' : '' ) }>
+                    <div className={ 'col-md-12 ' + ( error ? ' is-invalid ' : '' ) }>
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
                             value={ value }
-                            className={ error ? 'is-invalid' : '' }
-                            onChange={ changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formikProps, config) }
+                            className={ error ? ' is-invalid ' : '' }
+                            onChange={
+                                changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formikProps, config)
+                            }
                             { ...this.toolbarOptions }
                             { ... attributes } />
                         }
@@ -86,7 +101,7 @@ class Wysiwyg extends React.Component {
                             <textarea
                                 id={ 'ql-show-html-' + name }
                                 name={ name }
-                                className="form-control"
+                                className={ textareaClass }
                                 rows="10"
                                 value={ value }
                                 onChange={ changeHandler.bind(this, handleChange, formikProps, config) } />

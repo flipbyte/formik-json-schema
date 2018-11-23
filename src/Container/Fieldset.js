@@ -9,6 +9,8 @@ class Fieldset extends React.Component {
         this.state = {
             collapsed: this.collapsible && this.collapsed ? true : false,
         };
+
+        this.toggle = this.toggle.bind(this);
     }
 
     get collapsible() {
@@ -30,30 +32,39 @@ class Fieldset extends React.Component {
 
     render() {
         const {
-            config: { title, elements },
+            config: {
+                name,
+                title,
+                elements,
+                cardClass = 'card flutter-fieldset',
+                cardHeaderClass = 'card-header',
+                cardHeaderActionsClass = 'card-header-actions',
+                cardBodyClass = 'card-body'
+            },
             formikProps
         } = this.props;
 
         return (
-            <div className="card flutter-fieldset">
+            <div className={ cardClass }>
                 { !!title &&
-                    <div className="card-header" onClick={ (event) => this.toggle(event) }>
+                    <div className={ cardHeaderClass } onClick={ this.toggle }>
                         <i className="fa fa-align-justify"></i>
                         { title }
-                        <div className="card-header-actions">
-                            <a className="card-header-action btn btn-minimize">
+                        <div className={ cardHeaderActionsClass }>
+                            { this.collapsible && <a className="card-header-action btn btn-minimize">
                                 <i className={ this.state.collapsed ? 'icon-arrow-down' : 'icon-arrow-up' }></i>
-                            </a>
+                            </a> }
                         </div>
                     </div>
                 }
                 <div className={ 'collapse ' + (!this.state.collapsed ? 'show': '') }>
-                    <div className="card-body">
+                    <div className={ cardBodyClass }>
                         { _.map(elements, (element, key) =>
                             <Element
                                 key={ key }
                                 config={ element }
                                 formikProps={ formikProps }
+                                containerName={ name }
                                 update={ !this.state.collapsed }/>)
                         }
                     </div>
