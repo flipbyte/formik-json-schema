@@ -28,12 +28,12 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                         { _.map(fields, ({ label, width }, key) =>
                             <th key={ key } style={{ width: width + 'px' }}>{ label }</th>
                         ) }
-                        { !!buttons.remove && <th></th> }
+                        { !!buttons && !!buttons.remove && <th></th> }
                     </tr>
                 </thead>
                 <tbody>
                     { hasValue ? arrayValues.map( (data, index) =>
-                        <tr key={ index }>
+                        <tr key={ index } draggable="true">
                             { _.map(fields, ({ label, name, width, ...colProps }, key) => {
                                 let element = _.assign({}, colProps);
                                 element.name = joinNames(fieldArrayName, index, name);
@@ -46,7 +46,7 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                                     </td>
                                 );
                             }) }
-                            { !! buttons.remove &&
+                            { !!buttons && !!buttons.remove &&
                                 <td>
                                     <button
                                         type="button"
@@ -60,7 +60,7 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                 </tbody>
                 <tfoot>
                     <tr>
-                        { !!buttons.add &&
+                        { !!buttons && !!buttons.add &&
                             <td colSpan={ _.size(fields) + 1 }>
                                 <button
                                     type="button"
