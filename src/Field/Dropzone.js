@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone'
 import Thumb from './Thumb'
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const CodeEditor = ({ config, formikProps, submitCountToValidate, containerName }) => {
+const Dropzone = ({ config, formikProps, submitCountToValidate, containerName }) => {
     const {
         name: elementName,
         label,
