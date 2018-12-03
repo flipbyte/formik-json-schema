@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Element from '../Element';
+import { joinNames } from '../utils';
 import React, { Component } from 'react';
 
 class Tabs extends React.Component {
@@ -48,6 +49,7 @@ class Tabs extends React.Component {
             config: {
                 name,
                 tabs,
+                prefixNameToElementName = false,
                 cardClass = 'card',
                 cardBodyClass = 'card-body',
                 rowClass = 'row',
@@ -84,15 +86,20 @@ class Tabs extends React.Component {
                                 { _.map(this.tabContent, ( tabContent, tabKey ) =>
                                     <div
                                         key={ tabKey }
-                                        className={ tabPaneClass + ( this.state.activeTab == tabKey ? tabActiveClass : '' ) }>
-                                        { _.map(tabContent, ( content, key ) =>
-                                            <Element
+                                        className={
+                                            tabPaneClass + ( this.state.activeTab == tabKey ? tabActiveClass : '' )
+                                        }>
+                                        { _.map(tabContent, ({ name: elementName, ...rest }, key ) => {
+                                            let element = _.assign({}, rest);
+                                            element.name = prefixNameToElementName
+                                                ? joinNames(name, elementName) : elementName;
+
+                                            return <Element
                                                 key={ key }
-                                                config={ content }
+                                                config={ element }
                                                 formikProps={ formikProps }
-                                                containerName={ name }
-                                                update={ this.state.activeTab == tabKey }/>
-                                        ) }
+                                                update={ this.state.activeTab == tabKey } />
+                                        }) }
                                     </div>
                                 ) }
                             </div>

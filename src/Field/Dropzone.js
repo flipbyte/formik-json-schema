@@ -5,9 +5,9 @@ import Dropzone from 'react-dropzone'
 import Thumb from './Thumb'
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Dropzone = ({ config, formikProps, submitCountToValidate, containerName }) => {
+const Dropzone = ({ config, formikProps, submitCountToValidate }) => {
     const {
-        name: elementName,
+        name,
         label,
         options,
         defaultValue,
@@ -16,13 +16,11 @@ const Dropzone = ({ config, formikProps, submitCountToValidate, containerName })
         placeholder,
         zoneActiveText,
         attributes,
-        prefixContainerName = false,
         labelClass = '',
         inputClass = 'dropzone',
         formGroupClass = 'form-group',
     } = config;
     const { values, setFieldValue } = formikProps;
-    const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
     const error = hasError(name, submitCountToValidate, formikProps);
     const selectedValue = _.get(values, name, defaultValue);
 

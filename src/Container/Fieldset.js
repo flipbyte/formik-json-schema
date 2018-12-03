@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Element from '../Element';
+import { joinNames } from '../utils';
 import React, { Component } from 'react';
 
 class Fieldset extends React.Component {
@@ -36,6 +37,7 @@ class Fieldset extends React.Component {
                 name,
                 title,
                 elements,
+                prefixNameToElementName = false,
                 cardClass = 'card flutter-fieldset',
                 cardHeaderClass = 'card-header',
                 cardHeaderActionsClass = 'card-header-actions',
@@ -59,14 +61,17 @@ class Fieldset extends React.Component {
                 }
                 <div className={ 'collapse ' + (!this.state.collapsed ? 'show': '') }>
                     <div className={ cardBodyClass }>
-                        { _.map(elements, (element, key) =>
-                            <Element
+                        { _.map(elements, ({ name: elementName, ...rest }, key) => {
+                            let element = _.assign({}, rest);
+                            element.name = prefixNameToElementName ? joinNames(name, elementName) : elementName;
+
+                            return <Element
                                 key={ key }
                                 config={ element }
                                 formikProps={ formikProps }
                                 containerName={ name }
-                                update={ !this.state.collapsed }/>)
-                        }
+                                update={ !this.state.collapsed }/>
+                        }) }
                     </div>
                 </div>
             </div>

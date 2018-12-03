@@ -55,22 +55,20 @@ class Wysiwyg extends React.Component {
     }
 
     render() {
-        const { config, formikProps, submitCountToValidate, containerName } = this.props;
+        const { config, formikProps, submitCountToValidate } = this.props;
         const {
-            name: elementName,
+            name,
             label,
             type,
             attributes,
             options,
             rows,
-            prefixContainerName = false,
             labelClass = '',
             inputClass = 'form-control',
             formGroupClass = 'form-group',
             textareaClass = 'form-control'
         } = config;
         const { setFieldValue, handleChange } = formikProps;
-        const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
         const value = _.get(formikProps.values, name, '');
         const error = hasError(name, submitCountToValidate, formikProps);
 

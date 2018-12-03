@@ -1,16 +1,20 @@
 import _ from 'lodash';
 import React from 'react';
 import Element from '../Element';
+import { joinNames } from '../utils';
 
 const Form = ({ config, formikProps }) => {
-    const { elements, htmlClass = 'form-horizontal' } = config;
+    const { name, elements, htmlClass = 'form-horizontal', prefixNameToElementName = false } = config;
     const { handleSubmit, handleReset } = formikProps;
 
     return(
         <form className={ htmlClass } onSubmit={ handleSubmit } onReset={ handleReset }>
-            { _.map(elements, ( element, key ) =>
-                <Element key={ key } config={ element } formikProps={ formikProps } />
-            ) }
+            { _.map(elements, ( { name: elementName, ...rest }, key ) => {
+                let element = _.assign({}, rest);
+                element.name = prefixNameToElementName ? joinNames(name, elementName) : elementName;
+
+                return <Element key={ key } config={ element } formikProps={ formikProps } />
+            }) }
         </form>
     );
 }

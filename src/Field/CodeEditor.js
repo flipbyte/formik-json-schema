@@ -5,20 +5,18 @@ import ErrorMessage from './ErrorMessage';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
-const CodeEditor = ({ config, formikProps, submitCountToValidate, containerName }) => {
+const CodeEditor = ({ config, formikProps, submitCountToValidate }) => {
     const {
-        name: elementName,
+        name,
         label,
         options,
         defaultValue,
         attributes,
-        prefixContainerName = false,
         labelClass = '',
         inputClass = '',
         formGroupClass = 'form-group'
     } = config;
     const { values, setFieldValue } = formikProps;
-    const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
     const error = hasError(name, submitCountToValidate, formikProps);
     const selectedValue = _.get(values, name, defaultValue);
 

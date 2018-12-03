@@ -4,20 +4,18 @@ import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
-const Switch = ({ config, formikProps, submitCountToValidate, containerName }) => {
+const Switch = ({ config, formikProps, submitCountToValidate }) => {
     const {
-        name: elementName,
+        name,
         label,
         attributes,
         dataOn,
         dataOff,
-        prefixContainerName = false,
         labelClass = '',
         inputClass = 'switch',
         formGroupClass = 'form-group'
     } = config;
     const { values, setFieldValue } = formikProps;
-    const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
     const error = hasError(name, submitCountToValidate, formikProps);
 
     return (

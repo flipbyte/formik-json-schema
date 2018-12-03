@@ -4,19 +4,17 @@ import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Radio = ({ config, formikProps, submitCountToValidate, containerName }) => {
+const Radio = ({ config, formikProps, submitCountToValidate }) => {
     const {
-        name: elementName,
+        name,
         type,
         attributes,
         options,
-        prefixContainerName = false,
         labelClass = '',
         inputClass = 'form-check-input',
         formGroupClass = 'form-group'
     } = config;
     const { values, handleChange } = formikProps;
-    const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
     const error = hasError(name, submitCountToValidate, formikProps);
 
     return (

@@ -16,21 +16,19 @@ const prepareOptions = ( options ) =>
         return result;
     }, [])
 
-const ReactSelect = ({ config, formikProps, submitCountToValidate, containerName }) => {
+const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
     const {
-        name: elementName,
+        name,
         label,
         options: initialOptions,
         defaultValue,
         multi,
         noOptionsMessage,
-        prefixContainerName = false,
         labelClass = '',
         inputClass = '',
         formGroupClass = 'form-group'
     } = config;
     const { values, setFieldValue } = formikProps;
-    const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
     const error = hasError(name, submitCountToValidate, formikProps);
     const options = prepareOptions(initialOptions);
     const selectedValue = _.get(values, name, defaultValue);

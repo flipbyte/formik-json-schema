@@ -4,20 +4,18 @@ import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Textarea = ({ config, formikProps, submitCountToValidate, containerName }) => {
+const Textarea = ({ config, formikProps, submitCountToValidate }) => {
     const {
-        name: elementName,
+        name,
         label,
         type,
         attributes,
         rows,
-        prefixContainerName = false,
         labelClass = '',
         inputClass = 'form-control',
         formGroupClass = 'form-group'
     } = config;
     const { values, handleChange } = formikProps;
-    const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
     const error = hasError(name, submitCountToValidate, formikProps);
 
     return (

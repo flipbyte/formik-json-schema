@@ -4,9 +4,9 @@ import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Text = ({ config, formikProps, submitCountToValidate, containerName }) => {
+const Text = ({ config, formikProps, submitCountToValidate }) => {
     const {
-        name: elementName,
+        name,
         label,
         type,
         renderer,
@@ -14,7 +14,6 @@ const Text = ({ config, formikProps, submitCountToValidate, containerName }) => 
         fieldType,
         defaultValue,
         icon,
-        prefixContainerName = false,
         labelClass = '',
         inputClass = 'form-control',
         formGroupClass = 'form-group',
@@ -23,7 +22,6 @@ const Text = ({ config, formikProps, submitCountToValidate, containerName }) => 
 
     const { values, setFieldValue, handleChange, handleBlur } = formikProps;
     const isInputGroup = icon ? true : false;
-    const name = prefixContainerName && containerName ? joinNames(containerName, elementName) : elementName;
     const error = hasError(name, submitCountToValidate, formikProps);
 
     return (
