@@ -49,7 +49,7 @@ class Tabs extends React.Component {
             config: {
                 name,
                 tabs,
-                prefixNameToElementName = false,
+                prefixNameToElement = false,
                 cardClass = 'card',
                 cardBodyClass = 'card-body',
                 rowClass = 'row',
@@ -91,7 +91,7 @@ class Tabs extends React.Component {
                                         }>
                                         { _.map(tabContent, ({ name: elementName, ...rest }, key ) => {
                                             let element = _.assign({}, rest);
-                                            element.name = prefixNameToElementName
+                                            element.name = prefixNameToElement
                                                 ? joinNames(name, elementName) : elementName;
 
                                             return <Element

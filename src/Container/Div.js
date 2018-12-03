@@ -7,12 +7,12 @@ const Div = ({ config: {
     name,
     elements,
     htmlClass,
-    prefixNameToElementName = false
+    prefixNameToElement = false
 }, formikProps }) =>
     <div className={ htmlClass }>
         { _.map(elements, ({ name: elementName, ...rest }, key) => {
             let element = _.assign({}, rest);
-            element.name = prefixNameToElementName ? joinNames(name, elementName) : elementName;
+            element.name = prefixNameToElement ? joinNames(name, elementName) : elementName;
 
             return <Element key={ key } config={ element } formikProps={ formikProps } containerName={ name } />
         }) }

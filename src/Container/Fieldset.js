@@ -37,7 +37,7 @@ class Fieldset extends React.Component {
                 name,
                 title,
                 elements,
-                prefixNameToElementName = false,
+                prefixNameToElement = false,
                 cardClass = 'card flutter-fieldset',
                 cardHeaderClass = 'card-header',
                 cardHeaderActionsClass = 'card-header-actions',
@@ -63,7 +63,7 @@ class Fieldset extends React.Component {
                     <div className={ cardBodyClass }>
                         { _.map(elements, ({ name: elementName, ...rest }, key) => {
                             let element = _.assign({}, rest);
-                            element.name = prefixNameToElementName ? joinNames(name, elementName) : elementName;
+                            element.name = prefixNameToElement ? joinNames(name, elementName) : elementName;
 
                             return <Element
                                 key={ key }
