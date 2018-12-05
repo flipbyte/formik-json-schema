@@ -74,7 +74,10 @@ const EditableGrid = ({ config, formikProps, fieldArrayName, arrayActions }) => 
                     </tr>
                 </thead>
                 { isSortable
-                    ? <SortableTableBody onSortEnd={ onSortEnd.bind(this, move) } { ...bodyProps } />
+                    ? <SortableTableBody
+                        distance={ 10 }
+                        onSortEnd={ onSortEnd.bind(this, move) }
+                        { ...bodyProps } />
                     : renderTableBody(bodyProps)
                 }
                 <tfoot>
