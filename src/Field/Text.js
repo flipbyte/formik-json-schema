@@ -9,7 +9,6 @@ const Text = ({ config, formikProps, submitCountToValidate }) => {
         name,
         label,
         type,
-        renderer,
         attributes,
         fieldType,
         defaultValue,
