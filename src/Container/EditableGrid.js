@@ -69,8 +69,6 @@ const EditableGrid = ({
                     arrayValues, hasValue, fields, formikProps, fieldArrayName, arrayActions, buttons, isSortable
                 };
 
-                console.log(bodyProps, arrayFields);
-
                 return (
                     <div className={ tableContainerClass }>
                         <table className={ tableClass } style={{ width: tableWidth }}>
