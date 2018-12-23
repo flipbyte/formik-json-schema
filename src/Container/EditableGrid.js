@@ -4,23 +4,25 @@ import { getIn } from 'formik';
 import Element from '../Element';
 import { FieldArray } from 'formik';
 import { joinNames } from '../utils';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 
 const onSortEnd = ( move, { oldIndex, newIndex } ) => move(oldIndex, newIndex);
 const SortableItem = SortableElement((props) => renderTableRow(props));
 const SortableTableBody = SortableContainer((props) => renderTableBody(props));
+const SortableRowHandle = SortableHandle((props) => renderSortableHandle(props));
 
 const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) =>
     <tbody>
         { hasValue ? arrayValues.map(( data, index ) =>
             isSortable
-                ? <SortableItem key={ index } index={ index } rowIndex={ index } { ...rowProps } />
+                ? <SortableItem key={ index } index={ index } rowIndex={ index } isSortable={ isSortable } { ...rowProps } />
                 : renderTableRow({ ...rowProps, index, rowIndex: index })
         ) : null }
     </tbody>
 
-const renderTableRow = ({ fieldArrayName, fields, formikProps, arrayActions, rowIndex, buttons }) =>
+const renderTableRow = ({ fieldArrayName, fields, formikProps, arrayActions, rowIndex, buttons, isSortable }) =>
     <tr key={ rowIndex }>
+        { isSortable && <SortableRowHandle /> }
         { _.map(fields, ({ label, name, width, ...colProps }, key) => {
             let element = _.assign({}, colProps);
             element.name = joinNames(fieldArrayName, rowIndex, name);
@@ -43,6 +45,8 @@ const renderTableRow = ({ fieldArrayName, fields, formikProps, arrayActions, row
             </td>
         }
     </tr>
+
+const renderSortableHandle = ( props ) => <td><i class="fas fa-grip-vertical"></i></td>
 
 const EditableGrid = ({
     config: {
@@ -74,6 +78,7 @@ const EditableGrid = ({
                         <table className={ tableClass } style={{ width: tableWidth }}>
                             <thead>
                                 <tr>
+                                    { isSortable && <th></th>}
                                     { _.map(fields, ({ label, width }, key) =>
                                         <th key={ key } style={{ width: width }}>{ label }</th>
                                     ) }
@@ -84,6 +89,7 @@ const EditableGrid = ({
                                 ? <SortableTableBody
                                     distance={ 10 }
                                     onSortEnd={ onSortEnd.bind(this, arrayActions.move) }
+                                    useDragHandle={ true }
                                     { ...bodyProps } />
                                 : renderTableBody(bodyProps)
                             }
