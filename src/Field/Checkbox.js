@@ -12,7 +12,7 @@ const Checkbox = ({ config, formikProps, submitCountToValidate }) => {
         attributes,
         description,
         labelClass = '',
-        inputClass = 'form-check-input',
+        fieldClass = 'form-check-input',
         formGroupClass = 'form-group'
     } = config;
     const { values, handleChange } = formikProps;
@@ -26,7 +26,7 @@ const Checkbox = ({ config, formikProps, submitCountToValidate }) => {
                     <input
                         id={ name }
                         name={ name }
-                        className={ inputClass + ( error ? ' is-invalid ' : '' ) }
+                        className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                         type="checkbox"
                         checked={ _.get(values, name) }
                         onChange={ changeHandler.bind(this, handleChange, formikProps, config) }

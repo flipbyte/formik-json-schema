@@ -11,7 +11,7 @@ const Radio = ({ config, formikProps, submitCountToValidate }) => {
         attributes,
         options,
         labelClass = '',
-        inputClass = 'form-check-input',
+        fieldClass = 'form-check-input',
         formGroupClass = 'form-group'
     } = config;
     const { values, handleChange } = formikProps;
@@ -26,7 +26,7 @@ const Radio = ({ config, formikProps, submitCountToValidate }) => {
                         <input
                             name={ name }
                             type="radio"
-                            className={ inputClass + ( error ? ' is-invalid ' : '' ) }
+                            className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                             id={ name + '_' + option.value }
                             value={ option.value }
                             checked={ getIn(values, name) === option.value }

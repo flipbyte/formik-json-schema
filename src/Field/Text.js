@@ -14,7 +14,7 @@ const Text = ({ config, formikProps, submitCountToValidate }) => {
         defaultValue,
         icon,
         labelClass = '',
-        inputClass = 'form-control',
+        fieldClass = 'form-control',
         formGroupClass = 'form-group',
         inputGroupClass = 'input-group'
     } = config;
@@ -37,7 +37,7 @@ const Text = ({ config, formikProps, submitCountToValidate }) => {
                         id={ name }
                         name={ name }
                         type={ fieldType }
-                        className={ inputClass + ( error ? ' is-invalid ' : '' ) }
+                        className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                         value={ _.get(values, name, '') }
                         onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
                         { ...attributes } />
@@ -46,7 +46,7 @@ const Text = ({ config, formikProps, submitCountToValidate }) => {
                     id={ name }
                     name={ name }
                     type={ fieldType }
-                    className={ inputClass + ( error ? ' is-invalid ' : '' ) }
+                    className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                     value={ _.get(values, name, '') }
                     onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
                     { ...attributes } />

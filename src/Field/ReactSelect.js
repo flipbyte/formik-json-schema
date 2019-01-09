@@ -25,7 +25,7 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
         multi,
         noOptionsMessage,
         labelClass = '',
-        inputClass = '',
+        fieldClass = '',
         formGroupClass = 'form-group'
     } = config;
     const { values, setFieldValue } = formikProps;
@@ -46,7 +46,7 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
                 id={ name }
                 name={ name }
                 options={ options }
-                className={ inputClass + ( error ? ' is-invalid ' : '') }
+                className={ fieldClass + ( error ? ' is-invalid ' : '') }
                 multi={ multi }
                 onChange={
                     (value) => changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, value.value)

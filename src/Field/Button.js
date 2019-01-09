@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 const Button = ({ config, formikProps }) => {
-    const { label, htmlClass, buttonType } = config;
+    const { label, fieldClass, buttonType } = config;
     const { values, isSubmitting, errors } = formikProps;
 
     let buttonProps = {
         type: buttonType ? buttonType : 'button' ,
-        className: 'btn ' + htmlClass,
+        className: 'btn ' + fieldClass,
         disabled: isSubmitting
     };
 

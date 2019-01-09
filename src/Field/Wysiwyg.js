@@ -64,7 +64,7 @@ class Wysiwyg extends React.Component {
             options,
             rows,
             labelClass = '',
-            inputClass = 'form-control',
+            fieldClass = 'form-control',
             formGroupClass = 'form-group',
             textareaClass = 'form-control'
         } = config;
@@ -75,7 +75,7 @@ class Wysiwyg extends React.Component {
         return (
             <div className={ formGroupClass }>
                 <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
-                <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name} ${inputClass}` }>
+                <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name} ${fieldClass}` }>
                     <div className="col-md-12 d-flex justify-content-end">
                         <button
                             type="button"

@@ -12,7 +12,7 @@ const Switch = ({ config, formikProps, submitCountToValidate }) => {
         dataOn,
         dataOff,
         labelClass = '',
-        inputClass = 'switch',
+        fieldClass = 'switch',
         formGroupClass = 'form-group'
     } = config;
     const { values, setFieldValue } = formikProps;
@@ -21,7 +21,7 @@ const Switch = ({ config, formikProps, submitCountToValidate }) => {
     return (
         <div className={ formGroupClass }>
             <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
-            <label className={ inputClass + ( error ? ' is-invalid ' : '' ) }>
+            <label className={ fieldClass + ( error ? ' is-invalid ' : '' ) }>
                 <input type="checkbox"
                     className="switch-input"
                     defaultChecked={ getIn(values, name) }

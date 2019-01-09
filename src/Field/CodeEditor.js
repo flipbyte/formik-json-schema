@@ -13,7 +13,7 @@ const CodeEditor = ({ config, formikProps, submitCountToValidate }) => {
         defaultValue,
         attributes,
         labelClass = '',
-        inputClass = '',
+        fieldClass = '',
         formGroupClass = 'form-group'
     } = config;
     const { values, setFieldValue } = formikProps;
@@ -27,7 +27,7 @@ const CodeEditor = ({ config, formikProps, submitCountToValidate }) => {
                 id={ name }
                 name={ name }
                 options={ options }
-                className={ inputClass + ( error ? ' is-invalid ' : '' ) }
+                className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                 onChange={ ( editor, data, value ) =>
                     changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, value)
                 }

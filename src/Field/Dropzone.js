@@ -17,7 +17,7 @@ const Dropzone = ({ config, formikProps, submitCountToValidate }) => {
         zoneActiveText,
         attributes,
         labelClass = '',
-        inputClass = 'dropzone',
+        fieldClass = 'dropzone',
         formGroupClass = 'form-group',
     } = config;
     const { values, setFieldValue } = formikProps;
@@ -28,7 +28,7 @@ const Dropzone = ({ config, formikProps, submitCountToValidate }) => {
         <div className={ formGroupClass }>
             <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
             <Dropzone
-                className={ inputClass + ( error ? ' is-invalid ' : '' )}
+                className={ fieldClass + ( error ? ' is-invalid ' : '' )}
                 accept={ accept }
                 disabled={ disabled }
                 onDrop={ acceptedFiles => {

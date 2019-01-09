@@ -12,7 +12,7 @@ const Textarea = ({ config, formikProps, submitCountToValidate }) => {
         attributes,
         rows,
         labelClass = '',
-        inputClass = 'form-control',
+        fieldClass = 'form-control',
         formGroupClass = 'form-group'
     } = config;
     const { values, handleChange } = formikProps;
@@ -24,7 +24,7 @@ const Textarea = ({ config, formikProps, submitCountToValidate }) => {
             <textarea
                 id={ name }
                 name={ name }
-                className={ inputClass + ( error ? ' is-invalid ' : '' ) }
+                className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                 value={ _.get(values, name, '') }
                 onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
                 { ...attributes } />
