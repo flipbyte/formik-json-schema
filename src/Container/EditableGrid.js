@@ -46,7 +46,7 @@ const renderTableRow = ({ fieldArrayName, fields, formikProps, arrayActions, row
         }
     </tr>
 
-const renderSortableHandle = ( props ) => <td><i class="fas fa-grip-vertical"></i></td>
+const renderSortableHandle = ( props ) => <td><i className="fas fa-grip-vertical"></i></td>
 
 const EditableGrid = ({
     config: {
