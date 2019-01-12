@@ -3,7 +3,7 @@ import React from 'react';
 import Label from './Label';
 import Select from 'react-select';
 import ErrorMessage from './ErrorMessage';
-import AsyncSelect from 'react-select/lib/Async';
+import CreatableSelect from 'react-select/lib/Creatable';
 import { hasError, changeHandler, promiseHandler, setFieldValueWrapper, joinNames } from '../utils';
 
 const prepareOptions = ( options ) =>
@@ -24,10 +24,9 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
         options: initialOptions,
         defaultValue,
         multi,
-        loadOptions,
-        isAsync = false,
-        defaultOptions = false,
-        cacheOptions = false,
+        isCreatable = false,
+        isClearable = false,
+        isDisabled = false,
         labelClass = '',
         fieldClass = '',
         formGroupClass = 'form-group',
@@ -37,29 +36,31 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
     const error = hasError(name, submitCountToValidate, formikProps);
     const options = prepareOptions(initialOptions);
     const selectedValue = _.get(values, name, defaultValue);
-    const selectedOption = options.filter(option => option.value == selectedValue);
+    const selectedOption = selectedValue && !_.isEmpty(options)
+        ? options.filter(option => option.value == selectedValue) : null;
 
     var selectProps = {
+        name,
+        multi,
+        noOptionsMessage,
+        isClearable,
+        isDisabled,
         id: name,
-        name: name,
         className: fieldClass + ( error ? ' is-invalid ' : '' ),
-        multi: multi,
-        onChange: ( value ) => changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, value.value),
-        value: selectedOption,
-        noOptionsMessage: noOptionsMessage
+        onChange: ( value ) =>
+            changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, value.value),
     };
+    selectProps = _.assign(selectProps, { options });
 
-    var otherProps = isAsync ? {
-        loadOptions: promiseHandler.bind(this, loadOptions, formikProps, config),
-        cacheOptions,
-        defaultOptions
-    } : { options };
-    selectProps = _.assign(selectProps, otherProps);
+    if(selectedOption) {
+        selectProps.value = selectedOption;
+    }
 
+    const SelectComponent = isCreatable ? CreatableSelect : Select;
     return (
         <div className={ formGroupClass }>
             <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
-            { isAsync ? <AsyncSelect { ...selectProps } /> : <Select { ...selectProps } /> }
+            <SelectComponent { ...selectProps } />
             <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
         </div>
     );
