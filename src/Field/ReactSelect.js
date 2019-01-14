@@ -23,7 +23,7 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
         label,
         options: initialOptions,
         defaultValue,
-        multi,
+        isMulti,
         isCreatable = false,
         isClearable = false,
         isDisabled = false,
@@ -41,7 +41,7 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
 
     var selectProps = {
         name,
-        multi,
+        isMulti,
         noOptionsMessage,
         isClearable,
         isDisabled,
