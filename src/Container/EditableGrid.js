@@ -64,6 +64,7 @@ const EditableGrid = ({
     const arrayValues = getIn(values, fieldArrayName);
     const hasValue = _.size(arrayValues) > 0;
     const tableWidth = _.map(fields, 'width').reduce(( sum, num ) => sum + num, 50) || '100%';
+    const additionalColumnCount = isSortable ? 2 : 1;
 
     return (
         <FieldArray
@@ -96,7 +97,7 @@ const EditableGrid = ({
                             <tfoot>
                                 <tr>
                                     { !!buttons && !!buttons.add &&
-                                        <td colSpan={ _.size(fields) + 1 }>
+                                        <td colSpan={ _.size(fields) + additionalColumnCount }>
                                             <button
                                                 type="button"
                                                 className="btn btn-secondary"
