@@ -1,7 +1,9 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
+import { hasError, clickHandler, joinNames, setFieldValueWrapper } from '../utils';
 
 const Button = ({ config, formikProps }) => {
-    const { label, fieldClass, buttonType } = config;
+    const { label, fieldClass, buttonType, onClick } = config;
     const { values, isSubmitting, errors } = formikProps;
 
     let buttonProps = {
@@ -10,8 +12,7 @@ const Button = ({ config, formikProps }) => {
         disabled: isSubmitting
     };
 
-    // let onClick = (action && formikProps.hasOwnProperty(action)) ? formikProps[action] : '';
-    // if(onClick) buttonProps.onClick = onClick;
+    if(_.isFunction(onClick)) buttonProps.onClick = onClick.bind(this, formikProps, config);
 
     return <button { ...buttonProps }>
         { label } { isSubmitting && <i className="fa fa-spinner fa-spin" /> }
