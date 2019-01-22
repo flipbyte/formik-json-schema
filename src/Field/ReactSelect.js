@@ -4,7 +4,7 @@ import Label from './Label';
 import Select from 'react-select';
 import ErrorMessage from './ErrorMessage';
 import CreatableSelect from 'react-select/lib/Creatable';
-import { hasError, changeHandler, promiseHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
 const prepareOptions = ( options ) =>
     _.reduce(options, (result, value) => {

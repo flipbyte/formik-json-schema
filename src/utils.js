@@ -8,9 +8,6 @@ export const changeHandler = ( handler, formikProps, { onChange, ...fieldConfig 
     _.isFunction(onChange) && onChange(formikProps, fieldConfig, data);
 }
 
-export const promiseHandler = ( handler, formikProps, config, extra, data ) =>
-    handler(formikProps, config, extra, data);
-
 export const setFieldValueWrapper = ( setFieldValue, name ) => ( value ) =>
     setFieldValue(name, value);
 
