@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone'
 import Thumb from './Thumb'
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Dropzone = ({ config, formikProps, submitCountToValidate }) => {
+const FileUploader = ({ config, formikProps, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -67,4 +67,4 @@ const Dropzone = ({ config, formikProps, submitCountToValidate }) => {
     );
 }
 
-export default Dropzone
+export default FileUploader
