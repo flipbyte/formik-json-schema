@@ -54,7 +54,7 @@ class Fieldset extends React.Component {
                         { title }
                         <div className={ cardHeaderActionsClass }>
                             { this.collapsible && <a className="card-header-action btn btn-minimize">
-                                <i className={ this.state.collapsed ? 'icon-arrow-down' : 'icon-arrow-up' }></i>
+                                <i className={ 'fas ' + (this.state.collapsed ? 'fa-angle-down' : 'fa-angle-up') }></i>
                             </a> }
                         </div>
                     </div>

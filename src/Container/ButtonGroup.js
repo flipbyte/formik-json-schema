@@ -2,9 +2,17 @@ import _ from 'lodash';
 import React from 'react';
 import Element from '../Element';
 
-const ButtonGroup = ({ config: { title, elements }, formikProps }) =>
-    <div className="buttons-container clearfix">
-        <div className="btn-group d-flex justify-content-end">
+const ButtonGroup = ({
+    config: {
+        title,
+        elements,
+        buttonsContainerClass = 'buttons-container',
+        buttonGroupClass = 'btn-group'
+    },
+    formikProps
+}) =>
+    <div className={ buttonsContainerClass }>
+        <div className={ buttonGroupClass }>
             { _.map(elements, (element, key) =>
                 <Element key={ key } config={ element } formikProps={ formikProps } />)
             }

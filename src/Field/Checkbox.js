@@ -13,7 +13,8 @@ const Checkbox = ({ config, formikProps, submitCountToValidate }) => {
         description,
         labelClass = '',
         fieldClass = 'form-check-input',
-        formGroupClass = 'form-group'
+        formGroupClass = 'form-group',
+        formCheckClass = 'form-check'
     } = config;
     const { values, handleChange } = formikProps;
     const error = hasError(name, submitCountToValidate, formikProps);
@@ -21,7 +22,7 @@ const Checkbox = ({ config, formikProps, submitCountToValidate }) => {
     return (
         <div className={ formGroupClass }>
             <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
-            <div className="form-check">
+            <div className={ formCheckClass }>
                 <label htmlFor={ name } className="form-check-label">
                     <input
                         id={ name }

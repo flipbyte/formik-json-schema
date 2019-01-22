@@ -6,38 +6,6 @@ import 'react-quill/dist/quill.snow.css';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
-const defaultOptions = {
-    modules: {
-        toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote', 'code-block'],
-
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            // [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-            // [{ 'direction': 'rtl' }],                         // text direction
-
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-
-            ['clean']
-        ],
-        clipboard: {
-            matchVisual: false,
-        },
-    },
-    formats: [
-        'header', 'font', 'size',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent',
-        'link', 'image', 'video'
-    ]
-};
-
 class Wysiwyg extends React.Component {
     constructor(props) {
         super(props);
@@ -46,7 +14,7 @@ class Wysiwyg extends React.Component {
             html: '',
         };
 
-        this.toolbarOptions = _.assign({}, ( this.props.options ) ? this.props.options : defaultOptions);
+        this.toolbarOptions = _.assign({}, ( this.props.options ) ? this.props.options : Wysiwyg.defaultOptions);
         this.toggleEditor = this.toggleEditor.bind(this);
     }
 
@@ -64,7 +32,6 @@ class Wysiwyg extends React.Component {
             options,
             rows,
             labelClass = '',
-            fieldClass = 'form-control',
             formGroupClass = 'form-group',
             textareaClass = 'form-control'
         } = config;
@@ -75,7 +42,7 @@ class Wysiwyg extends React.Component {
         return (
             <div className={ formGroupClass }>
                 <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
-                <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name} ${fieldClass}` }>
+                <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name}` }>
                     <div className="col-md-12 d-flex justify-content-end">
                         <button
                             type="button"
@@ -111,5 +78,37 @@ class Wysiwyg extends React.Component {
         );
     }
 }
+
+Wysiwyg.defaultOptions = {
+    modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block'],
+
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            // [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+            // [{ 'direction': 'rtl' }],                         // text direction
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+
+            ['clean']
+        ],
+        clipboard: {
+            matchVisual: false,
+        },
+    },
+    formats: [
+        'header', 'font', 'size',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image', 'video'
+    ]
+};
 
 export default Wysiwyg;
