@@ -8,6 +8,7 @@ const Radio = ({ config, formikProps, submitCountToValidate }) => {
     const {
         name,
         type,
+        label,
         attributes,
         options,
         labelClass = '',
