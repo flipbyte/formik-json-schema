@@ -31,6 +31,7 @@ class Autocomplete extends Component {
         ];
         this.prepareCallbacks();
         this.autosuggestOptions = _.assign({ inputProps: {} }, this.props.config.options, this.callbacks);
+        this.inputClassName = this.autosuggestOptions.inputProps.className || 'react-autosuggest__input';
     }
 
     prepareCallbacks() {
@@ -54,7 +55,6 @@ class Autocomplete extends Component {
             type,
             attributes,
             defaultValue,
-            icon,
             options = {},
             labelClass = '',
             fieldClass = 'form-control',
@@ -64,10 +64,10 @@ class Autocomplete extends Component {
         const error = hasError(name, submitCountToValidate, formikProps);
         const value = _.get(values, name, '');
 
-
         this.autosuggestOptions.inputProps.value = value;
         this.autosuggestOptions.inputProps.onChange = ( event, { newValue, method } ) =>
-            changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, newValue)
+            changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, newValue);
+        this.autosuggestOptions.inputProps.className = this.inputClassName + ( error ? ' is-invalid ' : '' )
 
         return (
             <div className={ formGroupClass }>
