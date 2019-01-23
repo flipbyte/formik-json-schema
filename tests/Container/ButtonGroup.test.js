@@ -55,7 +55,7 @@ describe('ButtonGroup', () => {
         expect(wrapper.exists()).toEqual(true);
     });
 
-    it('throws error when no "elements" is not defined', () => {
+    it('throws error when "elements" is not defined', () => {
         const wrapper = mount(<Form { ...prepareForm({ elements: buttonsGroup }) } />);
         expect(console.error.threw).toEqual(true);
     });
