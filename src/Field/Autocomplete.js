@@ -4,7 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import React, { Component } from 'react';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames, setFieldValueWrapper } from '../utils';
-import theme from '../css/autocomplete.css';
+import '../css/autocomplete.css';
 
 class Autocomplete extends Component {
     constructor(props) {
@@ -16,19 +16,6 @@ class Autocomplete extends Component {
     }
 
     initOptions() {
-        this.autosuggestCallbackKeys = [
-            'onSuggestionsFetchRequested',
-            'onSuggestionsClearRequested',
-            'getSuggestionValue',
-            'renderSuggestion',
-            'onSuggestionSelected',
-            'onSuggestionHighlighted',
-            'shouldRenderSuggestions',
-            'renderSectionTitle',
-            'getSectionSuggestions',
-            'renderInputComponent',
-            'renderSuggestionsContainer'
-        ];
         this.prepareCallbacks();
         this.autosuggestOptions = _.assign({ inputProps: {} }, this.props.config.options, this.callbacks);
         this.inputClassName = this.autosuggestOptions.inputProps.className || 'react-autosuggest__input';
@@ -38,7 +25,7 @@ class Autocomplete extends Component {
         const { formikProps, config } = this.props;
         const stateUpdater = this.setState.bind(this);
 
-        this.callbacks = _.reduce(this.autosuggestCallbackKeys, ( callbacks, key ) => {
+        this.callbacks = _.reduce(Autocomplete.autosuggestCallbackKeys, ( callbacks, key ) => {
             if(_.isFunction(config.options[key])) {
                 callbacks[key] = config.options[key].bind(this, formikProps, config, { stateUpdater });
             }
@@ -78,5 +65,19 @@ class Autocomplete extends Component {
         );
     }
 }
+
+Autocomplete.autosuggestCallbackKeys = [
+    'onSuggestionsFetchRequested',
+    'onSuggestionsClearRequested',
+    'getSuggestionValue',
+    'renderSuggestion',
+    'onSuggestionSelected',
+    'onSuggestionHighlighted',
+    'shouldRenderSuggestions',
+    'renderSectionTitle',
+    'getSectionSuggestions',
+    'renderInputComponent',
+    'renderSuggestionsContainer'
+];
 
 export default Autocomplete;
