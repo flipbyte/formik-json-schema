@@ -2,7 +2,8 @@ import expect from 'expect'
 
 export const checkConsoleError = () => {
     expect.spyOn(console, 'error').andCall(msg => {
-        console.error.threw = true
+        console.error.threw = true;
+        // console.log(msg);
     })
 
     console.error.threw = false;
@@ -32,3 +33,7 @@ export const prepareForm = ({
         }
     }
 }
+
+export const prepareElement = ( type, renderer, props ) => ({ type, renderer, ...props });
+export const prepareContainer = ( renderer, props = {} ) => prepareElement('container', renderer, props);
+export const prepareField = ( renderer, props = {} ) => prepareElement('field', renderer, props);
