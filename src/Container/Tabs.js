@@ -2,6 +2,7 @@ import _ from 'lodash';
 import Element from '../Element';
 import { joinNames } from '../utils';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Tabs extends React.Component {
     constructor(props) {
@@ -87,7 +88,7 @@ class Tabs extends React.Component {
                                     <div
                                         key={ tabKey }
                                         className={
-                                            tabPaneClass + ( this.state.activeTab == tabKey ? tabActiveClass : '' )
+                                            tabPaneClass + ' ' + ( this.state.activeTab == tabKey ? tabActiveClass : '' )
                                         }>
                                         { _.map(tabContent, ({ name: elementName, ...rest }, key ) => {
                                             let element = _.assign({}, rest);
@@ -110,5 +111,24 @@ class Tabs extends React.Component {
         );
     }
 }
+
+Tabs.propTypes = {
+    config: PropTypes.shape({
+        name: PropTypes.string,
+        prefixNameToElement: PropTypes.bool,
+        tabs: PropTypes.object.isRequired,
+        cardClass: PropTypes.string,
+        cardBodyClass: PropTypes.string,
+        rowClass: PropTypes.string,
+        tabListClass: PropTypes.string,
+        tabListItemClass: PropTypes.string,
+        tabContentClass: PropTypes.string,
+        tabColumnClass: PropTypes.string,
+        contentColumnClass: PropTypes.string,
+        tabActiveClass: PropTypes.string,
+        tabPaneClass: PropTypes.string,
+    })
+}
+
 
 export default Tabs;

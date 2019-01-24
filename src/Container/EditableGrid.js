@@ -5,6 +5,7 @@ import Element from '../Element';
 import { FieldArray } from 'formik';
 import { joinNames } from '../utils';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
+import PropTypes from 'prop-types';
 
 const onSortEnd = ( move, { oldIndex, newIndex } ) => move(oldIndex, newIndex);
 const SortableItem = SortableElement((props) => renderTableRow(props));
@@ -112,6 +113,20 @@ const EditableGrid = ({
                 )
         }} />
     );
+}
+
+EditableGrid.propTypes = {
+    config: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        fields: PropTypes.object.isRequired,
+        buttons: PropTypes.exact({
+            add: PropTypes.string,
+            remove: PropTypes.string
+        }),
+        isSortable: PropTypes.bool,
+        tableContainerClass: PropTypes.string,
+        tableClass: PropTypes.string
+    })
 }
 
 export default EditableGrid;

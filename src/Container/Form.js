@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Element from '../Element';
 import { joinNames } from '../utils';
+import PropTypes from 'prop-types';
 
 const Form = ({ config, formikProps }) => {
     const { name, elements, htmlClass = 'form-horizontal', prefixNameToElement = false } = config;
@@ -17,6 +18,15 @@ const Form = ({ config, formikProps }) => {
             }) }
         </form>
     );
+}
+
+Form.propTypes = {
+    config: PropTypes.shape({
+        name: PropTypes.string,
+        htmlClass: PropTypes.string,
+        elements: PropTypes.object.isRequired,
+        prefixNameToElement: PropTypes.bool
+    })
 }
 
 export default Form;

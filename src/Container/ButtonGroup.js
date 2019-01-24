@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Element from '../Element';
 
 const ButtonGroup = ({
     config: {
-        title,
         elements,
         buttonsContainerClass = 'buttons-container',
         buttonGroupClass = 'btn-group'
@@ -18,5 +18,13 @@ const ButtonGroup = ({
             }
         </div>
     </div>
+
+ButtonGroup.propTypes = {
+    config: PropTypes.shape({
+        buttonsContainerClass: PropTypes.string,
+        buttonGroupClass: PropTypes.string,
+        elements: PropTypes.object.isRequired
+    })
+}
 
 export default ButtonGroup;
