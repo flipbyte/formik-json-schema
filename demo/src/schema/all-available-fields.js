@@ -64,13 +64,36 @@ export default {
                     type: "field",
                     renderer: "textarea",
                 },
-                checkbox: {
-                    name: "checkbox",
-                    label: "Checkbox",
+                singleCheckbox: {
+                    name: "singleCheckbox",
+                    label: "Multiple options",
                     type: "field",
                     renderer: "checkbox",
-                    labelClass: "mr-2 float-left",
-                    fieldClass: "d-inline float-left"
+                    labelClass: "mr-2",
+                    fieldClass: "d-inline",
+                    options: [{
+                        value: 'checkbox-1',
+                        label: 'Checkbox 1'
+                    }]
+                },
+                multiCheckbox: {
+                    name: "multiCheckbox",
+                    label: "Multiple options",
+                    type: "field",
+                    renderer: "checkbox",
+                    options: [{
+                        value: 'checkbox-1',
+                        label: 'Checkbox 1'
+                    }, {
+                        value: 'checkbox-2',
+                        label: 'Checkbox 2'
+                    }, {
+                        value: 'checkbox-3',
+                        label: 'Checkbox 3'
+                    }, {
+                        value: 'checkbox-4',
+                        label: 'Checkbox 4'
+                    }]
                 },
                 radio: {
                     name: "radio",
