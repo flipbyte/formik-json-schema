@@ -1,19 +1,19 @@
 # formik-json
 [Powered by Flipbyte](https://www.flipbyte.com/)
 
-[![Travis][build-badge]][build]
+[![Build Status][build-badge]][build]
 [![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+[![Coverage Status][coveralls-badge]][coveralls]
 
 formik-json is a wrapper for Formik to easily create forms using JSON / Javascript Object for defining the elements.
 
-[build-badge]: https://img.shields.io/travis/flipbyte/formik-json/master.png?style=flat-square
+[build-badge]: https://travis-ci.org/flipbyte/formik-json.svg?branch=master
 [build]: https://travis-ci.org/flipbyte/formik-json
 
 [npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
 [npm]: https://www.npmjs.org/package/npm-package
 
-[coveralls-badge]: https://img.shields.io/coveralls/flipbyte/formik-json/master.png?style=flat-square
+[coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json/badge.svg
 [coveralls]: https://coveralls.io/github/flipbyte/formik-json
 
 
