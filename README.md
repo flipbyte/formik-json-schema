@@ -4,6 +4,7 @@
 [![Build Status][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coverage Status][coveralls-badge]][coveralls]
+[![license][license-badge]][license]
 
 formik-json is a wrapper for Formik to easily create forms using JSON / Javascript Object for defining the elements.
 
@@ -15,6 +16,9 @@ formik-json is a wrapper for Formik to easily create forms using JSON / Javascri
 
 [coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json/badge.svg
 [coveralls]: https://coveralls.io/github/flipbyte/formik-json
+
+[license-badge]: https://badgen.now.sh/badge/license/MIT
+[license]: ./LICENSE
 
 ### Pre-requisites
 ----
