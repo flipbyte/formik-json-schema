@@ -10,12 +10,11 @@ formik-json is a wrapper for Formik to easily create forms using JSON / Javascri
 [build-badge]: https://travis-ci.org/flipbyte/formik-json.svg?branch=master
 [build]: https://travis-ci.org/flipbyte/formik-json
 
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
+[npm-badge]: https://img.shields.io/npm/v/formik-json.svg
+[npm]: https://www.npmjs.org/package/formik-json
 
 [coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json/badge.svg
 [coveralls]: https://coveralls.io/github/flipbyte/formik-json
-
 
 ### Pre-requisites
 ----
