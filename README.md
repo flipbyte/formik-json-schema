@@ -102,12 +102,13 @@ import { Form } from 'flutter-react-json-form';
 #### Form Component
 ----
 Form component requires the following properties:
+
+
 | Key | Description |
 | ------ | ------ |
 | schema | your schema object |
 | initialValues | check [<Formik />](https://jaredpalmer.com/formik/docs/api/formik) |
 | Formik properties| You can add any of the [<Formik />](https://jaredpalmer.com/formik/docs/api/formik) component props |
-
 
 #### Schema object
 ----
