@@ -19,9 +19,7 @@ Few of them already come packaged with the extension and few need to be installe
 You can install Formik-json using following steps.
 
 ```js
-$ Correct installation
-$ commands need to be
-$ added here
+$ npm i @flipbyte/formik-json
 ```
 
 ### Quick Start Guide
@@ -31,7 +29,7 @@ Once you've finished installation, you can add the form to any of your component
 #### Import the Form component
 
 ```js
-import { Form } from 'formik-json';
+import { Form } from '@flipbyte/formik-json';
 ```
 
 ##### Prepare your form object
@@ -148,20 +146,20 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | isSortable | Bool | whether the grid rows can be dragged and sorted |
 | | tableContainerClass | String | htmlClass for the div wrapping the editable-grid |
 | | tableClass | String | htmlClass for the main editable grid |
-| div | renderer| String | div |
+| div | renderer | String | div |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | | htmlClass | String | htmlClass for the div element |
-| fieldset | renderer | String |fielset |
+| fieldset | renderer | String | fieldset |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | | title | String | label for the fieldset |
 | | cardClass | String | htmlClass for the main wrapping container |
 | | cardHeaderClass | String | htmlClass for the header of the wrapping container |
 | | cardHeaderActionsClass | String | htmlClass for the container holding the disclose buttons in the header of the container |
 | | cardBodyClass | String | htmlClass for the body of the container |
-| form | renderer| String | form |
+| form | renderer | String | form |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | |  htmlClass | String | any character |
-| tabs | renderer | String |tabs|
+| tabs | renderer | String | tabs |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | | tabs | {} | Object |
 | | cardClass | String | same as fieldset |
@@ -173,7 +171,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | contentColumnClass | String | htmlClass for wrapping the tab content container |
 | | tabActiveClass | String | htmlClass for active tabs |
 | | tabPaneClass | String | htmlClass for single tab pane |
-| button-group | renderer|String | button-group |
+| button-group | renderer | String | button-group |
 | | elements | {} | the elements can only be of type: "field" with renderer: "button". |
 
 ### Following are the properties for each type of field
@@ -293,7 +291,7 @@ The MIT License (MIT)
 [build]: https://travis-ci.org/flipbyte/formik-json
 
 [npm-badge]: https://img.shields.io/npm/v/formik-json.svg
-[npm]: https://www.npmjs.org/package/formik-json
+[npm]: https://www.npmjs.com/package/@flipbyte/formik-json
 
 [coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json/badge.svg
 [coveralls]: https://coveralls.io/github/flipbyte/formik-json
