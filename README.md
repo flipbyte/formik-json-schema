@@ -5,28 +5,17 @@
 [![npm package][npm-badge]][npm]
 [![Coverage Status][coveralls-badge]][coveralls]
 [![license][license-badge]][license]
+[![Codacy Badge][codacy-badge]][codacy]
 
 formik-json is a wrapper for Formik to easily create forms using JSON / Javascript Object for defining the elements.
 
-[build-badge]: https://travis-ci.org/flipbyte/formik-json.svg?branch=master
-[build]: https://travis-ci.org/flipbyte/formik-json
+## Pre-requisites
 
-[npm-badge]: https://img.shields.io/npm/v/formik-json.svg
-[npm]: https://www.npmjs.org/package/formik-json
-
-[coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json/badge.svg
-[coveralls]: https://coveralls.io/github/flipbyte/formik-json
-
-[license-badge]: https://badgen.now.sh/badge/license/MIT
-[license]: ./LICENSE
-
-### Pre-requisites
-----
 The component depends on a few third-party plugins for adding WYSIWYG, select, auto-complete, validation etc.
 Few of them already come packaged with the extension and few need to be installed separately in your project.
 
-### Installation
-----
+## Installation
+
 You can install Formik-json using following steps.
 
 ```sh
@@ -35,12 +24,11 @@ $ commands need to be
 $ added here
 ```
 
+### Quick Start Guide
 
-#### Quick Start Guide:
-----
 Once you've finished installation, you can add the form to any of your components as follows:
 
-##### Import the Form component
+#### Import the Form component
 
 ```sh
 import { Form } from 'formik-json';
@@ -102,7 +90,7 @@ import { Form } from 'formik-json';
     { ...# Other formik props # } />
 ```
 
-#### Form Component
+### Form Component
 ----
 Form component requires the following properties:
 
@@ -111,16 +99,16 @@ Form component requires the following properties:
 | ------ | ------ |
 | schema | your schema object |
 | initialValues | check [<Formik />](https://jaredpalmer.com/formik/docs/api/formik) |
-| Formik properties| You can add any of the [<Formik />](https://jaredpalmer.com/formik/docs/api/formik) component props |
+| Formik properties | You can add any of the [<Formik />](https://jaredpalmer.com/formik/docs/api/formik) component props |
 
-#### Schema object
+### Schema object
 ----
 "validation" and "form" are the 2 main keys of the object.
 
-- Validation: validation allows you to define the validation rules for the form.
+-   Validation: validation allows you to define the validation rules for the form.
 The plugin depends on [Validatorjs](https://github.com/skaterdav85/validatorjs) and you can follow the instructions in their [README](https://github.com/skaterdav85/validatorjs/blob/master/README.md) to setup your validation rules.
 
-- Form: Everything inside the "form" key has 2 types: either "container" or "field"
+-   Form: Everything inside the "form" key has 2 types: either "container" or "field"
 Each type needs a renderer to render the specific component.
 The "container" has an "elements" key within which you can define either new containers or fields.
 
@@ -140,9 +128,9 @@ Note: The "form" object can only have one container. You can have multiple conta
 
 Each container or field requires a renderer which can be set using "renderer": "{your_renderer}". You can define you own renderers for both containers and keys or use the ones that come with the module.
 
-#### Following are the properties for each type of container:
+### Following are the properties for each type of container:
 
-##### Common properties
+#### Common properties
 
 | Not applicable | Field | Property | Description |
 | ------- | ------ | ------ | ------ |
@@ -151,27 +139,27 @@ Each container or field requires a renderer which can be set using "renderer": "
 | editable-grid, tabs | elements | {} | is an object that can hold one or more fields or containers within it. |
 | editable-grid, button-group| prefixNameToElement | Bool | |
 
-##### Container specific properties
+#### Container specific properties
 
 | Container | Field | Property | Description |
 | ------- | ------ | ------ | ------ |
-| editable-grid |renderer |String |editable-grid |
+| editable-grid | renderer | String | editable-grid |
 |  | fields | {} | An object with one or more field definitions in a key-value pair |
-| | buttons |{"add": "Add", "remove": "X"} | has 2 properties both optional to define labels for the buttons in the editable grid |
+| | buttons | {"add": "Add", "remove": "X"} | has 2 properties both optional to define labels for the buttons in the editable grid |
 | | isSortable | Bool | whether the grid rows can be dragged and sorted |
 | | tableContainerClass | String | htmlClass for the div wrapping the editable-grid |
 | | tableClass | String | htmlClass for the main editable grid |
-| div | renderer|String |div |
+| div | renderer| String | div |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | | htmlClass | String | htmlClass for the div element |
-| fieldset |renderer |String |fielset |
+| fieldset | renderer | String |fielset |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | | title | String | label for the fieldset |
-| | cardClass | String | htmlClass for the main wrapping container|
+| | cardClass | String | htmlClass for the main wrapping container |
 | | cardHeaderClass | String | htmlClass for the header of the wrapping container |
 | | cardHeaderActionsClass | String | htmlClass for the container holding the disclose buttons in the header of the container |
 | | cardBodyClass | String | htmlClass for the body of the container |
-| form | renderer|String |form |
+| form | renderer| String | form |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | |  htmlClass | String | any character |
 | tabs | renderer |String |tabs|
@@ -189,16 +177,16 @@ Each container or field requires a renderer which can be set using "renderer": "
 | button-group | renderer|String |button-group |
 | | elements | {} | the elements can only be of type: "field" with renderer: "button". |
 
-#### Following are the properties for each type of field:
+### Following are the properties for each type of field:
 
-##### Common properties
+#### Common properties
 | Field | Type | Property | Description |
 | :--- | :--- | :---: | :--- |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | |  type | String | "field" |
 
-##### Field specific properties
+#### Field specific properties
 
 | Field | Type | Property | Description |
 | :--- | :--- | :---: | :--- |
@@ -231,7 +219,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | react-select | renderer | String | react-select |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
-| | options | {} | array of objects with value and label keys. Example: [{"label": "Item 1", "value": "value-1"}] |
+| | options | {} | array of objects with value and label keys. Example: `[{"label": "Item 1", "value": "value-1"}]` |
 | | defaultValue | String | default field value (untested) |
 | | multi | Bool | whether it's a mult-select |
 | | noOptionsMessage | String | message to show when there are no options |
@@ -293,7 +281,6 @@ Each container or field requires a renderer which can be set using "renderer": "
 
 
 ## Thank You
-----
 We would like to extend our sincere gratitude towards all members of open-source web-development community.
 Special shout-out goes to following members who inspire us to always works towards the greater good:
 [@skaterdav85](https://github.com/skaterdav85/validatorjs)
@@ -305,5 +292,20 @@ If you have suggestions, comments or ideas to develop more such solutions, you c
 
 
 ## License
-----
 The MIT License (MIT)
+
+
+[build-badge]: https://travis-ci.org/flipbyte/formik-json.svg?branch=master
+[build]: https://travis-ci.org/flipbyte/formik-json
+
+[npm-badge]: https://img.shields.io/npm/v/formik-json.svg
+[npm]: https://www.npmjs.org/package/formik-json
+
+[coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json/badge.svg
+[coveralls]: https://coveralls.io/github/flipbyte/formik-json
+
+[license-badge]: https://badgen.now.sh/badge/license/MIT
+[license]: ./LICENSE
+
+[codacy-badge]: https://api.codacy.com/project/badge/Grade/18e71277b7e94ad9aca885b5ba3d890c
+[codacy]: https://www.codacy.com/app/easeq/formik-json?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=flipbyte/formik-json&amp;utm_campaign=Badge_Grade

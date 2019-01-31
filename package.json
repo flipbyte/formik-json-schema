@@ -21,7 +21,8 @@
         "start": "nwb serve-react-demo",
         "test": "nwb test-react",
         "test:coverage": "nwb test-react --coverage",
-        "test:watch": "nwb test-react --server"
+        "test:watch": "nwb test-react --server",
+        "lint-md": "remark ."
     },
     "dependencies": {
         "react-autosuggest": "^9.4.3",
@@ -52,7 +53,8 @@
         "nwb": "0.23.x",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
-        "validatorjs": "^3.15.1"
+        "validatorjs": "^3.15.1",
+        "remark-lint": "^6.0.4"
     },
     "author": "",
     "homepage": "",
@@ -68,5 +70,8 @@
         "form",
         "validation",
         "bootstrap"
-    ]
+    ],
+    "remarkConfig": {
+        "plugins": ["remark-preset-lint-recommended"]
+    }
 }
