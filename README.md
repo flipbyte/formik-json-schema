@@ -39,7 +39,7 @@ Once you've finished installation, you can add the form to any of your component
 ##### Import the Form component
 
 ```sh
-import { Form } from 'flutter-react-json-form';
+import { Form } from 'formik-json';
 ```
 
 ##### Prepare your form object
