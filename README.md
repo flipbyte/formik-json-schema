@@ -7,14 +7,14 @@
 
 formik-json is a wrapper for Formik to easily create forms using JSON / Javascript Object for defining the elements.
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
+[build-badge]: https://img.shields.io/travis/flipbyte/formik-json/master.png?style=flat-square
+[build]: https://travis-ci.org/flipbyte/formik-json
 
 [npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
 [npm]: https://www.npmjs.org/package/npm-package
 
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+[coveralls-badge]: https://img.shields.io/coveralls/flipbyte/formik-json/master.png?style=flat-square
+[coveralls]: https://coveralls.io/github/flipbyte/formik-json
 
 
 ### Pre-requisites
