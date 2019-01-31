@@ -18,7 +18,7 @@ Few of them already come packaged with the extension and few need to be installe
 
 You can install Formik-json using following steps.
 
-```sh
+```js
 $ Correct installation
 $ commands need to be
 $ added here
@@ -30,13 +30,13 @@ Once you've finished installation, you can add the form to any of your component
 
 #### Import the Form component
 
-```sh
+```js
 import { Form } from 'formik-json';
 ```
 
 ##### Prepare your form object
 
-```sh
+```js
 {
     "validation": {
         "status": "required",
@@ -94,7 +94,6 @@ import { Form } from 'formik-json';
 ----
 Form component requires the following properties:
 
-
 | Key | Description |
 | ------ | ------ |
 | schema | your schema object |
@@ -119,7 +118,7 @@ The "container" has an "elements" key within which you can define either new con
 | id | the ID for the form |
 | label | the title for the form |
 | type | "container" |
-| renderer | "form" (you can use other renderers but if you want the form to have a &lt;form /&gt; tag use the "form" renderer.) |
+| renderer | "form" (you can use other renderers but if you want the form to have a ```<form />``` tag use the "form" renderer.) |
 | elements | is an object used to define the elements within the container |
 
 Note: The "form" object can only have one container. You can have multiple containers and fields inside the elements object of the form container.
@@ -128,16 +127,16 @@ Note: The "form" object can only have one container. You can have multiple conta
 
 Each container or field requires a renderer which can be set using "renderer": "{your_renderer}". You can define you own renderers for both containers and keys or use the ones that come with the module.
 
-### Following are the properties for each type of container:
+### Following are the properties for each type of container
 
-#### Common properties
+#### Common container properties
 
 | Not applicable | Field | Property | Description |
 | ------- | ------ | ------ | ------ |
 | none | type | String | "container" |
 | button-group | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | editable-grid, tabs | elements | {} | is an object that can hold one or more fields or containers within it. |
-| editable-grid, button-group| prefixNameToElement | Bool | |
+| editable-grid, button-group | prefixNameToElement | Bool | |
 
 #### Container specific properties
 
@@ -145,7 +144,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | ------- | ------ | ------ | ------ |
 | editable-grid | renderer | String | editable-grid |
 |  | fields | {} | An object with one or more field definitions in a key-value pair |
-| | buttons | {"add": "Add", "remove": "X"} | has 2 properties both optional to define labels for the buttons in the editable grid |
+| | buttons | ```{"add": "Add", "remove": "X"}``` | has 2 properties both optional to define labels for the buttons in the editable grid |
 | | isSortable | Bool | whether the grid rows can be dragged and sorted |
 | | tableContainerClass | String | htmlClass for the div wrapping the editable-grid |
 | | tableClass | String | htmlClass for the main editable grid |
@@ -162,7 +161,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | form | renderer| String | form |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | |  htmlClass | String | any character |
-| tabs | renderer |String |tabs|
+| tabs | renderer | String |tabs|
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | | tabs | {} | Object |
 | | cardClass | String | same as fieldset |
@@ -174,12 +173,12 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | contentColumnClass | String | htmlClass for wrapping the tab content container |
 | | tabActiveClass | String | htmlClass for active tabs |
 | | tabPaneClass | String | htmlClass for single tab pane |
-| button-group | renderer|String |button-group |
+| button-group | renderer|String | button-group |
 | | elements | {} | the elements can only be of type: "field" with renderer: "button". |
 
-### Following are the properties for each type of field:
+### Following are the properties for each type of field
 
-#### Common properties
+#### Common field properties
 | Field | Type | Property | Description |
 | :--- | :--- | :---: | :--- |
 | | name | String | html field name attribute |
@@ -208,14 +207,14 @@ Each container or field requires a renderer which can be set using "renderer": "
 | |  labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
-| radio | renderer | String | radio
+| radio | renderer | String | radio |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | options | {} | |
-| | attributes |{}  | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
+| | attributes | {}  | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 | | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
-| | formGroupClass |String  | html class for the div that wraps the form field |
+| | formGroupClass | String  | html class for the div that wraps the form field |
 | react-select | renderer | String | react-select |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
@@ -232,7 +231,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | attributes |  {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 | | dataOn | String | label for On. Example: in a yes/no option this would be Yes |
 | | dataOff | String | label for Off. In the above example "No" |
-| | labelClass |String  | html class for the label html element |
+| | labelClass | String  | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
 | text | renderer | String | text |
@@ -278,8 +277,6 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
 
-
-
 ## Thank You
 We would like to extend our sincere gratitude towards all members of open-source web-development community.
 Special shout-out goes to following members who inspire us to always works towards the greater good:
@@ -289,11 +286,8 @@ Special shout-out goes to following members who inspire us to always works towar
 
 If you have suggestions, comments or ideas to develop more such solutions, you can write to us at [Flipbyte.com](https://www.flipbyte.com/#ht-top-footer)
 
-
-
 ## License
 The MIT License (MIT)
-
 
 [build-badge]: https://travis-ci.org/flipbyte/formik-json.svg?branch=master
 [build]: https://travis-ci.org/flipbyte/formik-json
