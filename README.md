@@ -33,37 +33,24 @@ $ added here
 ```
 
 
-### Description
+#### Quick Start Guide:
 ----
-"validation" and "form" are the 2 main keys of the object.
+Once you've finished installation, you can add the form to any of your components as follows:
 
-- Validation: validation allows you to define the validation rules for the form.
-The plugin depends on [Validatorjs](https://github.com/skaterdav85/validatorjs) and you can follow the instructions in their [README](https://github.com/skaterdav85/validatorjs/blob/master/README.md) to setup your validation rules.
+##### Import the Form component
 
-- Form: Everything inside the "form" key has 2 types: either "container" or "field"
-Each type needs a renderer to render the specific component.
-The "container" has an "elements" key within which you can define either new containers or fields.
+```sh
+import { Form } from 'flutter-react-json-form';
+```
 
-"form" is an object that has the following keys (all required):
-
-| Key | Description |
-| ------ | ------ |
-| id | the ID for the form |
-| label | the title for the form |
-| type | "container" |
-| renderer | "form" (you can use other renderers but if you want the form to have a &lt;form /&gt; tag use the "form" renderer.) |
-| elements | is an object used to define the elements within the container |
-
-Note: The "form" object can only have one container. You can have multiple containers and fields inside the elements object of the form container.
-
-#### Following is a sample JSON:
+##### Prepare your form object
 
 ```sh
 {
     "validation": {
         "status": "required",
         "data.identifier": "required|alpha_dash",
-        "attributes.\*.title": "required",
+        "attributes.*.title": "required",
         ...
     },
     "form": {
@@ -104,43 +91,88 @@ Note: The "form" object can only have one container. You can have multiple conta
 
 ```
 
+##### Add the component anywhere you want
+
+```sh
+<Form
+    schema={ # Your form object here # }
+    { ...# Other formik props # } />
+```
+
+#### Form Component
+----
+Form component requires the following properties:
+| Key | Description |
+| ------ | ------ |
+| schema | your schema object |
+| initialValues | check [<Formik />](https://jaredpalmer.com/formik/docs/api/formik) |
+| Formik properties| You can add any of the [<Formik />](https://jaredpalmer.com/formik/docs/api/formik) component props |
+
+
+#### Schema object
+----
+"validation" and "form" are the 2 main keys of the object.
+
+- Validation: validation allows you to define the validation rules for the form.
+The plugin depends on [Validatorjs](https://github.com/skaterdav85/validatorjs) and you can follow the instructions in their [README](https://github.com/skaterdav85/validatorjs/blob/master/README.md) to setup your validation rules.
+
+- Form: Everything inside the "form" key has 2 types: either "container" or "field"
+Each type needs a renderer to render the specific component.
+The "container" has an "elements" key within which you can define either new containers or fields.
+
+"form" is an object that has the following keys (all required):
+
+| Key | Description |
+| ------ | ------ |
+| id | the ID for the form |
+| label | the title for the form |
+| type | "container" |
+| renderer | "form" (you can use other renderers but if you want the form to have a &lt;form /&gt; tag use the "form" renderer.) |
+| elements | is an object used to define the elements within the container |
+
+Note: The "form" object can only have one container. You can have multiple containers and fields inside the elements object of the form container.
+
 "elements" is an object with key-value pair where value is another object. The value object can either be a of type "container" or "field".
 
 Each container or field requires a renderer which can be set using "renderer": "{your_renderer}". You can define you own renderers for both containers and keys or use the ones that come with the module.
 
 #### Following are the properties for each type of container:
 
+##### Common properties
+
+| Not applicable | Field | Property | Description |
+| ------- | ------ | ------ | ------ |
+| none | type | String | "container" |
+| button-group | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
+| editable-grid, tabs | elements | {} | is an object that can hold one or more fields or containers within it. |
+| editable-grid, button-group| prefixNameToElement | Bool | |
+
+##### Container specific properties
+
 | Container | Field | Property | Description |
 | ------- | ------ | ------ | ------ |
-| editable-grid | | | |
+| editable-grid |renderer |String |editable-grid |
 |  | fields | {} | An object with one or more field definitions in a key-value pair |
 | | buttons |{"add": "Add", "remove": "X"} | has 2 properties both optional to define labels for the buttons in the editable grid |
 | | isSortable | Bool | whether the grid rows can be dragged and sorted |
 | | tableContainerClass | String | htmlClass for the div wrapping the editable-grid |
 | | tableClass | String | htmlClass for the main editable grid |
-| div | | | |
+| div | renderer|String |div |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
-| | elements | {} | is an object that can hold one or more fields or containers within it. |
 | | htmlClass | String | htmlClass for the div element |
-| | prefixNameToElement | Bool | |
-| fieldset | | | |
+| fieldset |renderer |String |fielset |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | | title | String | label for the fieldset |
-| | elements| {} | is an object that can hold one or more fields or containers within it. |
-| | prefixNameToElement | Bool | |
 | | cardClass | String | htmlClass for the main wrapping container|
 | | cardHeaderClass | String | htmlClass for the header of the wrapping container |
 | | cardHeaderActionsClass | String | htmlClass for the container holding the disclose buttons in the header of the container |
 | | cardBodyClass | String | htmlClass for the body of the container |
-| form | | | |
+| form | renderer|String |form |
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
-| | elements | {} | is an object that can hold one or more fields or containers within it. |
 | |  htmlClass | String | any character |
-| | prefixNameToElement | Bool | |
-| tabs |  |  | |
+| tabs | renderer |String |tabs|
 | | name | String | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | | tabs | {} | Object |
-| | prefixNameToElement | Bool | |
 | | cardClass | String | same as fieldset |
 | | rowClass | String |  htmlClass for the row div |
 | | tabListClass | String | htmlClass for tab list |
@@ -150,23 +182,32 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | contentColumnClass | String | htmlClass for wrapping the tab content container |
 | | tabActiveClass | String | htmlClass for active tabs |
 | | tabPaneClass | String | htmlClass for single tab pane |
-| ButtonGroup | | | |
-| |  |  | |
+| button-group | renderer|String |button-group |
+| | elements | {} | the elements can only be of type: "field" with renderer: "button". |
 
 #### Following are the properties for each type of field:
 
+##### Common properties
 | Field | Type | Property | Description |
 | :--- | :--- | :---: | :--- |
-| checkbox | | | |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
-| |  type | String | either "container" or "field" |
+| |  type | String | "field" |
+
+##### Field specific properties
+
+| Field | Type | Property | Description |
+| :--- | :--- | :---: | :--- |
+| checkbox | renderer | String | checkbox |
+| | name | String | html field name attribute |
+| | label | String | the label for the field |
+| |  type | String | "field" |
 | | attributes |  {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 | | options | Array | Array of objects with keys "value" and "label" |
 | | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
-| code-editor | | | |
+| code-editor | renderer | String | code-editor |
 | | name | String | html field name attribute |
 | |  label | String | the label for the field |
 | | options | {} | |
@@ -175,7 +216,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | |  labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
-| radio | | |
+| radio | renderer | String | radio
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | options | {} | |
@@ -183,7 +224,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass |String  | html class for the div that wraps the form field |
-| react-select | | | |
+| react-select | renderer | String | react-select |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | options | {} | array of objects with value and label keys. Example: [{"label": "Item 1", "value": "value-1"}] |
@@ -193,7 +234,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | labelClass | String | html class for the label html element |
 | | fieldClass | String  | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
-| switch | | | |
+| switch | renderer | String | switch |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | attributes |  {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
@@ -202,7 +243,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | labelClass |String  | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
-| text | | | |
+| text | renderer | String | text |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | type | String | either "container" or "field" |
@@ -214,7 +255,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
 | | inputGroupClass | String | html class for the div that wraps an icon and an input element together |
-| textarea | | | |
+| textarea | renderer | String | textarea |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | type | String | either "container" or "field" |
@@ -223,7 +264,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
-| wysiwyg | | | |
+| wysiwyg | renderer | String | wysiwyg |
 | | name | String | html field name attribute |
 | |  label | String | the label for the field |
 | | type | String | either "container" or "field" |
@@ -234,7 +275,7 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
 | | textareaClass | String |  the class for the textarea that will show the raw html for the content entered in the wysiwyg |
-| autocomplete | | | |
+| autocomplete | renderer | String | autcomplete |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | type | String | either "container" or "field" |
@@ -262,4 +303,3 @@ If you have suggestions, comments or ideas to develop more such solutions, you c
 ## License
 ----
 The MIT License (MIT)
-markdown
