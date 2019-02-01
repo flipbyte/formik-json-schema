@@ -5,7 +5,9 @@ import {
     renderSuggestion
 } from '../source/autocomplete';
 
-import { save } from '../source/external-handlers';
+import {
+    save
+} from '../source/external-handlers';
 
 export default {
     onSubmit: save.bind(this),
@@ -46,16 +48,31 @@ export default {
                     renderer: "react-select",
                     name: "react-select",
                     label: "React Select",
-                    options: [
-                        {
-                            value: 0,
-                            label: "No"
-                        },
-                        {
-                            value: 1,
-                            label: "Yes"
-                        }
-                    ],
+                    options: [{
+                        value: 0,
+                        label: "No"
+                    }, {
+                        value: 1,
+                        label: "Yes"
+                    }],
+                    formGroupClass: "form-group mb-4"
+                },
+                reactSelectMulti: {
+                    type: "field",
+                    renderer: "react-select",
+                    name: "react-select-multi",
+                    label: "React Select Multi",
+                    isMulti: true,
+                    options: [{
+                        value: 'chocolate',
+                        label: 'Chocolate'
+                    }, {
+                        value: 'strawberry',
+                        label: 'Strawberry'
+                    }, {
+                        value: 'vanilla',
+                        label: 'Vanilla'
+                    }],
                     formGroupClass: "form-group mb-4"
                 },
                 textarea: {

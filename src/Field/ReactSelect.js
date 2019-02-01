@@ -17,6 +17,13 @@ const prepareOptions = ( options ) =>
         return result;
     }, [])
 
+const getSelectedOptions = ( options, values ) =>
+    values && !_.isEmpty(options)
+        ? _.isObject(values)
+            ? _.filter(options, (option) => _.includes(values, option.value))
+            : _.filter(options, (option) => option.value == values)
+        : null;
+
 const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
     const {
         name,
@@ -36,8 +43,7 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
     const error = hasError(name, submitCountToValidate, formikProps);
     const options = prepareOptions(initialOptions);
     const selectedValue = _.get(values, name, defaultValue);
-    const selectedOption = selectedValue && !_.isEmpty(options)
-        ? options.filter(option => option.value == selectedValue) : null;
+    const selectedOption = getSelectedOptions(options, selectedValue);
 
     var selectProps = {
         name,
@@ -47,8 +53,15 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
         isDisabled,
         id: name,
         className: fieldClass + ( error ? ' is-invalid ' : '' ),
-        onChange: ( value ) =>
-            changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, value.value),
+        onChange: ( selectedOptions ) => {
+            const selectedValues = !isMulti ? selectedOptions.value : _.mapValues(selectedOptions, 'value');
+            return changeHandler(
+                setFieldValueWrapper(setFieldValue, name),
+                formikProps,
+                config,
+                selectedValues
+            );
+        }
     };
     selectProps = _.assign(selectProps, { options });
 
