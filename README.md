@@ -218,8 +218,10 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | label | String | the label for the field |
 | | options | {} | array of objects with value and label keys. Example: `[{"label": "Item 1", "value": "value-1"}]` |
 | | defaultValue | String | default field value (untested) |
-| | multi | Bool | whether it's a mult-select |
-| | noOptionsMessage | String | message to show when there are no options |
+| | isMulti | Bool | whether it's a mult-select |
+| | isClearable | Bool | displays a clear select button on the select which will clear the selected options |
+| | isDisabled | Bool | disables the select when set to true |
+| | noOptionsMessage | Function | refer [ReactSelect Props](https://react-select.com/props) |
 | | labelClass | String | html class for the label html element |
 | | fieldClass | String  | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
