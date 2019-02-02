@@ -10,12 +10,33 @@
     margin-bottom: 50px;
 }
 
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
+div.scrollmenu {
+    background-color: #f8f9fa !important;
+    overflow: auto;
+    white-space: nowrap;
+}
 
-    .sidenav a {
-        font-size: 18px;
+div.scrollmenu a {
+    display: inline-block;
+    color: #000;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+    background-color: #ccc;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 11
+}
+
+@media (min-width: 768px) {
+    div.scrollmenu {
+        display: none;
     }
 }

@@ -16,13 +16,21 @@ const Demo = () =>
             <div className="sidebar-heading"><strong>formik-json</strong></div>
             <div className="list-group list-group-flush">
                 { forms.map(({ id, title }, index) =>
-                    <a key={ index } href={ `#${id}` } className="list-group-item list-group-item-action bg-light"> { title }</a>
+                    <a key={ index } href={ `#${id}` }
+                        className="list-group-item list-group-item-action bg-light">
+                        { title }
+                    </a>
                 ) }
             </div>
         </div>
         <div id="page-content-wrapper">
-            <div className="container-fluid p-4">
-                { forms.map((form, index) => <ExampleFormContainer key={ index } { ...form }/> )}
+            <div class="scrollmenu sticky">
+                { forms.map(({ id, title }, index) =>
+                    <a key={ index } href={ `#${id}` }>{ title }</a> ) }
+            </div>
+            <div className="container-fluid p-4 content">
+                { forms.map((form, index) =>
+                    <ExampleFormContainer key={ index } { ...form }/> )}
             </div>
         </div>
     </div>
