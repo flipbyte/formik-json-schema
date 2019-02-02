@@ -1,2 +1,21 @@
-.is-invalid { border: 1px solid red }
-.invalid-feedback { display: block; }
+.is-invalid {
+    border: 1px solid red
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+.form-container {
+    margin-bottom: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
