@@ -292,7 +292,7 @@ The MIT License (MIT)
 [build-badge]: https://travis-ci.org/flipbyte/formik-json.svg?branch=master
 [build]: https://travis-ci.org/flipbyte/formik-json
 
-[npm-badge]: https://img.shields.io/npm/v/formik-json.svg
+[npm-badge]: https://img.shields.io/npm/v/@flipbyte/formik-json.svg
 [npm]: https://www.npmjs.com/package/@flipbyte/formik-json
 
 [coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json/badge.svg
