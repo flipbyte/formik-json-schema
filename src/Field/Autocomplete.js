@@ -7,6 +7,20 @@ import { hasError, changeHandler, joinNames, setFieldValueWrapper } from '../uti
 import '../css/autocomplete.css';
 
 class Autocomplete extends Component {
+    static autosuggestCallbackKeys = [
+        'onSuggestionsFetchRequested',
+        'onSuggestionsClearRequested',
+        'getSuggestionValue',
+        'renderSuggestion',
+        'onSuggestionSelected',
+        'onSuggestionHighlighted',
+        'shouldRenderSuggestions',
+        'renderSectionTitle',
+        'getSectionSuggestions',
+        'renderInputComponent',
+        'renderSuggestionsContainer'
+    ]
+
     constructor(props) {
         super(props);
 
@@ -65,19 +79,5 @@ class Autocomplete extends Component {
         );
     }
 }
-
-Autocomplete.autosuggestCallbackKeys = [
-    'onSuggestionsFetchRequested',
-    'onSuggestionsClearRequested',
-    'getSuggestionValue',
-    'renderSuggestion',
-    'onSuggestionSelected',
-    'onSuggestionHighlighted',
-    'shouldRenderSuggestions',
-    'renderSectionTitle',
-    'getSectionSuggestions',
-    'renderInputComponent',
-    'renderSuggestionsContainer'
-];
 
 export default Autocomplete;
