@@ -25,7 +25,7 @@ export const registerField = fieldRegistry.register.bind(fieldRegistry);
 const containerRegistry = new Registry();
 export const registerContainer = containerRegistry.register.bind(containerRegistry);
 
-export const render = ( config, formikProps, submitCountToValidate, rest ) => {
+export const render = ( config, formik, submitCountToValidate, rest ) => {
     let currentRegistry = containerRegistry;
     if( config.type ==  FIELD ) {
         currentRegistry = fieldRegistry;
@@ -38,7 +38,7 @@ export const render = ( config, formikProps, submitCountToValidate, rest ) => {
 
     return <Renderer
         config={ config }
-        formikProps={ formikProps }
+        formik={ formik }
         submitCountToValidate={ submitCountToValidate }
         { ...rest } />
 }

@@ -5,7 +5,7 @@ import ErrorMessage from './ErrorMessage';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
-const CodeEditor = ({ config, formikProps, submitCountToValidate }) => {
+const CodeEditor = ({ config, formik, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -16,8 +16,8 @@ const CodeEditor = ({ config, formikProps, submitCountToValidate }) => {
         fieldClass = '',
         formGroupClass = 'form-group'
     } = config;
-    const { values, setFieldValue } = formikProps;
-    const error = hasError(name, submitCountToValidate, formikProps);
+    const { values, setFieldValue } = formik;
+    const error = hasError(name, submitCountToValidate, formik);
     const selectedValue = _.get(values, name, defaultValue);
 
     return (
@@ -29,7 +29,7 @@ const CodeEditor = ({ config, formikProps, submitCountToValidate }) => {
                 options={ options }
                 className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                 onChange={ ( editor, data, value ) =>
-                    changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, value)
+                    changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, value)
                 }
                 value={ selectedValue }
                 { ...attributes }

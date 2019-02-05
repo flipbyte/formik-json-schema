@@ -4,7 +4,7 @@ import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Radio = ({ config, formikProps, submitCountToValidate }) => {
+const Radio = ({ config, formik, submitCountToValidate }) => {
     const {
         name,
         type,
@@ -15,8 +15,8 @@ const Radio = ({ config, formikProps, submitCountToValidate }) => {
         fieldClass = 'form-check-input',
         formGroupClass = 'form-group'
     } = config;
-    const { values, handleChange } = formikProps;
-    const error = hasError(name, submitCountToValidate, formikProps);
+    const { values, handleChange } = formik;
+    const error = hasError(name, submitCountToValidate, formik);
 
     return (
         <div className={ formGroupClass }>
@@ -31,7 +31,7 @@ const Radio = ({ config, formikProps, submitCountToValidate }) => {
                             id={ name + '_' + option.value }
                             value={ option.value }
                             checked={ getIn(values, name) === option.value }
-                            onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
+                            onChange={ changeHandler.bind(this, handleChange, formik, config) }
                             { ...attributes } /> { option.title }
                     </label>
                 </div>

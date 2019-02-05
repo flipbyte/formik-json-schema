@@ -4,7 +4,7 @@ import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
-const Switch = ({ config, formikProps, submitCountToValidate }) => {
+const Switch = ({ config, formik, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -15,8 +15,8 @@ const Switch = ({ config, formikProps, submitCountToValidate }) => {
         fieldClass = 'switch',
         formGroupClass = 'form-group'
     } = config;
-    const { values, setFieldValue } = formikProps;
-    const error = hasError(name, submitCountToValidate, formikProps);
+    const { values, setFieldValue } = formik;
+    const error = hasError(name, submitCountToValidate, formik);
 
     return (
         <div className={ formGroupClass }>
@@ -26,7 +26,7 @@ const Switch = ({ config, formikProps, submitCountToValidate }) => {
                     className="switch-input"
                     defaultChecked={ getIn(values, name) }
                     onClick={
-                        () => changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, !getIn(values, name))
+                        () => changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, !getIn(values, name))
                     } />
                 <span
                     className="switch-label"

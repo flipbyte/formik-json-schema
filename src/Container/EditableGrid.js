@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import { getIn } from 'formik';
 import Element from '../Element';
+import PropTypes from 'prop-types';
 import { FieldArray } from 'formik';
 import { joinNames } from '../utils';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-import PropTypes from 'prop-types';
 
 const onSortEnd = ( move, { oldIndex, newIndex } ) => move(oldIndex, newIndex);
 const SortableItem = SortableElement((props) => renderTableRow(props));
@@ -21,7 +21,7 @@ const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) =>
         ) : null }
     </tbody>
 
-const renderTableRow = ({ fieldArrayName, fields, formikProps, arrayActions, rowIndex, buttons, isSortable }) =>
+const renderTableRow = ({ fieldArrayName, fields, arrayActions, rowIndex, buttons, isSortable }) =>
     <tr key={ rowIndex }>
         { isSortable && <SortableRowHandle /> }
         { _.map(fields, ({ label, name, width, ...colProps }, key) => {
@@ -30,9 +30,7 @@ const renderTableRow = ({ fieldArrayName, fields, formikProps, arrayActions, row
 
             return (
                 <td key={ key }>
-                    <Element
-                        config={ element }
-                        formikProps={ formikProps } />
+                    <Element config={ element } />
                 </td>
             );
         }) }
@@ -58,9 +56,9 @@ const EditableGrid = ({
         tableContainerClass = 'table-responsive',
         tableClass = 'table table-bordered flutter-editable-grid'
     },
-    formikProps
+    formik
 }) => {
-    const { values, errors, touched } = formikProps;
+    const { values, errors, touched } = formik;
     const arrayFields = _.mapValues(_.assign({}, fields), () => '');
     const arrayValues = getIn(values, fieldArrayName);
     const hasValue = _.size(arrayValues) > 0;
@@ -72,7 +70,7 @@ const EditableGrid = ({
             name={ fieldArrayName }
             render={( arrayActions ) => {
                 const bodyProps = {
-                    arrayValues, hasValue, fields, formikProps, fieldArrayName, arrayActions, buttons, isSortable
+                    arrayValues, hasValue, fields, fieldArrayName, arrayActions, buttons, isSortable
                 };
 
                 return (

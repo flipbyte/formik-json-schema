@@ -4,7 +4,7 @@ import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Text = ({ config, formikProps, submitCountToValidate }) => {
+const Text = ({ config, formik, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -19,9 +19,9 @@ const Text = ({ config, formikProps, submitCountToValidate }) => {
         inputGroupClass = 'input-group'
     } = config;
 
-    const { values, setFieldValue, handleChange, handleBlur } = formikProps;
+    const { values, setFieldValue, handleChange, handleBlur } = formik;
     const isInputGroup = icon ? true : false;
-    const error = hasError(name, submitCountToValidate, formikProps);
+    const error = hasError(name, submitCountToValidate, formik);
 
     return (
         <div className={ formGroupClass }>
@@ -39,7 +39,7 @@ const Text = ({ config, formikProps, submitCountToValidate }) => {
                         type={ fieldType }
                         className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                         value={ _.get(values, name, '') }
-                        onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
+                        onChange={ changeHandler.bind(this, handleChange, formik, config) }
                         { ...attributes } />
                 </div> :
                 <input
@@ -48,7 +48,7 @@ const Text = ({ config, formikProps, submitCountToValidate }) => {
                     type={ fieldType }
                     className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                     value={ _.get(values, name, '') }
-                    onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
+                    onChange={ changeHandler.bind(this, handleChange, formik, config) }
                     { ...attributes } />
             }
             <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />

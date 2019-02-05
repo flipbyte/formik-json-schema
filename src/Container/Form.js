@@ -4,9 +4,9 @@ import Element from '../Element';
 import { joinNames } from '../utils';
 import PropTypes from 'prop-types';
 
-const Form = ({ config, formikProps }) => {
+const Form = ({ config, formik }) => {
     const { name, elements, htmlClass = 'form-horizontal', prefixNameToElement = false } = config;
-    const { handleSubmit, handleReset } = formikProps;
+    const { handleSubmit, handleReset } = formik;
 
     return(
         <form className={ htmlClass } onSubmit={ handleSubmit } onReset={ handleReset }>
@@ -14,7 +14,7 @@ const Form = ({ config, formikProps }) => {
                 let element = _.assign({}, rest);
                 element.name = prefixNameToElement ? joinNames(name, elementName) : elementName;
 
-                return <Element key={ key } config={ element } formikProps={ formikProps } />
+                return <Element key={ key } config={ element } />
             }) }
         </form>
     );

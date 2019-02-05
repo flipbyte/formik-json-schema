@@ -22,12 +22,12 @@ class Autocomplete extends Component {
     }
 
     prepareCallbacks() {
-        const { formikProps, config } = this.props;
+        const { formik, config } = this.props;
         const stateUpdater = this.setState.bind(this);
 
         this.callbacks = _.reduce(Autocomplete.autosuggestCallbackKeys, ( callbacks, key ) => {
             if(_.isFunction(config.options[key])) {
-                callbacks[key] = config.options[key].bind(this, formikProps, config, { stateUpdater });
+                callbacks[key] = config.options[key].bind(this, formik, config, { stateUpdater });
             }
 
             return callbacks;
@@ -35,7 +35,7 @@ class Autocomplete extends Component {
     }
 
     render() {
-        const { config, formikProps, submitCountToValidate } = this.props;
+        const { config, formik, submitCountToValidate } = this.props;
         const {
             name,
             label,
@@ -47,13 +47,13 @@ class Autocomplete extends Component {
             fieldClass = 'form-control',
             formGroupClass = 'form-group',
         } = config;
-        const { values, setFieldValue, handleChange, handleBlur } = formikProps;
-        const error = hasError(name, submitCountToValidate, formikProps);
+        const { values, setFieldValue, handleChange, handleBlur } = formik;
+        const error = hasError(name, submitCountToValidate, formik);
         const value = _.get(values, name, '');
 
         this.autosuggestOptions.inputProps.value = value;
         this.autosuggestOptions.inputProps.onChange = ( event, { newValue, method } ) =>
-            changeHandler(setFieldValueWrapper(setFieldValue, name), formikProps, config, newValue);
+            changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, newValue);
         this.autosuggestOptions.inputProps.className = this.inputClassName + ( error ? ' is-invalid ' : '' )
 
         return (
