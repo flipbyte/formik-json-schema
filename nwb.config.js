@@ -6,6 +6,7 @@ module.exports = {
             global: 'FormikJson',
             externals: {
                 react: 'React',
+                'react-dom': 'ReactDOM',
                 formik: 'Formik',
             }
         }
