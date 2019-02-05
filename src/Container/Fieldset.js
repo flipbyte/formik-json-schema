@@ -4,7 +4,7 @@ import { joinNames } from '../utils';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Fieldset extends React.Component {
+class Fieldset extends Component {
     constructor( props ) {
         super(props);
 
@@ -43,8 +43,7 @@ class Fieldset extends React.Component {
                 cardHeaderClass = 'card-header',
                 cardHeaderActionsClass = 'card-header-actions',
                 cardBodyClass = 'card-body'
-            },
-            formikProps
+            }
         } = this.props;
 
         return (
@@ -70,7 +69,6 @@ class Fieldset extends React.Component {
                             return <Element
                                 key={ key }
                                 config={ element }
-                                formikProps={ formikProps }
                                 containerName={ name }
                                 update={ !this.state.collapsed }/>
                         }) }

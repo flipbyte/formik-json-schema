@@ -4,16 +4,12 @@ import { joinNames } from '../utils';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Tabs extends React.Component {
+class Tabs extends Component {
     constructor(props) {
         super(props);
 
         this.prepareTabs(this.props.config.tabs);
-
-        this.state = {
-            activeTab: this.defaultActiveTab
-        };
-
+        this.state = { activeTab: this.defaultActiveTab };
         this.toggle = this.toggle.bind(this);
     }
 
@@ -61,8 +57,7 @@ class Tabs extends React.Component {
                 contentColumnClass = 'col-sm-12 col-md-9',
                 tabActiveClass = ' active ',
                 tabPaneClass = 'tab-pane',
-            },
-            formikProps
+            }
         } = this.props;
 
         return (
@@ -98,7 +93,6 @@ class Tabs extends React.Component {
                                             return <Element
                                                 key={ key }
                                                 config={ element }
-                                                formikProps={ formikProps }
                                                 update={ this.state.activeTab == tabKey } />
                                         }) }
                                     </div>

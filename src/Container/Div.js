@@ -1,8 +1,8 @@
 import _ from 'lodash';
+import React from 'react';
 import Element from '../Element';
-import { joinNames } from '../utils';
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { joinNames } from '../utils';
 
 const Div = ({
     config: {
@@ -10,15 +10,14 @@ const Div = ({
         elements,
         htmlClass,
         prefixNameToElement = false
-    },
-    formikProps
+    }
 }) =>
     <div className={ htmlClass }>
         { _.map(elements, ({ name: elementName, ...rest }, key) => {
             let element = _.assign({}, rest);
             element.name = prefixNameToElement ? joinNames(name, elementName) : elementName;
 
-            return <Element key={ key } config={ element } formikProps={ formikProps } containerName={ name } />
+            return <Element key={ key } config={ element } containerName={ name } />
         }) }
     </div>
 
