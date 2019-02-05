@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { connect } from 'formik';
 import React, { Component } from 'react';
 import { render as renderElement, getConfig } from './registry';
 
@@ -6,12 +7,12 @@ class Element extends Component {
     constructor( props ) {
         super(props);
 
-        const { config, update, formikProps } = this.props;
+        const { config, update, formik } = this.props;
         this.state = {
             hasLoadedConfig: false,
             hasLoadedData: config.dataSource ? false : true,
             hasMounted: update !== false,
-            submitCountToValidate: formikProps.submitCount || 0
+            submitCountToValidate: formik.submitCount || 0
         };
 
         this.loadDataAfter = this.loadDataAfter.bind(this);
@@ -19,10 +20,10 @@ class Element extends Component {
     }
 
     componentDidMount() {
-        const { config: { configSource }, formikProps }  = this.props;
+        const { config: { configSource }, formik }  = this.props;
 
         if( !this.state.hasLoadedConfig && configSource && _.isFunction(configSource) ) {
-            configSource(formikProps, this.props.config)
+            configSource(formik, this.props.config)
                 .then(this.loadConfigAfter)
                 .catch((err) => {});
         }
@@ -34,7 +35,7 @@ class Element extends Component {
     }
 
     componentWillReceiveProps( nextProps ) {
-        const { update, config: { name, dataSource }, formikProps }  = nextProps;
+        const { update, config: { name, dataSource }, formik }  = nextProps;
 
         if( !this.state.hasMounted ) {
             const canUpdate = update !== false;
@@ -46,14 +47,14 @@ class Element extends Component {
         }
 
         if(dataSource && _.isFunction(dataSource)) {
-            if(formikProps.initialValues !== this.props.formikProps.initialValues && this.state.hasLoadedData) {
-                dataSource(formikProps, nextProps.config)
+            if(formik.initialValues !== this.props.formik.initialValues && this.state.hasLoadedData) {
+                dataSource(formik, nextProps.config)
                     .then(this.loadDataAfter)
                     .catch((err) => {});
             }
 
             if( this.state.hasMounted && !this.state.hasLoadedData ) {
-                dataSource(formikProps, nextProps.config)
+                dataSource(formik, nextProps.config)
                     .then(this.loadDataAfter)
                     .catch((err) => {});
             }
@@ -65,11 +66,11 @@ class Element extends Component {
     }
 
     render() {
-        const { config: initialConfig, formikProps, ...rest } = this.props;
+        const { config: initialConfig, formik, ...rest } = this.props;
         const { loadedConfig, submitCountToValidate } = this.state;
         const config = loadedConfig || initialConfig;
-        return this.state.hasMounted && renderElement(config, formikProps, submitCountToValidate, rest);
+        return this.state.hasMounted && renderElement(config, formik, submitCountToValidate, rest);
     }
 }
 
-export default Element;
+export default connect(Element);
