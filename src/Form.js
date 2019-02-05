@@ -1,8 +1,7 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import { Formik, withFormik } from 'formik';
-import { render, setConfig } from './registry';
+import React from 'react';
+import { Formik } from 'formik';
 import messages from './messages';
+import Element from './Element';
 
 const Validator = require('validatorjs');
 
@@ -24,6 +23,6 @@ const Form = ({
         { ...props }
         initialValues={ initialValues }
         validate={ validate.bind(this, validation || {}) }
-        render={ render.bind(this, form) } />
+        render={ props => <Element config={ form } /> } />
 
 export default Form;
