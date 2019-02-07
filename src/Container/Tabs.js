@@ -8,7 +8,7 @@ class Tabs extends Component {
     constructor(props) {
         super(props);
 
-        this.prepareTabs(this.props.config.tabs);
+        this.prepareTabs(this.props.config.elements);
         this.state = { activeTab: this.defaultActiveTab };
         this.toggle = this.toggle.bind(this);
     }
@@ -45,7 +45,6 @@ class Tabs extends Component {
         const {
             config: {
                 name,
-                tabs,
                 prefixNameToElement = false,
                 cardClass = 'card',
                 cardBodyClass = 'card-body',
@@ -110,7 +109,7 @@ Tabs.propTypes = {
     config: PropTypes.shape({
         name: PropTypes.string,
         prefixNameToElement: PropTypes.bool,
-        tabs: PropTypes.object.isRequired,
+        elements: PropTypes.object.isRequired,
         cardClass: PropTypes.string,
         cardBodyClass: PropTypes.string,
         rowClass: PropTypes.string,
