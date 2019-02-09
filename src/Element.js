@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { connect } from 'formik';
 import React, { Component } from 'react';
+import ElementRenderer from './Renderer';
 import { render as renderElement, getConfig } from './registry';
 
 class Element extends Component {
@@ -69,7 +70,9 @@ class Element extends Component {
         const { config: initialConfig, formik, ...rest } = this.props;
         const { loadedConfig, submitCountToValidate } = this.state;
         const config = loadedConfig || initialConfig;
-        return this.state.hasMounted && renderElement(config, formik, submitCountToValidate, rest);
+        const rendererProps = { config, submitCountToValidate, ...rest }
+        return this.state.hasMounted //&& renderElement(config, formik, submitCountToValidate, rest);
+            && <ElementRenderer { ...rendererProps } />
     }
 }
 

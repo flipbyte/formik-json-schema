@@ -2,24 +2,35 @@ import React from 'react';
 import { Formik } from 'formik';
 import messages from './messages';
 import Element from './Element';
+import { SchemaProvider } from './withFormConfig';
 import { prepareValidationSchema } from './utils';
+
 const Validator = require('validatorjs');
 
 class Form extends React.Component {
     constructor(props) {
         super(props);
-
-        this.validationSchema = prepareValidationSchema(this.props.schema) || {};
         this.validate = this.validate.bind(this);
     }
 
+    getContextValue() {
+        let validationSchema = prepareValidationSchema(this.props.schema) || {};
+        this.validator = new Validator(validationSchema, messages)
+
+        // let conditionalSchema = prepareConditionalSchema(schema) || {};
+        return {
+            validationSchema,
+            validator: this.validator,
+            schema: this.props.schema
+        }
+    }
+
     validate(values) {
-        let validation = new Validator(values, this.validationSchema, messages);
-        if(!validation.fails()) {
+        if(!this.validator.fails(values)) {
             return {};
         }
 
-        return validation.errors.all();
+        return this.validator.errors.all();
     }
 
     render() {
@@ -29,11 +40,15 @@ class Form extends React.Component {
             ...rest
         } = this.props;
 
-        return <Formik
-            { ...rest }
-            initialValues={ initialValues }
-            validate={ this.validate }
-            render={ props => <Element config={ schema } /> } />
+        return (
+            <SchemaProvider value={ this.getContextValue() }>
+                <Formik
+                    { ...rest }
+                    initialValues={ initialValues }
+                    validate={ this.validate }
+                    render={ props => <Element config={ schema } /> } />
+            </SchemaProvider>
+        )
     }
 }
 
