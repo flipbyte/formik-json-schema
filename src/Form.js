@@ -4,33 +4,23 @@ import messages from './messages';
 import Element from './Element';
 import { SchemaProvider } from './withFormConfig';
 import { prepareValidationSchema } from './utils';
-
-const Validator = require('validatorjs');
+import Rules from '@flipbyte/yup-schema';
 
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.validate = this.validate.bind(this);
     }
 
     getContextValue() {
-        let validationSchema = prepareValidationSchema(this.props.schema) || {};
-        this.validator = new Validator(validationSchema, messages)
+        this.validationSchema = new Rules([[
+            'object',
+            prepareValidationSchema(this.props.schema) || {}
+        ]]).toYup();
 
-        // let conditionalSchema = prepareConditionalSchema(schema) || {};
         return {
-            validationSchema,
-            validator: this.validator,
+            validationSchema: this.validationSchema,
             schema: this.props.schema
         }
-    }
-
-    validate(values) {
-        if(!this.validator.fails(values)) {
-            return {};
-        }
-
-        return this.validator.errors.all();
     }
 
     render() {
@@ -45,8 +35,10 @@ class Form extends React.Component {
                 <Formik
                     { ...rest }
                     initialValues={ initialValues }
-                    validate={ this.validate }
-                    render={ props => <Element config={ schema } /> } />
+                    validationSchema={ this.validationSchema }
+                    render={ props =>
+                        <Element config={ schema } />
+                    } />
             </SchemaProvider>
         )
     }

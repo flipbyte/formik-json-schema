@@ -17,47 +17,24 @@ export const changeHandler = (handler, formikProps, {
 export const setFieldValueWrapper = (setFieldValue, name) => (value) => setFieldValue(name, value);
 export const joinNames = (...args) => _.join(_.filter(args, arg => (_.isString(arg) && arg) || _.isInteger(arg)), '.')
 
-export const prepareValidationSchema = (schema, result = {}) => {
-    const processContainer = (container) => {
-        const {
-            elements,
-            prefixNameToElement,
-            name: containerName,
-            type,
-            renderer: containerRenderer
-        } = container;
-        let prefix = prefixNameToElement || containerRenderer === 'editable-grid' ? containerName : '';
-
-        _.map(elements, (element, key, index) => {
-            const {
-                type,
-                renderer: fieldRenderer,
-                isWildcardValidation,
-                name: fieldName,
-                validation
-            } = element;
-            if (type !== 'field') {
-                let joinArgs = [fieldName];
-                if (prefix) {
-                    joinArgs.unshift(prefix, '*');
-                }
-                processContainer({
-                    ...element,
-                    name: fieldRenderer === 'editable-grid' || isWildcardValidation ? joinNames(...joinArgs) : '',
-                });
+export const prepareValidationSchema = ({ elements }, result = {}) => {
+    _.forEach(elements, (element, index) => {
+        const { name, type, validation, prefixNameToElement, renderer } = element;
+        if(type !== 'field') {
+            if(prefixNameToElement) {
+                result[name] = [['object'], ['shape', prepareValidationSchema(element, {})]];
+            } else if(renderer == 'editable-grid') {
+                result[name] = [['array'], ['of', [['object'], ['shape', prepareValidationSchema(element, {})]]]]
+                // result[name].push(prepareValidationSchema(element, {}));
+            } else {
+                result = prepareValidationSchema(element, result);
             }
-
-            if (!validation) {
-                return;
+        } else {
+            if(validation) {
+                result[name] = validation
             }
+        }
+    })
 
-            let validationKey = containerRenderer !== 'editable-grid' ?
-                joinNames(prefix, fieldName) :
-                joinNames(prefix, '*', fieldName);
-            result[validationKey] = validation;
-        })
-    }
-
-    processContainer(schema);
     return result;
 }

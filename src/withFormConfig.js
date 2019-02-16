@@ -2,8 +2,6 @@ import messages from './messages';
 import React, { Component } from 'react';
 import { prepareValidationSchema } from './utils';
 
-const ValidatorJs = require('validatorjs');
-
 const SchemaContext = React.createContext({});
 export const SchemaProvider = ({ value, children }) =>
     <SchemaContext.Provider value={ value }>
