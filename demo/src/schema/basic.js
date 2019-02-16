@@ -15,7 +15,7 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "text",
-                validation: "required|min:3"
+                validation: [['string'], ['required'], ['min', 3]]
             },
             email: {
                 name: "email",
@@ -23,7 +23,7 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "text",
-                validation: "required|email"
+                validation: [['string'], ['required'], ['email']]
             },
             telephone: {
                 name: "telephone",
@@ -31,14 +31,14 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "telephone",
-                validation: "regex:/^\\d{3}-\\d{3}-\\d{4}$/"
+                validation: [['string'], ['matches', /^\d{3}-\d{3}-\d{4}$/]]
             },
             message: {
                 name: "message",
                 label: "Message",
                 type: "field",
                 renderer: "textarea",
-                validation: "required"
+                validation: [['string'], ['required']]
             },
             save: {
                 type: "field",

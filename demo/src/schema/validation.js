@@ -24,10 +24,7 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "text",
-                validation: [
-                    "required",
-                    "regex:/^[a-zA-Z][a-zA-Z0-9]+$/"
-                ]
+                validation: [['string'], ['required']]
             },
             url: {
                 name: "url",
@@ -35,7 +32,7 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "text",
-                validation: "required|url"
+                validation: [['string'], ['required'], ['url']]
             },
             autocomplete: {
                 name: "autocomplete",
@@ -51,7 +48,10 @@ export default {
                     renderSuggestion: renderSuggestion,
                     inputProps: {}
                 },
-                validation: "required_if:text"
+                validation: [['string'], ['when', 'text', {
+                    is: undefined,
+                    then: [['string'], ['required'], ['min', 2]]
+                }]]
             },
             reactSelect: {
                 type: "field",
@@ -68,7 +68,8 @@ export default {
                         label: "Yes"
                     }
                 ],
-                formGroupClass: "form-group mb-4"
+                formGroupClass: "form-group mb-4",
+                validation: [['boolean'], ['required']]
             },
             submit: {
                 label: "Submit",

@@ -38,6 +38,7 @@ export default {
                                 collapsible: false,
                                 cardClass: "card mb-3",
                                 prefixNameToElement: true,
+                                name: 'simpleFieldset',
                                 elements: {
                                     title: {
                                         name: "title",
@@ -46,9 +47,105 @@ export default {
                                         renderer: "text",
                                         fieldType: "text",
                                         validation: [
-                                            "required",
-                                            "regex:/^[a-zA-Z][a-zA-Z0-9]+$/"
+                                            ['string'],
+                                            ['required'],
+                                            ['matches', /^[a-zA-Z][a-zA-Z0-9]+$/]
                                         ]
+                                    }
+                                }
+                            },
+                            nestedF: {
+                                type: "container",
+                                renderer: "fieldset",
+                                title: " Nested Fieldset",
+                                collapsible: false,
+                                cardClass: "card mb-3",
+                                prefixNameToElement: true,
+                                name: 'nestedF',
+                                elements: {
+                                    simple: {
+                                        type: "container",
+                                        renderer: "fieldset",
+                                        title: " Simple Fieldset",
+                                        collapsible: false,
+                                        cardClass: "card mb-3",
+                                        prefixNameToElement: true,
+                                        name: 'simpleFieldset',
+                                        elements: {
+                                            title: {
+                                                name: "title",
+                                                label: "Title",
+                                                type: "field",
+                                                renderer: "text",
+                                                fieldType: "text",
+                                                validation: [
+                                                    ['string'],
+                                                    ['required'],
+                                                    ['matches', /^[a-zA-Z][a-zA-Z0-9]+$/]
+                                                ]
+                                            },
+                                            nestedGrid: {
+                                                type: "container",
+                                                renderer: "fieldset",
+                                                title: " Nested Grid",
+                                                collapsible: false,
+                                                elements: {
+                                                    nested: {
+                                                        type: "container",
+                                                        renderer: "editable-grid",
+                                                        label: "Travel",
+                                                        name: "nested",
+                                                        isSortable: false,
+                                                        elements: {
+                                                            name: {
+                                                                type: "field",
+                                                                renderer: "text",
+                                                                name: "name",
+                                                                fieldType: "text",
+                                                                label: "Name",
+                                                                validation: [['string'], ['required']]
+                                                            },
+                                                            travelHistory: {
+                                                                type: "container",
+                                                                renderer: "editable-grid",
+                                                                name: "travelHistory",
+                                                                isSortable: true,
+                                                                elements: {
+                                                                    date: {
+                                                                        type: "field",
+                                                                        renderer: "text",
+                                                                        name: "date",
+                                                                        fieldType: "date",
+                                                                        label: "Date",
+                                                                        validation: [['date'], ['required']]
+                                                                    },
+                                                                    location: {
+                                                                        type: "field",
+                                                                        renderer: "text",
+                                                                        name: "location",
+                                                                        fieldType: "text",
+                                                                        label: "Location Travelled",
+                                                                        validation: [['string'], ['when', 'date', {
+                                                                            is: true,
+                                                                            then: [['string'], ['min', 2]],
+                                                                            otherwise: [['string'], ['nullable']]
+                                                                        }]]
+                                                                    }
+                                                                },
+                                                                buttons: {
+                                                                    add: "Add",
+                                                                    remove: "X"
+                                                                }
+                                                            }
+                                                        },
+                                                        buttons: {
+                                                            add: "Add Person",
+                                                            remove: "X"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -66,10 +163,11 @@ export default {
                                         type: "field",
                                         renderer: "text",
                                         fieldType: "text",
-                                        validation: [
-                                            "required",
-                                            "regex:/^[a-zA-Z][a-zA-Z0-9]+$/"
-                                        ]
+                                        validation: [['string'], ['when', 'simpleFieldset.title', {
+                                            is: false,
+                                            then: [['string'], ['required'], ['min', 5]],
+                                            otherwise: [['string'], ['nullable']]
+                                        }]]
                                     }
                                 }
                             }
@@ -97,7 +195,7 @@ export default {
                                                 name: "name",
                                                 fieldType: "text",
                                                 label: "Name",
-                                                validation: "required"
+                                                validation: [['string'], ['required']]
                                             },
                                             age: {
                                                 type: "field",
@@ -105,7 +203,7 @@ export default {
                                                 name: "age",
                                                 fieldType: "number",
                                                 label: "Age",
-                                                validation: "required|min:18"
+                                                validation: [['number'], ['required'], ['min', 18]]
                                             },
                                             dob: {
                                                 type: "field",
@@ -113,7 +211,7 @@ export default {
                                                 name: "dob",
                                                 fieldType: "date",
                                                 label: "DOB",
-                                                validation: "date"
+                                                validation: [['date'], ['required']]
                                             },
                                             gender: {
                                                 type: "field",
@@ -159,7 +257,7 @@ export default {
                                                 name: "name",
                                                 fieldType: "text",
                                                 label: "Name",
-                                                validation: "required"
+                                                validation: [['string'], ['required']]
                                             },
                                             travelHistory: {
                                                 type: "container",
@@ -173,7 +271,7 @@ export default {
                                                         name: "date",
                                                         fieldType: "date",
                                                         label: "Date",
-                                                        validation: "required|date"
+                                                        validation: [['date'], ['required']]
                                                     },
                                                     location: {
                                                         type: "field",
@@ -181,7 +279,10 @@ export default {
                                                         name: "location",
                                                         fieldType: "text",
                                                         label: "Location Travelled",
-                                                        validation: "required_if:nested.*.travelHistory.*.date"
+                                                        validation: [['string'], ['when', 'date', {
+                                                            is: undefined,
+                                                            then: [['string'], ['min', 2]]
+                                                        }]]
                                                     }
                                                 },
                                                 buttons: {
