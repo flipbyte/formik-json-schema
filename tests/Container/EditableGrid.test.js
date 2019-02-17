@@ -76,7 +76,7 @@ describe('EditableGrid', () => {
     it('renders multiple columns with fields', () => {
         const wrapper = mount(<Form { ...prepareForm({ elements: {
             [containerKey]: {
-                fields: {
+                elements: {
                     field1: {
                         type: "field",
                         renderer: "text",
@@ -97,11 +97,11 @@ describe('EditableGrid', () => {
         expect(wrapper.exists()).toEqual(true);
     });
 
-    it('throws error when "fields" is not defined', () => {
-        const wrapper = mount(<Form { ...prepareForm({ elements: { [containerKey]: { ...container } } }) } />);
-        expect(console.error.threw).toEqual(true);
-    });
-
+    // it('throws error when "elements" is not defined', () => {
+    //     const wrapper = mount(<Form { ...prepareForm({ elements: { [containerKey]: { ...container } } }) } />);
+    //     expect(console.error.threw).toEqual(true);
+    // });
+    //
     it('throws error when "name" is not defined', () => {
         const wrapper = mount(<Form { ...prepareForm({
             elements: { [containerKey]: prepareContainer('editable-grid') }
@@ -133,7 +133,7 @@ describe('EditableGrid', () => {
     context('sortable', function() {
         const sortableGrid = {
             [containerKey]: {
-                fields: {
+                elements: {
                     field1: {
                         type: "field",
                         renderer: "text",
@@ -166,7 +166,7 @@ describe('EditableGrid', () => {
         it('adds "add" button when label "add" key is set in "buttons"', () => {
             const wrapper = mount(<Form { ...prepareForm({ elements: {
                 [containerKey]: {
-                    fields: {
+                    elements: {
                         field1: {
                             type: "field",
                             renderer: "text",
@@ -188,7 +188,7 @@ describe('EditableGrid', () => {
         it('add new row on "add" button click', () => {
             const wrapper = mount(<Form { ...prepareForm({ elements: {
                 [containerKey]: {
-                    fields: {
+                    elements: {
                         field1: {
                             type: "field",
                             renderer: "text",

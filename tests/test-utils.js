@@ -27,10 +27,7 @@ export const prepareForm = ({
 
     return {
         initialValues,
-        schema: {
-            validation,
-            form: formWrapperSchema
-        }
+        schema: formWrapperSchema
     }
 }
 
