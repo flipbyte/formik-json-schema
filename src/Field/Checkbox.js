@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Checkbox = ({ config, formikProps, submitCountToValidate }) => {
+const Checkbox = ({ config, formik, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -17,8 +17,8 @@ const Checkbox = ({ config, formikProps, submitCountToValidate }) => {
         formCheckClass = 'form-check'
     } = config;
 
-    const { values, handleChange } = formikProps;
-    const error = hasError(name, submitCountToValidate, formikProps);
+    const { values, handleChange } = formik;
+    const error = hasError(name, submitCountToValidate, formik);
 
     return (
         <div className={ formGroupClass }>
@@ -35,7 +35,7 @@ const Checkbox = ({ config, formikProps, submitCountToValidate }) => {
                                 className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                                 type="checkbox"
                                 checked={ checkboxValue[key] || false }
-                                onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
+                                onChange={ changeHandler.bind(this, handleChange, formik, config) }
                                 { ...attributes } /> { label }
                         </label>
                         <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />

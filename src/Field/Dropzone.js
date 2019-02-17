@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone'
 import Thumb from './Thumb'
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const FileUploader = ({ config, formikProps, submitCountToValidate }) => {
+const FileUploader = ({ config, formik, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -20,8 +20,8 @@ const FileUploader = ({ config, formikProps, submitCountToValidate }) => {
         fieldClass = 'dropzone',
         formGroupClass = 'form-group',
     } = config;
-    const { values, setFieldValue } = formikProps;
-    const error = hasError(name, submitCountToValidate, formikProps);
+    const { values, setFieldValue } = formik;
+    const error = hasError(name, submitCountToValidate, formik);
     const selectedValue = _.get(values, name, defaultValue);
 
     return (
@@ -38,7 +38,7 @@ const FileUploader = ({ config, formikProps, submitCountToValidate }) => {
 
                     changeHandler(
                         setFieldValueWrapper(setFieldValue, name),
-                        formikProps,
+                        formik,
                         config,
                         values[name].concat(acceptedFiles)
                     )

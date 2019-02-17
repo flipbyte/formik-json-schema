@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Field } from 'formik';
 
 const CONTAINER = 'container';
 const FIELD = 'field';
@@ -19,28 +20,10 @@ class Registry {
     }
 }
 
-const fieldRegistry = new Registry();
-export const registerField = fieldRegistry.register.bind(fieldRegistry);
+export const fields = new Registry();
+export const registerField = fields.register.bind(fields);
 
-const containerRegistry = new Registry();
-export const registerContainer = containerRegistry.register.bind(containerRegistry);
-
-export const render = ( config, formikProps, submitCountToValidate, rest ) => {
-    let currentRegistry = containerRegistry;
-    if( config.type ==  FIELD ) {
-        currentRegistry = fieldRegistry;
-    }
-
-    let Renderer = config.renderer;
-    if(typeof config.renderer == 'string') {
-        Renderer = currentRegistry.get(config.renderer);
-    }
-
-    return <Renderer
-        config={ config }
-        formikProps={ formikProps }
-        submitCountToValidate={ submitCountToValidate }
-        { ...rest } />
-}
+export const containers = new Registry();
+export const registerContainer = containers.register.bind(containers);
 
 export default Registry;

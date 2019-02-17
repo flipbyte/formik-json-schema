@@ -18,12 +18,12 @@ export default {
     integer: 'This must be an integer.',
     hex: 'Only hexadecimal format allowed here.',
     min: {
-        numeric: 'Please enter at least :min numerals.',
+        numeric: 'Enter a value greater than or equal to :min.',
         string: 'Entered value must be at least :min characters.'
     },
     max: {
-        numeric: 'This value may not be greater than :max. Please enter a smaller value.',
-        string: 'Only :max characters are allowed hwew. Please enter a shorter value'
+        numeric: 'Entered value must not be greater than :max.',
+        string: 'Only :max characters are allowed here.'
     },
     not_in: 'The selected option is invalid.',
     numeric: 'This must be a number.',

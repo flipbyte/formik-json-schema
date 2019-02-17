@@ -40,7 +40,7 @@ describe('Tabs', () => {
         fieldType: "text",
     });
     const withTabs = { [containerKey]: {
-        tabs: {
+        elements: {
             tab1: {
                 label: "Tab 1",
                 elements: {
@@ -68,14 +68,14 @@ describe('Tabs', () => {
         expect(wrapper.exists()).toEqual(true);
     });
 
-    it('throws error when "tabs" is not defined', () => {
-        const wrapper = mount(<Form { ...prepareForm({ elements: withNoTabs }) } />);
-        expect(console.error.threw).toEqual(true);
-    });
+    // it('throws error when "elements" is not defined', () => {
+    //     const wrapper = mount(<Form { ...prepareForm({ elements: withNoTabs }) } />);
+    //     expect(console.error.threw).toEqual(true);
+    // });
 
     context('custom html classes for tab html elements', function() {
         const tabs = {
-            tabs: {
+            elements: {
                 tab1: {
                     label: "Tab 1",
                     elements: {
@@ -188,7 +188,7 @@ describe('Tabs', () => {
 
     context('prefixNameToElement', function() {
         const tabs = {
-            tabs: {
+            elements: {
                 tab1: {
                     label: "Tab 1",
                     elements: {

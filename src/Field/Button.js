@@ -2,9 +2,9 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { hasError, clickHandler, joinNames, setFieldValueWrapper } from '../utils';
 
-const Button = ({ config, formikProps }) => {
+const Button = ({ config, formik }) => {
     const { label, fieldClass, buttonType, onClick } = config;
-    const { values, isSubmitting, errors } = formikProps;
+    const { isSubmitting } = formik;
 
     let buttonProps = {
         type: buttonType ? buttonType : 'button' ,
@@ -12,7 +12,7 @@ const Button = ({ config, formikProps }) => {
         disabled: isSubmitting
     };
 
-    if(_.isFunction(onClick)) buttonProps.onClick = onClick.bind(this, formikProps, config);
+    if(_.isFunction(onClick)) buttonProps.onClick = onClick.bind(this, formik, config);
 
     return <button { ...buttonProps }>
         { label } { isSubmitting && <i className="fa fa-spinner fa-spin" /> }

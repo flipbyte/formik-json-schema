@@ -24,7 +24,7 @@ const getSelectedOptions = ( options, values ) =>
             : _.filter(options, (option) => option.value == values)
         : null;
 
-const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
+const ReactSelect = ({ config, formik, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -39,8 +39,8 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
         formGroupClass = 'form-group',
         noOptionsMessage,
     } = config;
-    const { values, setFieldValue } = formikProps;
-    const error = hasError(name, submitCountToValidate, formikProps);
+    const { values, setFieldValue } = formik;
+    const error = hasError(name, submitCountToValidate, formik);
     const options = prepareOptions(initialOptions);
     const selectedValue = _.get(values, name, defaultValue);
     const selectedOption = getSelectedOptions(options, selectedValue);
@@ -57,7 +57,7 @@ const ReactSelect = ({ config, formikProps, submitCountToValidate }) => {
             const selectedValues = !isMulti ? selectedOptions.value : _.mapValues(selectedOptions, 'value');
             return changeHandler(
                 setFieldValueWrapper(setFieldValue, name),
-                formikProps,
+                formik,
                 config,
                 selectedValues
             );

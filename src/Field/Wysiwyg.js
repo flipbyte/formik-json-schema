@@ -23,7 +23,7 @@ class Wysiwyg extends React.Component {
     }
 
     render() {
-        const { config, formikProps, submitCountToValidate } = this.props;
+        const { config, formik, submitCountToValidate } = this.props;
         const {
             name,
             label,
@@ -35,9 +35,9 @@ class Wysiwyg extends React.Component {
             formGroupClass = 'form-group',
             textareaClass = 'form-control'
         } = config;
-        const { setFieldValue, handleChange } = formikProps;
-        const value = _.get(formikProps.values, name, '');
-        const error = hasError(name, submitCountToValidate, formikProps);
+        const { setFieldValue, handleChange } = formik;
+        const value = _.get(formik.values, name, '');
+        const error = hasError(name, submitCountToValidate, formik);
 
         return (
             <div className={ formGroupClass }>
@@ -57,7 +57,7 @@ class Wysiwyg extends React.Component {
                             value={ value }
                             className={ error ? ' is-invalid ' : '' }
                             onChange={
-                                changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formikProps, config)
+                                changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config)
                             }
                             { ...this.toolbarOptions }
                             { ... attributes } />
@@ -69,7 +69,7 @@ class Wysiwyg extends React.Component {
                                 className={ textareaClass }
                                 rows="10"
                                 value={ value }
-                                onChange={ changeHandler.bind(this, handleChange, formikProps, config) } />
+                                onChange={ changeHandler.bind(this, handleChange, formik, config) } />
                         }
                         <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
                     </div>

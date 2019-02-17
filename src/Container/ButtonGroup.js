@@ -1,20 +1,19 @@
 import _ from 'lodash';
 import React from 'react';
-import PropTypes from 'prop-types';
 import Element from '../Element';
+import PropTypes from 'prop-types';
 
 const ButtonGroup = ({
     config: {
         elements,
         buttonsContainerClass = 'buttons-container',
         buttonGroupClass = 'btn-group'
-    },
-    formikProps
+    }
 }) =>
     <div className={ buttonsContainerClass }>
         <div className={ buttonGroupClass }>
             { _.map(elements, (element, key) =>
-                <Element key={ key } config={ element } formikProps={ formikProps } />)
+                <Element key={ key } config={ element } />)
             }
         </div>
     </div>

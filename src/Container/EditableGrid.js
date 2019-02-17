@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import { getIn } from 'formik';
 import Element from '../Element';
+import PropTypes from 'prop-types';
 import { FieldArray } from 'formik';
 import { joinNames } from '../utils';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-import PropTypes from 'prop-types';
 
 const onSortEnd = ( move, { oldIndex, newIndex } ) => move(oldIndex, newIndex);
 const SortableItem = SortableElement((props) => renderTableRow(props));
@@ -21,18 +21,16 @@ const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) =>
         ) : null }
     </tbody>
 
-const renderTableRow = ({ fieldArrayName, fields, formikProps, arrayActions, rowIndex, buttons, isSortable }) =>
+const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable }) =>
     <tr key={ rowIndex }>
         { isSortable && <SortableRowHandle /> }
-        { _.map(fields, ({ label, name, width, ...colProps }, key) => {
+        { _.map(elements, ({ label, name, width, ...colProps }, key) => {
             let element = _.assign({}, colProps);
             element.name = joinNames(fieldArrayName, rowIndex, name);
 
             return (
                 <td key={ key }>
-                    <Element
-                        config={ element }
-                        formikProps={ formikProps } />
+                    <Element config={ element } />
                 </td>
             );
         }) }
@@ -52,19 +50,19 @@ const renderSortableHandle = ( props ) => <td><i className="fas fa-grip-vertical
 const EditableGrid = ({
     config: {
         name: fieldArrayName,
-        fields,
+        elements,
         buttons,
         isSortable = true,
         tableContainerClass = 'table-responsive',
         tableClass = 'table table-bordered flutter-editable-grid'
     },
-    formikProps
+    formik
 }) => {
-    const { values, errors, touched } = formikProps;
-    const arrayFields = _.mapValues(_.assign({}, fields), () => '');
+    const { values, errors, touched } = formik;
+    const arrayFields = _.mapValues(_.assign({}, elements), () => '');
     const arrayValues = getIn(values, fieldArrayName);
     const hasValue = _.size(arrayValues) > 0;
-    const tableWidth = _.map(fields, 'width').reduce(( sum, num ) => sum + num, 50) || '100%';
+    const tableWidth = _.map(elements, 'width').reduce(( sum, num ) => sum + num, 50) || '100%';
     const additionalColumnCount = isSortable ? 2 : 1;
 
     return (
@@ -72,7 +70,7 @@ const EditableGrid = ({
             name={ fieldArrayName }
             render={( arrayActions ) => {
                 const bodyProps = {
-                    arrayValues, hasValue, fields, formikProps, fieldArrayName, arrayActions, buttons, isSortable
+                    arrayValues, hasValue, elements, fieldArrayName, arrayActions, buttons, isSortable
                 };
 
                 return (
@@ -81,7 +79,7 @@ const EditableGrid = ({
                             <thead>
                                 <tr>
                                     { isSortable && <th></th>}
-                                    { _.map(fields, ({ label, width }, key) =>
+                                    { _.map(elements, ({ label, width }, key) =>
                                         <th key={ key } style={{ width: width }}>{ label }</th>
                                     ) }
                                     { !!buttons && !!buttons.remove && <th></th> }
@@ -98,7 +96,7 @@ const EditableGrid = ({
                             <tfoot>
                                 <tr>
                                     { !!buttons && !!buttons.add &&
-                                        <td colSpan={ _.size(fields) + additionalColumnCount }>
+                                        <td colSpan={ _.size(elements) + additionalColumnCount }>
                                             <button
                                                 type="button"
                                                 className="btn btn-secondary"
@@ -118,7 +116,7 @@ const EditableGrid = ({
 EditableGrid.propTypes = {
     config: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        fields: PropTypes.object.isRequired,
+        elements: PropTypes.object.isRequired,
         buttons: PropTypes.exact({
             add: PropTypes.string,
             remove: PropTypes.string

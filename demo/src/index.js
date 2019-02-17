@@ -24,7 +24,7 @@ const Demo = () =>
             </div>
         </div>
         <div id="page-content-wrapper">
-            <div class="scrollmenu sticky">
+            <div className="scrollmenu sticky">
                 { forms.map(({ id, title }, index) =>
                     <a key={ index } href={ `#${id}` }>{ title }</a> ) }
             </div>

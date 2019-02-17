@@ -4,7 +4,7 @@ import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Textarea = ({ config, formikProps, submitCountToValidate }) => {
+const Textarea = ({ config, formik, submitCountToValidate }) => {
     const {
         name,
         label,
@@ -15,8 +15,8 @@ const Textarea = ({ config, formikProps, submitCountToValidate }) => {
         fieldClass = 'form-control',
         formGroupClass = 'form-group'
     } = config;
-    const { values, handleChange } = formikProps;
-    const error = hasError(name, submitCountToValidate, formikProps);
+    const { values, handleChange } = formik;
+    const error = hasError(name, submitCountToValidate, formik);
 
     return (
         <div className={ formGroupClass }>
@@ -26,7 +26,7 @@ const Textarea = ({ config, formikProps, submitCountToValidate }) => {
                 name={ name }
                 className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                 value={ _.get(values, name, '') }
-                onChange={ changeHandler.bind(this, handleChange, formikProps, config) }
+                onChange={ changeHandler.bind(this, handleChange, formik, config) }
                 { ...attributes } />
             <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
         </div>
