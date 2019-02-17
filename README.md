@@ -40,45 +40,37 @@ import { Form } from '@flipbyte/formik-json';
 
 ```js
 {
-    "validation": {
-        "status": "required",
-        "data.identifier": "required|alpha_dash",
-        "attributes.*.title": "required",
-        ...
-    },
-    "form": {
-        "id": "my-new-form",
-        "label": "My New Form",
-        "type": "container",
-        "renderer": "form",
-        "elements": {
-            "save": {
-                "type": "field",
-                "renderer": "button",
-                "name": "save",
-                "label": "Save",
-                "position": 10,
-                "htmlClass": "btn-success",
-                "buttonType": "submit"
-            },
-            "main": {
-                "type": "container",
-                "renderer": "div",
-                "htmlClass": "row",
-                "elements": {
-                    "title": {
-                        "name": "attributes.0.title",
-                        "label": "Title",
-                        "type": "field",
-                        "renderer": "text",
-                        "position": 10,
-                        "fieldType": "text"
-                    },
-                    ....
-                }
-            },
-            ....
-        }
+    "id": "my-new-form",
+    "label": "My New Form",
+    "type": "container",
+    "renderer": "form",
+    "elements": {
+        "save": {
+            "type": "field",
+            "renderer": "button",
+            "name": "save",
+            "label": "Save",
+            "position": 10,
+            "htmlClass": "btn-success",
+            "buttonType": "submit"
+        },
+        "main": {
+            "type": "container",
+            "renderer": "div",
+            "htmlClass": "row",
+            "elements": {
+                "title": {
+                    "name": "attributes.0.title",
+                    "label": "Title",
+                    "type": "field",
+                    "renderer": "text",
+                    "position": 10,
+                    "fieldType": "text"
+                },
+                ....
+            }
+        },
+        ....
     }
 }
 
@@ -104,16 +96,11 @@ Form component requires the following properties:
 
 ### Schema object
 ----
-"validation" and "form" are the 2 main keys of the object.
-
--   Validation: validation allows you to define the validation rules for the form.
-The plugin depends on [Validatorjs](https://github.com/skaterdav85/validatorjs) and you can follow the instructions in their [README](https://github.com/skaterdav85/validatorjs/blob/master/README.md) to setup your validation rules.
-
--   Form: Everything inside the "form" key has 2 types: either "container" or "field"
+Schema object contains elements which can be one of 2 types: either "container" or "field"
 Each type needs a renderer to render the specific component.
 The "container" has an "elements" key within which you can define either new containers or fields.
 
-"form" is an object that has the following keys (all required):
+schema object that has the following keys (all required):
 
 | Key | Description |
 | ------ | ------ |
@@ -123,7 +110,7 @@ The "container" has an "elements" key within which you can define either new con
 | renderer | "form" (you can use other renderers but if you want the form to have a ```<form />``` tag use the "form" renderer.) |
 | elements | is an object used to define the elements within the container |
 
-Note: The "form" object can only have one container. You can have multiple containers and fields inside the elements object of the form container.
+Note: The schema object can only have one container. You can have multiple containers and fields inside the elements object of the main schema object.
 
 "elements" is an object with key-value pair where value is another object. The value object can either be a of type "container" or "field".
 
