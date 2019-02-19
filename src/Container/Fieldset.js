@@ -56,7 +56,7 @@ class Fieldset extends Component {
                         { title }
                         { this.collapsible && <div className={ cardHeaderActionsClass }>
                             <a className="card-header-action btn btn-minimize">
-                                <i className={ this.state.collapsed ?  cardHeaderIconCollapsed : cardHeaderIconDisclosed }></i>
+                                <i className={ this.state.collapsed ?  cardHeaderIconCollapsedClass : cardHeaderIconDisclosedClass }></i>
                             </a>
                         </div> }
 
