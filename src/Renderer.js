@@ -3,58 +3,56 @@ import { connect, Field } from 'formik';
 import React, { Component } from 'react';
 import withFormConfig from './withFormConfig';
 import { containers, fields } from './registry';
+import Rules from '@flipbyte/yup-schema';
+import when from '@flipbyte/when-condition';
 
 const FIELD = 'field';
 
-const validate = ( validationSchema, config, values, value ) => {
-    console.log(config.name);
-    // let result = await validationSchema.validateAt(config.name);
-    // if (result instanceof Error) {
-    //     throw result.message
-    // }
-    //
-    // return true;
-
-
-    // console.log(config.name, values)
-    // return validationSchema.validateAt(config.name, values).catch(err => {
-    //     throw err.message
-    // })
-    // if(_.isFunction(config.validation)) {
-    //     return config.validation(value, config);
-    // }
-    //
-    // if(config.validation) {
-    //     validator.single(value, config.validation)
-    //     return validator.errors.first(config.name);
-    // }
-    //
-    // return ''
-}
-
-const ElementRenderer = ({ config, formik, validationSchema, submitCountToValidate, ...rest }) => {
-    let currentRegistry = containers;
-    if( config.type ===  FIELD ) {
-        currentRegistry = fields;
+class ElementRenderer extends Component {
+    constructor(props) {
+        super(props);
     }
 
-    let Renderer = config.renderer;
-    if(typeof config.renderer === 'string') {
-        Renderer = currentRegistry.get(config.renderer);
+    // Experimental - Needs thorough testing
+    shouldComponentUpdate(nextProps) {
+        return nextProps.formik !== this.props.formik
     }
 
-    const makeRendererComponent = () => <Renderer
-        config={ config }
-        formik={ formik }
-        submitCountToValidate={ submitCountToValidate }
-        { ...rest } />
+    makeRendererComponent(props) {
+        let currentRegistry = containers;
+        if( props.config.type ===  FIELD ) {
+            currentRegistry = fields;
+        }
 
-    return config.type === FIELD
-        ? <Field
-            name={ config.name }
-            render={ props => makeRendererComponent() }
-            validate={ validate.bind(this, validationSchema, config, formik.values) } />
-        : makeRendererComponent();
+        let Renderer = props.config.renderer;
+        if(typeof props.config.renderer === 'string') {
+            Renderer = currentRegistry.get(props.config.renderer);
+        }
+
+        return this.validateConditional() && <Renderer { ...props } />
+    }
+
+    validateConditional() {
+        const { config, formik } = this.props;
+
+        if(config.condition) {
+            return when(config.condition, formik.values);
+        }
+
+        return true;
+    }
+
+    render() {
+        const { config, validationSchema, formik, ...rest } = this.props;
+
+        return config.type === FIELD
+            ? <Field
+                name={ config.name }
+                render={ ({ form: formik, field: formikField }) =>
+                    this.makeRendererComponent({ ...rest, config, formik, formikField })
+                } />
+            : this.makeRendererComponent({ ...rest, config, formik });
+    }
 }
 
 export default connect(withFormConfig(ElementRenderer));

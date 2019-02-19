@@ -1,4 +1,6 @@
-import { save } from '../source/external-handlers';
+import {
+    save
+} from '../source/external-handlers';
 
 export default {
     onSubmit: save.bind(this),
@@ -15,7 +17,11 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "text",
-                validation: [['string'], ['required'], ['min', 3]]
+                validation: [
+                    ['string'],
+                    ['required'],
+                    ['min', 3]
+                ]
             },
             email: {
                 name: "email",
@@ -23,7 +29,12 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "text",
-                validation: [['string'], ['required'], ['email']]
+                validation: [
+                    ['string'],
+                    ['required'],
+                    ['email']
+                ],
+                condition: ['or', ['name', undefined, 'is'], ['name', '', 'is']]
             },
             telephone: {
                 name: "telephone",
@@ -31,14 +42,20 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "telephone",
-                validation: [['string'], ['matches', /^\d{3}-\d{3}-\d{4}$/]]
+                validation: [
+                    ['string'],
+                    ['matches', /^\d{3}-\d{3}-\d{4}$/]
+                ]
             },
             message: {
                 name: "message",
                 label: "Message",
                 type: "field",
                 renderer: "textarea",
-                validation: [['string'], ['required']]
+                validation: [
+                    ['string'],
+                    ['required']
+                ]
             },
             save: {
                 type: "field",
