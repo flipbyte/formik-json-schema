@@ -41,6 +41,8 @@ class Fieldset extends Component {
                 prefixNameToElement = false,
                 cardClass = 'card flutter-fieldset',
                 cardHeaderClass = 'card-header',
+                cardHeaderIconCollapsedClass = 'fas fa-angle-down',
+                cardHeaderIconDisclosedClass = 'fas fa-angle-up',
                 cardHeaderActionsClass = 'card-header-actions',
                 cardBodyClass = 'card-body'
             }
@@ -54,7 +56,7 @@ class Fieldset extends Component {
                         { title }
                         { this.collapsible && <div className={ cardHeaderActionsClass }>
                             <a className="card-header-action btn btn-minimize">
-                                <i className={ 'fas ' + (this.state.collapsed ? 'fa-angle-down' : 'fa-angle-up') }></i>
+                                <i className={ this.state.collapsed ?  cardHeaderIconCollapsed : cardHeaderIconDisclosed }></i>
                             </a>
                         </div> }
 
