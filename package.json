@@ -1,6 +1,6 @@
 {
     "name": "@flipbyte/formik-json",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "formik-json is a wrapper for Formik to easily create forms using JSON / Javascript Object for defining the elements",
     "main": "lib/index.js",
     "module": "es/index.js",
@@ -26,6 +26,7 @@
         "publish-demo": "npm run build && gh-pages -d demo/dist"
     },
     "dependencies": {
+        "@flipbyte/when-condition": "^0.1.2",
         "@flipbyte/yup-schema": "^0.1.3",
         "codemirror": "^5.41.0",
         "formik": "^1.5.0",

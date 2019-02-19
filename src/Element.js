@@ -30,6 +30,15 @@ class Element extends Component {
         }
     }
 
+    // Experimental - need thorough testing
+    shouldComponentUpdate(nextProps, nextState) {
+        if(nextState !== this.state) {
+            return true;
+        }
+
+        return false
+    }
+
     loadConfigAfter(config) {
         let fullConfig = _.assign({}, this.props.config, config);
         this.setState({ hasLoadedConfig: true, loadedConfig: fullConfig });
