@@ -11,7 +11,7 @@
 }
 
 div.scrollmenu {
-    background-color: #f8f9fa !important;
+    background-color: #f8f9fa;
     overflow: auto;
     white-space: nowrap;
 }
