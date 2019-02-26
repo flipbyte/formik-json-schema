@@ -7,7 +7,7 @@ module.exports = {
             externals: {
                 react: 'React',
                 'react-dom': 'ReactDOM',
-                formik: 'Formik',
+                lodash: '_',
             }
         }
     }

@@ -4,7 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import React, { Component } from 'react';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames, setFieldValueWrapper } from '../utils';
-import '../css/autocomplete.css';
+// import '../css/autocomplete.css';
 
 class Autocomplete extends Component {
     static autosuggestCallbackKeys = [

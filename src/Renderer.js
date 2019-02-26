@@ -14,9 +14,9 @@ class ElementRenderer extends Component {
     }
 
     // Experimental - Needs thorough testing
-    shouldComponentUpdate(nextProps) {
-        return nextProps.formik !== this.props.formik
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     return nextProps.formik !== this.props.formik
+    // }
 
     makeRendererComponent(props) {
         let currentRegistry = containers;

@@ -30,7 +30,7 @@ class Element extends Component {
         }
     }
 
-    // Experimental - need thorough testing
+    // Experimental - needs thorough testing
     shouldComponentUpdate(nextProps, nextState) {
         if(nextState !== this.state) {
             return true;
@@ -80,8 +80,7 @@ class Element extends Component {
         const { loadedConfig, submitCountToValidate } = this.state;
         const config = loadedConfig || initialConfig;
         const rendererProps = { config, submitCountToValidate, ...rest }
-        return this.state.hasMounted //&& renderElement(config, formik, submitCountToValidate, rest);
-            && <ElementRenderer { ...rendererProps } />
+        return this.state.hasMounted && <ElementRenderer { ...rendererProps } />
     }
 }
 

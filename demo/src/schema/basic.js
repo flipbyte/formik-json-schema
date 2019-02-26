@@ -34,7 +34,7 @@ export default {
                     ['required'],
                     ['email']
                 ],
-                condition: ['or', ['name', undefined, 'is'], ['name', '', 'is']]
+                condition: ['or', ['is', 'name', undefined], ['is', 'name', '']]
             },
             telephone: {
                 name: "telephone",
@@ -44,7 +44,11 @@ export default {
                 fieldType: "telephone",
                 validation: [
                     ['string'],
-                    ['matches', /^\d{3}-\d{3}-\d{4}$/]
+                    ['matches', /^\d{3}-\d{3}-\d{4}$/],
+                    ['when', 'email', {
+                        is: undefined,
+                        then: [['string'], ['required']]
+                    }]
                 ]
             },
             message: {

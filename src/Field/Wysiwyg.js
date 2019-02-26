@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Label from './Label';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+// import 'react-quill/dist/quill.snow.css';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
