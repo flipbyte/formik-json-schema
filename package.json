@@ -38,6 +38,7 @@
         "react-sortable-hoc": "^0.8.4"
     },
     "peerDependencies": {
+        "lodash": "^4.17.11",
         "react": "^16.8.0",
         "react-dom": "^16.8.0",
         "prop-types": "^15.6.2",
@@ -45,18 +46,18 @@
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.6.3",
+        "bootstrap": "^4.1.1",
         "axios": "^0.18.0",
-        "bootstrap": "^4.2.1",
-        "css-loader": "^2.1.0",
+        "babel-plugin-transform-import-styles": "0.0.11",
         "enzyme": "^3.8.0",
         "enzyme-adapter-react-16": "^1.7.1",
         "gh-pages": "^2.0.1",
         "inferno": "^5.0.0",
+        "load-styles": "^2.0.0",
         "nwb": "0.23.x",
         "react": "^16.8.0",
         "react-dom": "^16.8.0",
-        "remark-lint": "^6.0.4",
-        "style-loader": "^0.23.1"
+        "remark-lint": "^6.0.4"
     },
     "author": "",
     "homepage": "",

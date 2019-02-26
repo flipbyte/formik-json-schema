@@ -12,10 +12,8 @@ class Form extends React.Component {
     }
 
     getContextValue() {
-        this.validationSchema = new Rules([[
-            'object',
-            prepareValidationSchema(this.props.schema) || {}
-        ]]).toYup();
+        const validationSchema = prepareValidationSchema(this.props.schema);
+        this.validationSchema = validationSchema ? new Rules([[ 'object', validationSchema ]]).toYup() : null;
 
         return {
             validationSchema: this.validationSchema,
@@ -30,12 +28,15 @@ class Form extends React.Component {
             ...rest
         } = this.props;
 
+        const formProps = { ...rest, initialValues };
+        if(null !== this.validationSchema) {
+            formProps.validationSchema = this.validationSchema;
+        }
+
         return (
             <SchemaProvider value={ this.getContextValue() }>
                 <Formik
-                    { ...rest }
-                    initialValues={ initialValues }
-                    validationSchema={ this.validationSchema }
+                    { ...formProps }
                     render={ props =>
                         <Element config={ schema } />
                     } />
