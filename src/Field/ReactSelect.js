@@ -17,12 +17,31 @@ const prepareOptions = ( options ) =>
         return result;
     }, [])
 
-const getSelectedOptions = ( options, values ) =>
-    values && !_.isEmpty(options)
-        ? _.isObject(values)
-            ? _.filter(options, (option) => _.includes(values, option.value))
-            : _.filter(options, (option) => option.value == values)
-        : null;
+const getSelectedOptions = ( options, values, isCreatable ) => {
+    const getSelectedOption = ( value ) => {
+        const selectedOption = _.filter(options, _.matches({ value }));
+        return !_.isEmpty(selectedOption)
+            ? selectedOption
+            : isCreatable ? [{ value, label: value }] : null;
+    }
+
+    if (values && !_.isEmpty(options)) {
+        if(!_.isObject(values)) {
+            return getSelectedOption(values)
+        }
+
+        return _.reduce(values, (result, value) => {
+            const selectedOption = getSelectedOption(value);
+            if(_.isEmpty(selectedOption)) {
+                return result;
+            }
+
+            return _.union(result, selectedOption);
+        }, [])
+    }
+
+    return null;
+}
 
 const ReactSelect = ({ config, formik, submitCountToValidate }) => {
     const {
@@ -43,7 +62,7 @@ const ReactSelect = ({ config, formik, submitCountToValidate }) => {
     const error = hasError(name, submitCountToValidate, formik);
     const options = prepareOptions(initialOptions);
     const selectedValue = _.get(values, name, defaultValue);
-    const selectedOption = getSelectedOptions(options, selectedValue);
+    const selectedOption = getSelectedOptions(options, selectedValue, isCreatable);
 
     var selectProps = {
         name,

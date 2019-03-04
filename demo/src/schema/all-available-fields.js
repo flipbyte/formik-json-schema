@@ -47,6 +47,7 @@ export default {
                 renderer: "react-select",
                 name: "react-select",
                 label: "React Select",
+                isCreatable: true,
                 options: [{
                     value: 0,
                     label: "No"
@@ -62,6 +63,7 @@ export default {
                 name: "react-select-multi",
                 label: "React Select Multi",
                 isMulti: true,
+                isCreatable: true,
                 options: [{
                     value: 'chocolate',
                     label: 'Chocolate'
