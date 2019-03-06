@@ -84,7 +84,7 @@ export default {
             },
             singleCheckbox: {
                 name: "singleCheckbox",
-                label: "Multiple options",
+                label: "Single option",
                 type: "field",
                 renderer: "checkbox",
                 labelClass: "mr-2",
@@ -92,7 +92,12 @@ export default {
                 options: [{
                     value: 'checkbox-1',
                     label: 'Checkbox 1'
-                }]
+                }],
+                validation: [
+                    ['bool'],
+                    ['test', 'singleCheckbox.0', 'You have to select this value', value => value === true],
+                    ['required', 'You have to select this value']
+                ]
             },
             multiCheckbox: {
                 name: "multiCheckbox",

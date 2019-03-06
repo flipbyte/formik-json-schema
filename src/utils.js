@@ -21,13 +21,24 @@ export const prepareValidationSchema = ({ elements }, result = {}) => {
     _.forEach(elements, (element, index) => {
         const { name, type, validation, prefixNameToElement, renderer } = element;
         if(type !== 'field') {
+            const schema = prepareValidationSchema(element, {});
             if(prefixNameToElement) {
-                result[name] = [['object'], ['shape', prepareValidationSchema(element, {})]];
-            } else if(renderer == 'editable-grid') {
-                result[name] = [['array'], ['of', [['object'], ['shape', prepareValidationSchema(element, {})]]]]
-                // result[name].push(prepareValidationSchema(element, {}));
+                if(!_.isEmpty(schema)) {
+                    if(name) {
+                        result[name] = [['object', schema]];
+                    } else {
+                        result = {
+                            ...result,
+                            ...schema
+                        }
+                    }
+                }
+            } else if(renderer === 'editable-grid') {
+                if(!_.isEmpty(schema)) {
+                    result[name] = [['array', [['object', schema]]]]
+                }
             } else {
-                result = prepareValidationSchema(element, result);
+                result = { ...result, ...schema }
             }
         } else {
             if(validation) {

@@ -26,6 +26,9 @@ export const prepareForm = ({
     };
 
     return {
+        onSubmit: (values, actions) => {
+            console.log(values);
+        },
         initialValues,
         schema: formWrapperSchema
     }
@@ -34,3 +37,11 @@ export const prepareForm = ({
 export const prepareElement = ( type, renderer, props ) => ({ type, renderer, ...props });
 export const prepareContainer = ( renderer, props = {} ) => prepareElement('container', renderer, props);
 export const prepareField = ( renderer, props = {} ) => prepareElement('field', renderer, props);
+
+export const submitButton = prepareField('button', {
+    type: "field",
+    name: "save",
+    label: "Save",
+    fieldClass: "btn-success float-right",
+    buttonType: "submit",
+});

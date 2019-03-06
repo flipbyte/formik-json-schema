@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { Formik } from 'formik';
 import messages from './messages';
@@ -9,12 +10,18 @@ import Rules from '@flipbyte/yup-schema';
 class Form extends React.Component {
     constructor(props) {
         super(props);
+
+        this.initValidationSchema();
+    }
+
+    initValidationSchema() {
+        const validationSchema = prepareValidationSchema(this.props.schema);
+        this.validationSchema = !_.isEmpty(validationSchema)
+            ? new Rules([[ 'object', validationSchema ]]).toYup()
+            : null;
     }
 
     getContextValue() {
-        const validationSchema = prepareValidationSchema(this.props.schema);
-        this.validationSchema = validationSchema ? new Rules([[ 'object', validationSchema ]]).toYup() : null;
-
         return {
             validationSchema: this.validationSchema,
             schema: this.props.schema

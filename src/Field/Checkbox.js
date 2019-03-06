@@ -24,14 +24,14 @@ const Checkbox = ({ config, formik, submitCountToValidate }) => {
         <div className={ formGroupClass }>
             <Label className={ labelClass }>{ label }</Label>
             { _.map(options, ({ value, label }, key, index ) => {
-                let fieldName = _.uniqueId(name);
+                let fieldName = _.kebabCase(name + ' ' + value);
                 let checkboxValue = _.get(values, name) || [];
                 return (
                     <div key={ key } className={ formCheckClass }>
                         <label htmlFor={ fieldName } className="form-check-label">
                             <input
                                 id={ fieldName }
-                                name={ `${name}[${key}]` }
+                                name={ `${name}.${key}` }
                                 className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                                 type="checkbox"
                                 checked={ checkboxValue[key] || false }
