@@ -172,9 +172,9 @@ Each container or field requires a renderer which can be set using "renderer": "
 | :--- | :--- | :---: | :--- |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
-| |  type | String | "field" |
-| |  validation | String | Check [yup-schema](https://github.com/flipbyte/yup-schema) |
-| |  conditional | String | Check [when-condition](https://github.com/flipbyte/when-condition) |
+| | type | String | "field" |
+| | validation | String | Check [yup-schema](https://github.com/flipbyte/yup-schema) |
+| | conditional | String | Check [when-condition](https://github.com/flipbyte/when-condition) |
 
 #### Field specific properties
 
