@@ -41,15 +41,7 @@ export default {
                 label: "Telephone",
                 type: "field",
                 renderer: "text",
-                fieldType: "telephone",
-                validation: [
-                    ['string'],
-                    ['matches', /^\d{3}-\d{3}-\d{4}$/],
-                    ['when', 'email', {
-                        is: undefined,
-                        then: [['string'], ['required']]
-                    }]
-                ]
+                fieldType: "telephone"
             },
             message: {
                 name: "message",
