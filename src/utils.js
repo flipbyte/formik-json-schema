@@ -24,7 +24,14 @@ export const prepareValidationSchema = ({ elements }, result = {}) => {
             const schema = prepareValidationSchema(element, {});
             if(prefixNameToElement) {
                 if(!_.isEmpty(schema)) {
-                    result[name] = [['object', schema]];
+                    if(name) {
+                        result[name] = [['object', schema]];
+                    } else {
+                        result = {
+                            ...result,
+                            ...schema
+                        }
+                    }
                 }
             } else if(renderer === 'editable-grid') {
                 if(!_.isEmpty(schema)) {
