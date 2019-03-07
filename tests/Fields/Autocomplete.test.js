@@ -47,4 +47,40 @@ describe('Autocomplete', () => {
         } }) } />);
         expect(wrapper.exists()).toEqual(true);
     });
+
+    it('shows suggestions on change and focus', () => {
+        const wrapper = mount(<Form { ...prepareForm({ elements: {
+            autocomplete: autocomplete
+        } }) } />);
+
+        wrapper.find('.react-autosuggest__input').simulate('change', {
+            target: { value: "Uni" }
+        });
+
+        wrapper.find('.react-autosuggest__input').prop('onFocus')()
+        expect(wrapper.find('.react-autosuggest__suggestions-container').html()).toInclude('United States')
+        expect(wrapper.find('.react-autosuggest__suggestions-container').html()).toInclude('United Kingdom')
+    });
+
+    it('clears suggestions', () => {
+        const wrapper = mount(<Form { ...prepareForm({ elements: {
+            autocomplete: autocomplete
+        } }) } />);
+
+        wrapper.find('.react-autosuggest__input').simulate('change', {
+            target: { value: "Uni" }
+        });
+        wrapper.find('.react-autosuggest__input').prop('onFocus')();
+
+        expect(wrapper.find('.react-autosuggest__suggestions-container').html()).toInclude('United States')
+        expect(wrapper.find('.react-autosuggest__suggestions-container').html()).toInclude('United Kingdom')
+
+        wrapper.find('.react-autosuggest__input').simulate('change', {
+            target: { value: "" }
+        });
+        wrapper.find('.react-autosuggest__input').prop('onFocus')();
+
+        expect(wrapper.find('.react-autosuggest__suggestions-container').html()).toNotInclude('United States')
+        expect(wrapper.find('.react-autosuggest__suggestions-container').html()).toNotInclude('United Kingdom')
+    });
 })
