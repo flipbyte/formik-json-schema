@@ -3,6 +3,8 @@ import { connect } from 'formik';
 import React, { Component } from 'react';
 import ElementRenderer from './Renderer';
 import { render as renderElement, getConfig } from './registry';
+import { hasError } from './utils';
+import shallowequal from 'shallowequal';
 
 class Element extends Component {
     constructor( props ) {
@@ -13,7 +15,9 @@ class Element extends Component {
             hasLoadedConfig: false,
             hasLoadedData: config.dataSource ? false : true,
             hasMounted: update !== false,
-            submitCountToValidate: formik.submitCount || 0
+            submitCountToValidate: formik.submitCount || 0,
+            value: undefined,
+            error: false
         };
 
         this.loadDataAfter = this.loadDataAfter.bind(this);
@@ -32,16 +36,30 @@ class Element extends Component {
 
     // Experimental - needs thorough testing
     shouldComponentUpdate(nextProps, nextState) {
-        if(nextState !== this.state) {
-            return true;
-        }
+        // console.log(
+        //     'Element - shouldComponentUpdate',
+        //     this.props.config.name,
+        //     nextState, this.state,
+        //     shallowequal(this.state, nextState),
+        //     nextState !== this.state
+        //     // this.props.config,
+        //     // nextProps.config,
+        //     // this.props.config === nextProps.config,
+        //     // this.props.formik,
+        //     // nextProps.formik,
+        //     // this.props.formik === nextProps.formik,
+        //     // this.props,
+        //     // this.props === nextProps
+        // )
 
-        return false
+        return !shallowequal(this.state, nextState)
     }
 
     loadConfigAfter(config) {
-        let fullConfig = _.assign({}, this.props.config, config);
-        this.setState({ hasLoadedConfig: true, loadedConfig: fullConfig });
+        this.setState({
+            hasLoadedConfig: true,
+            loadedConfig: _.assign({}, this.props.config, config)
+        });
     }
 
     componentWillReceiveProps( nextProps ) {
@@ -69,6 +87,11 @@ class Element extends Component {
                     .catch((err) => {});
             }
         }
+
+        this.setState({
+            value: _.get(formik.values, name),
+            error: hasError(name, this.state.submitCountToValidate, formik)
+        })
     }
 
     loadDataAfter(value) {
@@ -76,10 +99,11 @@ class Element extends Component {
     }
 
     render() {
-        const { config: initialConfig, formik, ...rest } = this.props;
-        const { loadedConfig, submitCountToValidate } = this.state;
+        // console.log('Element - render ' + this.props.config.name);
+        const { config: initialConfig, formik } = this.props;
+        const { loadedConfig, submitCountToValidate, value, error } = this.state;
         const config = loadedConfig || initialConfig;
-        const rendererProps = { config, submitCountToValidate, ...rest }
+        const rendererProps = { config, submitCountToValidate, value, error, formik }
         return this.state.hasMounted && <ElementRenderer { ...rendererProps } />
     }
 }

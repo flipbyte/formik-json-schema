@@ -5,30 +5,27 @@ import withFormConfig from './withFormConfig';
 import { containers, fields } from './registry';
 import Rules from '@flipbyte/yup-schema';
 import when from '@flipbyte/when-condition';
+import * as yup from 'yup';
 
 const FIELD = 'field';
 
 class ElementRenderer extends Component {
     constructor(props) {
         super(props);
+
+        const { type, renderer } = this.props.config;
+        this.renderer = this.getRenderer(
+            type === FIELD ? fields : containers,
+            renderer
+        );
     }
 
-    // Experimental - Needs thorough testing
-    // shouldComponentUpdate(nextProps) {
-    //     return nextProps.formik !== this.props.formik
-    // }
+    getRenderer(registry, renderer) {
+        return typeof renderer === 'string' ? registry.get(renderer) : renderer;
+    }
 
-    makeRendererComponent(props) {
-        let currentRegistry = containers;
-        if( props.config.type ===  FIELD ) {
-            currentRegistry = fields;
-        }
-
-        let Renderer = props.config.renderer;
-        if(typeof props.config.renderer === 'string') {
-            Renderer = currentRegistry.get(props.config.renderer);
-        }
-
+    renderElement(props) {
+        const Renderer = this.renderer;
         return this.validateConditional() && <Renderer { ...props } />
     }
 
@@ -43,16 +40,18 @@ class ElementRenderer extends Component {
     }
 
     render() {
-        const { config, validationSchema, formik, ...rest } = this.props;
+        const { config, value, error, validationSchema, formik, submitCountToValidate, ...rest } = this.props;
+        const fieldProps = { error, submitCountToValidate, config, formik };
 
+        const Renderer = this.renderer;
         return config.type === FIELD
             ? <Field
                 name={ config.name }
-                render={ ({ form: formik, field: formikField }) =>
-                    this.makeRendererComponent({ ...rest, config, formik, formikField })
-                } />
-            : this.makeRendererComponent({ ...rest, config, formik });
+                render={({ field: { value } }) => {
+                    return this.renderElement({ ...fieldProps, value })
+                }} />
+            : this.renderElement({ config, formik });
     }
 }
 
-export default connect(withFormConfig(ElementRenderer));
+export default withFormConfig(ElementRenderer);
