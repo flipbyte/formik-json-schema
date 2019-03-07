@@ -288,8 +288,8 @@ The MIT License (MIT)
 [npm-badge]: https://img.shields.io/npm/v/@flipbyte/formik-json.svg
 [npm]: https://www.npmjs.com/package/@flipbyte/formik-json
 
-[coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json/badge.svg
-[coveralls]: https://coveralls.io/github/flipbyte/formik-json
+[coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json-schema/badge.svg?branch=master
+[coveralls]: https://coveralls.io/github/flipbyte/formik-json-schema?branch=master
 
 [license-badge]: https://badgen.now.sh/badge/license/MIT
 [license]: ./LICENSE
