@@ -4,7 +4,7 @@ import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Text = ({ config, formik, submitCountToValidate }) => {
+const Text = ({ error, value, onChange, submitCountToValidate, config, formik }) => {
     const {
         name,
         label,
@@ -19,9 +19,8 @@ const Text = ({ config, formik, submitCountToValidate }) => {
         inputGroupClass = 'input-group'
     } = config;
 
-    const { values, setFieldValue, handleChange, handleBlur } = formik;
+    const { values, handleChange } = formik;
     const isInputGroup = icon ? true : false;
-    const error = hasError(name, submitCountToValidate, formik);
 
     return (
         <div className={ formGroupClass }>
@@ -38,7 +37,7 @@ const Text = ({ config, formik, submitCountToValidate }) => {
                         name={ name }
                         type={ fieldType }
                         className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
-                        value={ _.get(values, name, '') }
+                        value={ value || '' }
                         onChange={ changeHandler.bind(this, handleChange, formik, config) }
                         { ...attributes } />
                 </div> :
@@ -47,7 +46,7 @@ const Text = ({ config, formik, submitCountToValidate }) => {
                     name={ name }
                     type={ fieldType }
                     className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
-                    value={ _.get(values, name, '') }
+                    value={ value || '' }
                     onChange={ changeHandler.bind(this, handleChange, formik, config) }
                     { ...attributes } />
             }
@@ -56,4 +55,11 @@ const Text = ({ config, formik, submitCountToValidate }) => {
     );
 }
 
-export default Text;
+Text.defaultProps = {
+    labelClass: '',
+    fieldClass: 'form-control',
+    formGroupClass: 'form-group',
+    inputGroupClass: 'input-group'
+}
+
+export default React.memo(Text);
