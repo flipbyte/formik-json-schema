@@ -25,7 +25,7 @@ const Checkbox = ({ config, formik, submitCountToValidate }) => {
             <Label className={ labelClass }>{ label }</Label>
             { _.map(options, ({ value, label }, key, index ) => {
                 let fieldName = _.kebabCase(name + ' ' + value);
-                let checkboxValue = _.get(values, name) || [];
+                let checkboxValue = _.get(values, name, []);
                 return (
                     <div key={ key } className={ formCheckClass }>
                         <label htmlFor={ fieldName } className="form-check-label">
