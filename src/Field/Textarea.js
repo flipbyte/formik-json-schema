@@ -2,9 +2,9 @@ import _ from 'lodash';
 import React from 'react';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, joinNames } from '../utils';
+import { changeHandler } from '../utils';
 
-const Textarea = ({ config, formik, submitCountToValidate }) => {
+const Textarea = ({ config, formik, value = '', error }) => {
     const {
         name,
         label,
@@ -15,8 +15,7 @@ const Textarea = ({ config, formik, submitCountToValidate }) => {
         fieldClass = 'form-control',
         formGroupClass = 'form-group'
     } = config;
-    const { values, handleChange } = formik;
-    const error = hasError(name, submitCountToValidate, formik);
+    const { handleChange, handleBlur } = formik;
 
     return (
         <div className={ formGroupClass }>
@@ -25,10 +24,11 @@ const Textarea = ({ config, formik, submitCountToValidate }) => {
                 id={ name }
                 name={ name }
                 className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
-                value={ _.get(values, name, '') }
+                value={ value }
                 onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                onBlur={ handleBlur }
                 { ...attributes } />
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

@@ -49,7 +49,7 @@ class Autocomplete extends Component {
     }
 
     render() {
-        const { config, formik, submitCountToValidate } = this.props;
+        const { config, formik, error, value } = this.props;
         const {
             name,
             label,
@@ -61,20 +61,20 @@ class Autocomplete extends Component {
             fieldClass = 'form-control',
             formGroupClass = 'form-group',
         } = config;
-        const { values, setFieldValue, handleChange, handleBlur } = formik;
-        const error = hasError(name, submitCountToValidate, formik);
-        const value = _.get(values, name, '');
+        const { setFieldValue, handleBlur } = formik;
 
-        this.autosuggestOptions.inputProps.value = value;
+        this.autosuggestOptions.inputProps.name = name;
+        this.autosuggestOptions.inputProps.value = value || '';
         this.autosuggestOptions.inputProps.onChange = ( event, { newValue, method } ) =>
             changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, newValue);
+        this.autosuggestOptions.inputProps.onBlur = handleBlur.bind(this);
         this.autosuggestOptions.inputProps.className = this.inputClassName + ( error ? ' is-invalid ' : '' )
 
         return (
             <div className={ formGroupClass }>
                 <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
                 <Autosuggest suggestions={ this.state.suggestions} { ...this.autosuggestOptions } />
-                <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
+                <ErrorMessage name={ name } />
             </div>
         );
     }

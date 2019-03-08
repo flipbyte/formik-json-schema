@@ -5,7 +5,7 @@ import ErrorMessage from './ErrorMessage';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
-const CodeEditor = ({ config, formik, submitCountToValidate }) => {
+const CodeEditor = ({ config, formik, value, error }) => {
     const {
         name,
         label,
@@ -16,9 +16,8 @@ const CodeEditor = ({ config, formik, submitCountToValidate }) => {
         fieldClass = '',
         formGroupClass = 'form-group'
     } = config;
-    const { values, setFieldValue } = formik;
-    const error = hasError(name, submitCountToValidate, formik);
-    const selectedValue = _.get(values, name, defaultValue);
+    const { setFieldValue, handleBlur } = formik;
+    const selectedValue = value || '';
 
     return (
         <div className={ formGroupClass }>
@@ -31,10 +30,19 @@ const CodeEditor = ({ config, formik, submitCountToValidate }) => {
                 onChange={ ( editor, data, value ) =>
                     changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, value)
                 }
+                onBlur={ (editor, event) => {
+                    return handleBlur({
+                        ...event,
+                        target: {
+                            ...event.target,
+                            name
+                        }
+                    })
+                }}
                 value={ selectedValue }
                 { ...attributes }
             />
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

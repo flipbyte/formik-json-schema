@@ -43,7 +43,7 @@ const getSelectedOptions = ( options, values, isCreatable ) => {
     return null;
 }
 
-const ReactSelect = ({ config, formik, submitCountToValidate }) => {
+const ReactSelect = ({ config, formik, value, error }) => {
     const {
         name,
         label,
@@ -58,10 +58,9 @@ const ReactSelect = ({ config, formik, submitCountToValidate }) => {
         formGroupClass = 'form-group',
         noOptionsMessage,
     } = config;
-    const { values, setFieldValue } = formik;
-    const error = hasError(name, submitCountToValidate, formik);
+    const { setFieldValue, handleBlur } = formik;
     const options = prepareOptions(initialOptions);
-    const selectedValue = _.get(values, name, defaultValue);
+    const selectedValue = value || defaultValue;
     const selectedOption = getSelectedOptions(options, selectedValue, isCreatable);
 
     var selectProps = {
@@ -80,6 +79,15 @@ const ReactSelect = ({ config, formik, submitCountToValidate }) => {
                 config,
                 selectedValues
             );
+        },
+        onBlur: (event) => {
+            return handleBlur({
+                ...event,
+                target: {
+                    ...event.target,
+                    name
+                }
+            });
         }
     };
     selectProps = _.assign(selectProps, { options });
@@ -93,7 +101,7 @@ const ReactSelect = ({ config, formik, submitCountToValidate }) => {
         <div className={ formGroupClass }>
             <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
             <SelectComponent { ...selectProps } />
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

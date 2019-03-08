@@ -23,7 +23,7 @@ class Wysiwyg extends React.Component {
     }
 
     render() {
-        const { config, formik, submitCountToValidate } = this.props;
+        const { config, formik, value = '', error } = this.props;
         const {
             name,
             label,
@@ -35,9 +35,7 @@ class Wysiwyg extends React.Component {
             formGroupClass = 'form-group',
             textareaClass = 'form-control'
         } = config;
-        const { setFieldValue, handleChange } = formik;
-        const value = _.get(formik.values, name, '');
-        const error = hasError(name, submitCountToValidate, formik);
+        const { setFieldValue, handleChange, handleBlur } = formik;
 
         return (
             <div className={ formGroupClass }>
@@ -59,6 +57,10 @@ class Wysiwyg extends React.Component {
                             onChange={
                                 changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config)
                             }
+                            onBlur={ (previousRange, source, editor) => {
+                                console.log(previousRange, source, editor);
+                                return handleBlur(name);
+                            }}
                             { ...this.toolbarOptions }
                             { ... attributes } />
                         }
@@ -69,9 +71,10 @@ class Wysiwyg extends React.Component {
                                 className={ textareaClass }
                                 rows="10"
                                 value={ value }
-                                onChange={ changeHandler.bind(this, handleChange, formik, config) } />
+                                onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                                onBlur={ handleBlur } />
                         }
-                        <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
+                        <ErrorMessage name={ name } />
                     </div>
                 </div>
             </div>
