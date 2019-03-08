@@ -4,7 +4,7 @@ import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { hasError, changeHandler, joinNames } from '../utils';
 
-const Text = ({ error, value, onChange, submitCountToValidate, config, formik }) => {
+const Text = ({ config, formik, value = '', error }) => {
     const {
         name,
         label,
@@ -19,7 +19,8 @@ const Text = ({ error, value, onChange, submitCountToValidate, config, formik })
         inputGroupClass = 'input-group'
     } = config;
 
-    const { values, handleChange } = formik;
+    // console.log('Text', name, error);
+    const { handleChange, handleBlur } = formik;
     const isInputGroup = icon ? true : false;
 
     return (
@@ -37,8 +38,9 @@ const Text = ({ error, value, onChange, submitCountToValidate, config, formik })
                         name={ name }
                         type={ fieldType }
                         className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
-                        value={ value || '' }
+                        value={ value }
                         onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                        onBlur={ handleBlur }
                         { ...attributes } />
                 </div> :
                 <input
@@ -46,20 +48,14 @@ const Text = ({ error, value, onChange, submitCountToValidate, config, formik })
                     name={ name }
                     type={ fieldType }
                     className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
-                    value={ value || '' }
+                    value={ value }
                     onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                    onBlur={ handleBlur }
                     { ...attributes } />
             }
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
+            <ErrorMessage name={ name } error={ error } />
         </div>
     );
-}
-
-Text.defaultProps = {
-    labelClass: '',
-    fieldClass: 'form-control',
-    formGroupClass: 'form-group',
-    inputGroupClass: 'input-group'
 }
 
 export default React.memo(Text);
