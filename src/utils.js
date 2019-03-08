@@ -4,7 +4,14 @@ export const hasError = (name, submitCountToValidate = 0, {
     errors,
     touched,
     submitCount
-}) => _.get(errors, name, false) && (_.get(touched, name, false) || submitCount > submitCountToValidate);
+}) => _.get(errors, name, false) && !_.isEmpty(_.get(errors, name, false));
+
+// Try using memoization for submitCount
+export const getError = (name, { errors, touched, submitCount }) => {
+    const error = _.get(errors, name);
+    const isTouched = _.get(touched, name);
+    return !_.isEmpty(error) && ( isTouched || submitCount > 0 ) ? error : false
+}
 
 export const changeHandler = (handler, formikProps, {
     onChange,

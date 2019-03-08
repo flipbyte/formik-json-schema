@@ -2,8 +2,8 @@ import _ from 'lodash';
 import { connect } from 'formik';
 import React, { Component } from 'react';
 import ElementRenderer from './Renderer';
-import { render as renderElement, getConfig } from './registry';
-import { hasError } from './utils';
+import { FIELD } from './registry';
+import { getError } from './utils';
 import shallowequal from 'shallowequal';
 
 class Element extends Component {
@@ -36,22 +36,6 @@ class Element extends Component {
 
     // Experimental - needs thorough testing
     shouldComponentUpdate(nextProps, nextState) {
-        // console.log(
-        //     'Element - shouldComponentUpdate',
-        //     this.props.config.name,
-        //     nextState, this.state,
-        //     shallowequal(this.state, nextState),
-        //     nextState !== this.state
-        //     // this.props.config,
-        //     // nextProps.config,
-        //     // this.props.config === nextProps.config,
-        //     // this.props.formik,
-        //     // nextProps.formik,
-        //     // this.props.formik === nextProps.formik,
-        //     // this.props,
-        //     // this.props === nextProps
-        // )
-
         return !shallowequal(this.state, nextState)
     }
 
@@ -63,7 +47,7 @@ class Element extends Component {
     }
 
     componentWillReceiveProps( nextProps ) {
-        const { update, config: { name, dataSource }, formik }  = nextProps;
+        const { update, config: { name, dataSource, type }, formik }  = nextProps;
 
         if( !this.state.hasMounted ) {
             const canUpdate = update !== false;
@@ -88,10 +72,12 @@ class Element extends Component {
             }
         }
 
-        this.setState({
-            value: _.get(formik.values, name),
-            error: hasError(name, this.state.submitCountToValidate, formik)
-        })
+        if(type === FIELD) {
+            this.setState({
+                value: _.get(formik.values, name),
+                error: getError(name, formik)
+            })
+        }
     }
 
     loadDataAfter(value) {
@@ -99,7 +85,6 @@ class Element extends Component {
     }
 
     render() {
-        // console.log('Element - render ' + this.props.config.name);
         const { config: initialConfig, formik } = this.props;
         const { loadedConfig, submitCountToValidate, value, error } = this.state;
         const config = loadedConfig || initialConfig;

@@ -1,13 +1,10 @@
 import _ from 'lodash';
-import { connect, Field } from 'formik';
+import { connect, FastField } from 'formik';
 import React, { Component } from 'react';
 import withFormConfig from './withFormConfig';
-import { containers, fields } from './registry';
+import { containers, fields, FIELD } from './registry';
 import Rules from '@flipbyte/yup-schema';
 import when from '@flipbyte/when-condition';
-import * as yup from 'yup';
-
-const FIELD = 'field';
 
 class ElementRenderer extends Component {
     constructor(props) {
@@ -30,25 +27,22 @@ class ElementRenderer extends Component {
     }
 
     validateConditional() {
-        const { config, formik } = this.props;
+        const {
+            config: { condition },
+            formik: { values }
+        } = this.props;
 
-        if(config.condition) {
-            return when(config.condition, formik.values);
-        }
-
+        if(condition) return when(condition, values);
         return true;
     }
 
     render() {
-        const { config, value, error, validationSchema, formik, submitCountToValidate, ...rest } = this.props;
-        const fieldProps = { error, submitCountToValidate, config, formik };
-
-        const Renderer = this.renderer;
+        const { config, error, validationSchema, formik, ...rest } = this.props;
         return config.type === FIELD
-            ? <Field
+            ? <FastField
                 name={ config.name }
                 render={({ field: { value } }) => {
-                    return this.renderElement({ ...fieldProps, value })
+                    return this.renderElement({ config, formik, value, error })
                 }} />
             : this.renderElement({ config, formik });
     }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Field } from 'formik';
 
-const CONTAINER = 'container';
-const FIELD = 'field';
+export const CONTAINER = 'container';
+export const FIELD = 'field';
 
 class Registry {
     constructor() {
