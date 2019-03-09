@@ -9,9 +9,6 @@ const Switch = ({ config, formik, value, error }) => {
     const {
         name,
         label,
-        attributes,
-        dataOn,
-        dataOff,
         labelClass = '',
         fieldClass = 'switch',
         formGroupClass = 'form-group'
