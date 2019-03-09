@@ -74,7 +74,8 @@ export default {
                     value: 'vanilla',
                     label: 'Vanilla'
                 }],
-                formGroupClass: "form-group mb-4"
+                formGroupClass: "form-group mb-4",
+                validation: [['array'], ['of', [['string']]]]
             },
             textarea: {
                 name: "description",
@@ -152,7 +153,8 @@ export default {
                     style: {
                         height: 200
                     }
-                }
+                },
+                validation: [['string'], ['required'], ['min', 100]]
             },
             codeeditor: {
                 name: "codeeditor",
@@ -164,7 +166,8 @@ export default {
                 options: {
                     mode: "xml",
                     lineNumbers: true
-                }
+                },
+                validation: [['string'], ['required'], ['min', 100]]
             },
             buttonsGroup: {
                 type: "container",
