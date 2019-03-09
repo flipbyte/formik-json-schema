@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { hasError, clickHandler, joinNames } from '../utils';
+import { clickHandler, joinNames } from '../utils';
 
 const Button = ({ config, formik }) => {
     const { label, fieldClass, buttonType, onClick } = config;

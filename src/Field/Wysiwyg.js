@@ -4,7 +4,7 @@ import Label from './Label';
 import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
 class Wysiwyg extends React.Component {
     constructor(props) {
@@ -49,7 +49,17 @@ class Wysiwyg extends React.Component {
                             { this.state.showHtml ? 'Show Editor' : 'View Source' }
                         </button>
                     </div>
-                    <div className={ 'col-md-12 ' + ( error ? ' is-invalid ' : '' ) }>
+                    <div className={ 'col-md-12 '  }
+                        onBlur={ event => {
+                            return handleBlur({
+                                ...event,
+                                target: {
+                                    ...event.target,
+                                    name
+                                }
+                            })
+                        }
+                    }>
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
                             value={ value }
@@ -57,10 +67,6 @@ class Wysiwyg extends React.Component {
                             onChange={
                                 changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config)
                             }
-                            onBlur={ (previousRange, source, editor) => {
-                                console.log(previousRange, source, editor);
-                                return handleBlur(name);
-                            }}
                             { ...this.toolbarOptions }
                             { ... attributes } />
                         }
@@ -72,7 +78,7 @@ class Wysiwyg extends React.Component {
                                 rows="10"
                                 value={ value }
                                 onChange={ changeHandler.bind(this, handleChange, formik, config) }
-                                onBlur={ handleBlur } />
+                            />
                         }
                         <ErrorMessage name={ name } />
                     </div>
@@ -114,4 +120,4 @@ Wysiwyg.defaultOptions = {
     ]
 };
 
-export default Wysiwyg;
+export default React.memo(Wysiwyg);

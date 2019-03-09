@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Label = ({ children, ...attributes }) =>
+const Label = ({ children, ...attributes }) => 
     children ? <label { ...attributes }>{ children }</label> : null;
 
-export default Label;
+export default React.memo(Label);

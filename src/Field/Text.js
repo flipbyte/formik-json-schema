@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, joinNames } from '../utils';
+import { changeHandler, joinNames } from '../utils';
 
 const Text = ({ config, formik, value = '', error }) => {
     const {
@@ -19,7 +19,6 @@ const Text = ({ config, formik, value = '', error }) => {
         inputGroupClass = 'input-group'
     } = config;
 
-    // console.log('Text', name, error);
     const { handleChange, handleBlur } = formik;
     const isInputGroup = icon ? true : false;
 
@@ -53,7 +52,7 @@ const Text = ({ config, formik, value = '', error }) => {
                     onBlur={ handleBlur }
                     { ...attributes } />
             }
-            <ErrorMessage name={ name } error={ error } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }

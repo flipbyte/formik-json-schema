@@ -3,7 +3,7 @@ import React from 'react';
 import Label from './Label';
 import PropTypes from 'prop-types';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, joinNames } from '../utils';
+import { changeHandler, joinNames } from '../utils';
 
 const Checkbox = ({ config, formik, value, error }) => {
     const {
@@ -33,8 +33,10 @@ const Checkbox = ({ config, formik, value, error }) => {
                                 className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                                 type="checkbox"
                                 checked={ checkboxValue[key] || false }
-                                onChange={ changeHandler.bind(this, handleChange, formik, config) }
-                                onBlur={ handleBlur }
+                                onChange={ event => {
+                                    changeHandler(handleChange, formik, config, event);
+                                    handleBlur(event);
+                                }}
                                 { ...attributes } /> { label }
                         </label>
                         <ErrorMessage name={ name } />
@@ -57,4 +59,4 @@ Checkbox.propTypes = {
     })
 }
 
-export default Checkbox;
+export default React.memo(Checkbox);

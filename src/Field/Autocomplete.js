@@ -3,7 +3,7 @@ import Label from './Label';
 import Autosuggest from 'react-autosuggest';
 import React, { Component } from 'react';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, joinNames, setFieldValueWrapper } from '../utils';
+import { changeHandler, joinNames, setFieldValueWrapper } from '../utils';
 // import '../css/autocomplete.css';
 
 class Autocomplete extends Component {
@@ -80,4 +80,4 @@ class Autocomplete extends Component {
     }
 }
 
-export default Autocomplete;
+export default React.memo(Autocomplete);

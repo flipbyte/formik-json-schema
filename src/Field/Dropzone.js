@@ -3,9 +3,9 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Dropzone from 'react-dropzone'
 import Thumb from './Thumb'
-import { hasError, changeHandler, joinNames } from '../utils';
+import { changeHandler, joinNames } from '../utils';
 
-const FileUploader = ({ config, formik, submitCountToValidate }) => {
+const FileUploader = ({ config, formik, value, error }) => {
     const {
         name,
         label,
@@ -20,9 +20,8 @@ const FileUploader = ({ config, formik, submitCountToValidate }) => {
         fieldClass = 'dropzone',
         formGroupClass = 'form-group',
     } = config;
-    const { values, setFieldValue } = formik;
-    const error = hasError(name, submitCountToValidate, formik);
-    const selectedValue = _.get(values, name, defaultValue);
+    const { setFieldValue } = formik;
+    const selectedValue = value || defaultValue;
 
     return (
         <div className={ formGroupClass }>
@@ -62,9 +61,9 @@ const FileUploader = ({ config, formik, submitCountToValidate }) => {
                         </Fragment> : placeholder;
                 }}
             </Dropzone>
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }
 
-export default FileUploader
+export default React.memo(FileUploader)

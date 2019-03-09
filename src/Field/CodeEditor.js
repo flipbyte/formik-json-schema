@@ -3,7 +3,7 @@ import React from 'react';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
-import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
 const CodeEditor = ({ config, formik, value, error }) => {
     const {
@@ -47,4 +47,4 @@ const CodeEditor = ({ config, formik, value, error }) => {
     );
 }
 
-export default CodeEditor;
+export default React.memo(CodeEditor);

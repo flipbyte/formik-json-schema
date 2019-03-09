@@ -2,7 +2,7 @@ import React from 'react';
 import Label from './Label';
 import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, joinNames } from '../utils';
+import { changeHandler, joinNames } from '../utils';
 
 const Radio = ({ config, formik, value, error }) => {
     const {
@@ -29,9 +29,11 @@ const Radio = ({ config, formik, value, error }) => {
                             className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                             id={ name + '_' + option.value }
                             value={ option.value }
-                            checked={ value === option.value }
-                            onChange={ changeHandler.bind(this, handleChange, formik, config) }
-                            onBlur={ handleBlur }
+                            defaultChecked={ value === option.value }
+                            onChange={ event => {
+                                changeHandler(handleChange, formik, config, event);
+                                handleBlur(event);
+                            }}
                             { ...attributes } /> { option.title }
                     </label>
                 </div>
@@ -41,4 +43,4 @@ const Radio = ({ config, formik, value, error }) => {
     );
 }
 
-export default Radio;
+export default React.memo(Radio);

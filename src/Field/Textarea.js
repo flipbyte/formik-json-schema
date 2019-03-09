@@ -33,4 +33,4 @@ const Textarea = ({ config, formik, value = '', error }) => {
     );
 }
 
-export default Textarea;
+export default React.memo(Textarea);

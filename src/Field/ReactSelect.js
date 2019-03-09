@@ -4,7 +4,7 @@ import Label from './Label';
 import Select from 'react-select';
 import ErrorMessage from './ErrorMessage';
 import CreatableSelect from 'react-select/lib/Creatable';
-import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
 const prepareOptions = ( options ) =>
     _.reduce(options, (result, value) => {
@@ -106,4 +106,4 @@ const ReactSelect = ({ config, formik, value, error }) => {
     );
 }
 
-export default ReactSelect;
+export default React.memo(ReactSelect);
