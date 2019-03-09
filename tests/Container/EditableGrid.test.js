@@ -151,7 +151,8 @@ describe('EditableGrid', () => {
                 },
                 isSortable: true,
                 ...container
-        } };
+            }
+        };
 
         it('adds an extra column from drag handle at the beginning when "isSortable" is true', () => {
             const wrapper = mount(<Form { ...prepareForm({ elements: sortableGrid }) } />);
@@ -159,54 +160,67 @@ describe('EditableGrid', () => {
             expect(wrapper.find('th').at(0).exists()).toEqual(true);
             expect(wrapper.find('th').at(0).text()).toEqual('');
         });
-
-    });
-
-    context("add", function() {
-        it('adds "add" button when label "add" key is set in "buttons"', () => {
+        
+        it('renders when "isSortable" is false', () => {
             const wrapper = mount(<Form { ...prepareForm({ elements: {
+                ...sortableGrid,
                 [containerKey]: {
-                    elements: {
-                        field1: {
-                            type: "field",
-                            renderer: "text",
-                            name: "field1",
-                            fieldType: "text",
-                            label: "Field 1"
-                        }
-                    },
-                    buttons: {
-                        "add": "Add"
-                    },
-                    ...container
+                    ...sortableGrid[containerKey],
+                    isSortable: false
                 }
             } }) } />);
 
+            expect(wrapper).toExist();
+        });
+    });
+
+    context("add", function() {
+        const editableGrid = {
+            [containerKey]: {
+                elements: {
+                    field1: {
+                        type: "field",
+                        renderer: "text",
+                        name: "field1",
+                        fieldType: "text",
+                        label: "Field 1"
+                    }
+                },
+                buttons: {
+                    "add": "Add",
+                    "remove": "Remove"
+                },
+                ...container
+            }
+        };
+
+        it('adds "add" button when label "add" key is set in "buttons"', () => {
+            const wrapper = mount(<Form { ...prepareForm({ elements: editableGrid }) } />);
             expect(wrapper.find('tfoot tr td button').text()).toEqual("Add");
         });
 
         it('add new row on "add" button click', () => {
+            const wrapper = mount(<Form { ...prepareForm({ elements: editableGrid }) } />);
+            expect(wrapper.find('tfoot tr td button').length).toEqual(1);
+            wrapper.find('tfoot tr td button').props().onClick();
+            expect(wrapper.find('tbody').html()).toInclude('testFieldset.0.field1')
+        });
+
+        it('add new row on "add" button click when "isSortable" is false', () => {
             const wrapper = mount(<Form { ...prepareForm({ elements: {
+                ...editableGrid,
                 [containerKey]: {
-                    elements: {
-                        field1: {
-                            type: "field",
-                            renderer: "text",
-                            name: "field1",
-                            fieldType: "text",
-                            label: "Field 1"
-                        }
-                    },
-                    buttons: {
-                        "add": "Add"
-                    },
-                    ...container
+                    ...editableGrid[containerKey],
+                    isSortable: false
                 }
             } }) } />);
 
-            wrapper.find('tfoot tr td button').simulate('click');
-            expect(wrapper.find('tbody tr').exists()).toEqual(true);
+            expect(wrapper).toExist();
+            expect(wrapper.find('tfoot tr td button').length).toEqual(1);
+            wrapper.find('tfoot tr td button').props().onClick();
+
         });
+
 
         // it('add 2 rows and remove the first row', () => {
         //     const wrapper = mount(<Form { ...prepareForm({ elements: {
@@ -227,12 +241,11 @@ describe('EditableGrid', () => {
         //         }
         //     } }) } />);
         //
-        //     wrapper.find('tfoot tr td button').simulate('click');
-        //     wrapper.find('tfoot tr td button').simulate('click');
-        //     // console.log(wrapper.find('tbody').props());
-        //     expect(wrapper.find('tbody tr').to.have.length(2)).toEqual(true);
+        //     expect(wrapper.find('tfoot tr td button').length).toEqual(1);
+        //     wrapper.find('tfoot tr td button').props().onClick();
+        //     wrapper.find('tfoot tr td button').props().onClick();
+        //     expect(wrapper.find('tbody').html()).toInclude('testFieldset.0.field1')
+        //     expect(wrapper.find('tbody').html()).toInclude('testFieldset.1.field1')
         // });
-
     })
-
 })

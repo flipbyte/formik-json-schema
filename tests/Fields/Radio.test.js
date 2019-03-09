@@ -21,12 +21,13 @@ describe('Radio', () => {
             value: 1,
             title: "One"
         }, {
-            value: 2,
+            value: 'two',
             title: "Two"
         }, {
             value: 3,
             title: "Three"
-        }]
+        }],
+        validation: [['number'], ['required']]
     };
 
     const radio = prepareField('radio', config);
@@ -41,4 +42,22 @@ describe('Radio', () => {
         } }) } />);
         expect(wrapper.exists()).toEqual(true);
     });
+
+    it('on radio click - changes selection', () => {
+        const wrapper = mount(<Form { ...prepareForm({ elements: {
+            radio: radio
+        } }) } />);
+        expect(wrapper.find('input').at(1).prop('defaultChecked')).toEqual(false);
+        wrapper.find('input').at(1).simulate('change');
+        expect(wrapper.find('input').at(1).prop('defaultChecked')).toEqual(true);
+    });
+
+    // it('validates on change', () => {
+    //     const wrapper = mount(<Form { ...prepareForm({ elements: {
+    //         radio: radio
+    //     } }) } />);
+    //     wrapper.find('input').at(1).simulate('change');
+    //     // expect(wrapper.find('input').at(0).prop('defaultChecked')).toEqual(true);
+    //     console.log(wrapper.find('Radio').props());
+    // });
 })
