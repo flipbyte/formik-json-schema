@@ -1,6 +1,7 @@
 import React from 'react';
 import Label from './Label';
 import { getIn } from 'formik';
+import { default as ReactSwitch } from "react-switch";
 import ErrorMessage from './ErrorMessage';
 import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
@@ -21,17 +22,9 @@ const Switch = ({ config, formik, value, error }) => {
         <div className={ formGroupClass }>
             <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
             <label className={ fieldClass + ( error ? ' is-invalid ' : '' ) }>
-                <input type="checkbox"
-                    className="switch-input"
-                    defaultChecked={ value }
-                    onClick={
-                        () => changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, !value)
-                    } />
-                <span
-                    className="switch-label"
-                    data-on={ dataOn }
-                    data-off={ dataOff }></span>
-                <span className="switch-handle"></span>
+                <ReactSwitch onChange={
+                    () => changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, !value)
+                } checked={ value } />
             </label>
             <ErrorMessage name={ name } />
         </div>
