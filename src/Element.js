@@ -37,6 +37,7 @@ class Element extends Component {
     // Experimental - needs thorough testing
     shouldComponentUpdate(nextProps, nextState) {
         return !shallowequal(this.state, nextState)
+            || !shallowequal(this.props.formik, nextProps.formik)
     }
 
     loadConfigAfter(config) {
