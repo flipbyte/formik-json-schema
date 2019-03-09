@@ -221,9 +221,6 @@ Each container or field requires a renderer which can be set using "renderer": "
 | switch | renderer | String | switch |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
-| | attributes |  {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
-| | dataOn | String | label for On. Example: in a yes/no option this would be Yes |
-| | dataOff | String | label for Off. In the above example "No" |
 | | labelClass | String  | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
