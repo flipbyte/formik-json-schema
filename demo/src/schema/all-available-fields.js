@@ -139,9 +139,7 @@ export default {
                 name: "switch",
                 label: "Switch",
                 type: "field",
-                renderer: "switch",
-                dataOn: "Yes",
-                dataOff: "No"
+                renderer: "switch"
             },
             wysiwyg: {
                 name: "wysiwyg",
