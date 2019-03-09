@@ -20,7 +20,7 @@ const Switch = ({ config, formik, value, error }) => {
             <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
             <label className={ fieldClass + ( error ? ' is-invalid ' : '' ) }>
                 <ReactSwitch onChange={
-                    () => changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, !value)
+                    (checked) => changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, checked)
                 } checked={ value } />
             </label>
             <ErrorMessage name={ name } />
