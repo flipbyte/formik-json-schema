@@ -1,16 +1,11 @@
 import _ from 'lodash';
 
-export const hasError = (name, submitCountToValidate = 0, {
-    errors,
-    touched,
-    submitCount
-}) => _.get(errors, name, false) && !_.isEmpty(_.get(errors, name, false));
-
-// Try using memoization for submitCount
+const fieldSubmitCount = _.memoize((name, submitCount) => submitCount);
 export const getError = (name, { errors, touched, submitCount }) => {
     const error = _.get(errors, name);
     const isTouched = _.get(touched, name);
-    return !_.isEmpty(error) && ( isTouched || submitCount > 0 ) ? error : false
+    const fsc = fieldSubmitCount(name, submitCount);
+    return !_.isEmpty(error) && ( isTouched || submitCount > fsc ) ? error : false
 }
 
 export const changeHandler = (handler, formikProps, {
