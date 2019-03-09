@@ -2,9 +2,9 @@ import _ from 'lodash';
 import React from 'react';
 import Label from '../../../src/Field/Label';
 import ErrorMessage from '../../../src/Field/ErrorMessage';
-import { hasError, changeHandler, joinNames } from '../../../src/utils';
+import { changeHandler, joinNames } from '../../../src/utils';
 
-const CustomText = ({ config, formik, submitCountToValidate }) => {
+const CustomText = ({ config, formik, value = '', error }) => {
     const {
         name,
         label,
@@ -18,10 +18,9 @@ const CustomText = ({ config, formik, submitCountToValidate }) => {
         formGroupClass = 'form-group'
     } = config;
 
-    const { values, setFieldValue, handleChange, handleBlur } = formik;
+    const { setFieldValue, handleChange, handleBlur } = formik;
     const isInputGroup = icon ? true : false;
-    const error = hasError(name, submitCountToValidate, formik);
-    const currentValue = _.get(values, name, '');
+    const currentValue = value;
     return (
         <div className={ formGroupClass }>
             <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
@@ -31,11 +30,13 @@ const CustomText = ({ config, formik, submitCountToValidate }) => {
                 type={ fieldType }
                 className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
                 value={ currentValue }
-                onChange={ changeHandler.bind(this, handleChange, formik, config) } />
+                onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                onBlur={ handleBlur }
+            />
             { currentValue && <div className="mt-2">
                 Your unique id for <strong>{ currentValue }</strong> is <strong>{ _.uniqueId() }</strong>
             </div> }
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
+            <ErrorMessage name={ name } />
         </div>
     );
 }
