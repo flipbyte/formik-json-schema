@@ -20,9 +20,9 @@ const Switch = ({ config, formik, value = false, error }) => {
     return (
         <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             <label className={ fieldClass + ( error ? ' is-invalid ' : '' ) }>
-                <ReactSwitch onChange={
-                    (checked) => changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, checked)
-                } checked={ value } />
+                <ReactSwitch
+                    onChange={ changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config) }
+                    checked={ value } />
             </label>
         </Template>
     );
