@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Dropzone from 'react-dropzone'
 import Thumb from './Thumb'
 import { changeHandler, joinNames } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
 const FileUploader = ({ config, formik, value, error }) => {
     const {
@@ -19,13 +20,13 @@ const FileUploader = ({ config, formik, value, error }) => {
         labelClass = '',
         fieldClass = 'dropzone',
         formGroupClass = 'form-group',
+        template: Template = FieldTemplate
     } = config;
     const { setFieldValue } = formik;
     const selectedValue = value || defaultValue;
 
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             <Dropzone
                 className={ fieldClass + ( error ? ' is-invalid ' : '' )}
                 accept={ accept }
@@ -61,8 +62,7 @@ const FileUploader = ({ config, formik, value, error }) => {
                         </Fragment> : placeholder;
                 }}
             </Dropzone>
-            <ErrorMessage name={ name } />
-        </div>
+        </Template>
     );
 }
 

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
+import FieldTemplate from '../FieldTemplate';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
@@ -14,14 +15,14 @@ const CodeEditor = ({ config, formik, value, error }) => {
         attributes,
         labelClass = '',
         fieldClass = '',
-        formGroupClass = 'form-group'
+        formGroupClass = 'form-group',
+        template: Template = FieldTemplate
     } = config;
     const { setFieldValue, handleBlur } = formik;
     const selectedValue = value || '';
 
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             <CodeMirror
                 id={ name }
                 name={ name }
@@ -42,8 +43,7 @@ const CodeEditor = ({ config, formik, value, error }) => {
                 value={ selectedValue }
                 { ...attributes }
             />
-            <ErrorMessage name={ name } />
-        </div>
+        </Template>
     );
 }
 

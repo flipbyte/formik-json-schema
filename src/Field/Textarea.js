@@ -3,6 +3,7 @@ import React from 'react';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { changeHandler } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
 const Textarea = ({ config, formik, value = '', error }) => {
     const {
@@ -13,13 +14,13 @@ const Textarea = ({ config, formik, value = '', error }) => {
         rows,
         labelClass = '',
         fieldClass = 'form-control',
-        formGroupClass = 'form-group'
+        formGroupClass = 'form-group',
+        template: Template = FieldTemplate
     } = config;
     const { handleChange, handleBlur } = formik;
 
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             <textarea
                 id={ name }
                 name={ name }
@@ -28,8 +29,7 @@ const Textarea = ({ config, formik, value = '', error }) => {
                 onChange={ changeHandler.bind(this, handleChange, formik, config) }
                 onBlur={ handleBlur }
                 { ...attributes } />
-            <ErrorMessage name={ name } />
-        </div>
+        </Template>
     );
 }
 

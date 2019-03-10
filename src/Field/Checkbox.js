@@ -3,6 +3,7 @@ import React from 'react';
 import Label from './Label';
 import PropTypes from 'prop-types';
 import ErrorMessage from './ErrorMessage';
+import FieldTemplate from '../FieldTemplate';
 import { changeHandler, joinNames } from '../utils';
 
 const Checkbox = ({ config, formik, value, error }) => {
@@ -12,21 +13,22 @@ const Checkbox = ({ config, formik, value, error }) => {
         attributes,
         options = [],
         labelClass = '',
-        fieldClass = 'form-check-input',
         formGroupClass = 'form-group',
-        formCheckClass = 'form-check'
+        formCheckClass = 'form-check',
+        fieldClass = 'form-check-input',
+        template: Template = FieldTemplate,
+        formCheckLabelClass = 'form-check-label',
     } = config;
 
     const { handleChange, handleBlur } = formik;
     const checkboxValue = value || [];
     return (
-        <div className={ formGroupClass }>
-            <Label className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             { _.map(options, ({ value, label }, key, index ) => {
                 let fieldName = _.kebabCase(name + ' ' + value);
                 return (
                     <div key={ key } className={ formCheckClass }>
-                        <label htmlFor={ fieldName } className="form-check-label">
+                        <label htmlFor={ fieldName } className={ formCheckLabelClass }>
                             <input
                                 id={ fieldName }
                                 name={ `${name}.${key}` }
@@ -39,11 +41,10 @@ const Checkbox = ({ config, formik, value, error }) => {
                                 }}
                                 { ...attributes } /> { label }
                         </label>
-                        <ErrorMessage name={ name } />
                     </div>
                 );
             })}
-        </div>
+        </Template>
     );
 }
 

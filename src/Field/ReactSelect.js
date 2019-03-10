@@ -5,6 +5,7 @@ import Select from 'react-select';
 import ErrorMessage from './ErrorMessage';
 import CreatableSelect from 'react-select/lib/Creatable';
 import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
 const prepareOptions = ( options ) =>
     _.reduce(options, (result, value) => {
@@ -47,16 +48,17 @@ const ReactSelect = ({ config, formik, value, error }) => {
     const {
         name,
         label,
-        options: initialOptions,
-        defaultValue,
         isMulti,
-        isCreatable = false,
-        isClearable = false,
-        isDisabled = false,
+        defaultValue,
         labelClass = '',
         fieldClass = '',
-        formGroupClass = 'form-group',
         noOptionsMessage,
+        isDisabled = false,
+        isClearable = false,
+        isCreatable = false,
+        options: initialOptions,
+        formGroupClass = 'form-group',
+        template: Template = FieldTemplate
     } = config;
     const { setFieldValue, handleBlur } = formik;
     const options = prepareOptions(initialOptions);
@@ -98,11 +100,9 @@ const ReactSelect = ({ config, formik, value, error }) => {
 
     const SelectComponent = isCreatable ? CreatableSelect : Select;
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             <SelectComponent { ...selectProps } />
-            <ErrorMessage name={ name } />
-        </div>
+        </Template>
     );
 }
 

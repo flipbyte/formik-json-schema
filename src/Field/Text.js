@@ -3,6 +3,7 @@ import React from 'react';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import { changeHandler, joinNames } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
 const Text = ({ config, formik, value = '', error }) => {
     const {
@@ -16,15 +17,15 @@ const Text = ({ config, formik, value = '', error }) => {
         labelClass = '',
         fieldClass = 'form-control',
         formGroupClass = 'form-group',
-        inputGroupClass = 'input-group'
+        inputGroupClass = 'input-group',
+        template: Template = FieldTemplate
     } = config;
 
     const { handleChange, handleBlur } = formik;
     const isInputGroup = icon ? true : false;
 
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             { isInputGroup ?
                 <div className={ inputGroupClass }>
                     <div className="input-group-prepend">
@@ -52,8 +53,7 @@ const Text = ({ config, formik, value = '', error }) => {
                     onBlur={ handleBlur }
                     { ...attributes } />
             }
-            <ErrorMessage name={ name } />
-        </div>
+        </Template>
     );
 }
 

@@ -3,6 +3,7 @@ import Label from './Label';
 import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
 import { changeHandler, joinNames } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
 const Radio = ({ config, formik, value, error }) => {
     const {
@@ -12,17 +13,19 @@ const Radio = ({ config, formik, value, error }) => {
         attributes,
         options,
         labelClass = '',
+        formGroupClass = 'form-group',
+        formCheckClass = 'form-check',
         fieldClass = 'form-check-input',
-        formGroupClass = 'form-group'
+        template: Template = FieldTemplate,
+        formCheckLabelClass = 'form-check-label',
     } = config;
     const { handleChange, handleBlur } = formik;
 
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             { options.map(( option ) =>
-                <div className="form-check" key={ option.value }>
-                    <label htmlFor={ name + '_' + option.value } className="form-check-label">
+                <div className={ formCheckClass } key={ option.value }>
+                    <label htmlFor={ name + '_' + option.value } className={ formCheckLabelClass }>
                         <input
                             name={ name }
                             type="radio"
@@ -38,8 +41,7 @@ const Radio = ({ config, formik, value, error }) => {
                     </label>
                 </div>
             ) }
-            <ErrorMessage name={ name } />
-        </div>
+        </Template>
     );
 }
 

@@ -5,6 +5,7 @@ import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 import ErrorMessage from './ErrorMessage';
 import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
 class Wysiwyg extends React.Component {
     constructor(props) {
@@ -33,13 +34,13 @@ class Wysiwyg extends React.Component {
             rows,
             labelClass = '',
             formGroupClass = 'form-group',
-            textareaClass = 'form-control'
+            textareaClass = 'form-control',
+            template: Template = FieldTemplate
         } = config;
         const { setFieldValue, handleChange, handleBlur } = formik;
 
         return (
-            <div className={ formGroupClass }>
-                <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+            <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
                 <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name}` }>
                     <div className="col-md-12 d-flex justify-content-end">
                         <button
@@ -80,10 +81,9 @@ class Wysiwyg extends React.Component {
                                 onChange={ changeHandler.bind(this, handleChange, formik, config) }
                             />
                         }
-                        <ErrorMessage name={ name } />
                     </div>
                 </div>
-            </div>
+            </Template>
         );
     }
 }
