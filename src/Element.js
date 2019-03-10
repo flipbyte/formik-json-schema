@@ -51,7 +51,7 @@ class Element extends Component {
         const { update, config: { name, dataSource, type }, formik }  = nextProps;
 
         if( !this.state.hasMounted ) {
-            const canUpdate = update !== false;
+            const canUpdate = update !== false || formik.isValidating === true;
             // if( false === canUpdate ) {
             //     return false;
             // }

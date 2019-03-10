@@ -1,10 +1,12 @@
 import _ from 'lodash';
 
-const fieldSubmitCount = _.memoize((name, submitCount) => submitCount);
-export const getError = (name, { errors, touched, submitCount }) => {
+const fieldSubmitCount = _.memoize((name, submitCount, isValidating) =>
+    isValidating ? submitCount - 1 : submitCount
+);
+export const getError = (name, { errors, touched, isValidating, submitCount }) => {
     const error = _.get(errors, name);
     const isTouched = _.get(touched, name);
-    const fsc = fieldSubmitCount(name, submitCount);
+    const fsc = fieldSubmitCount(name, submitCount, isValidating);
     return !_.isEmpty(error) && ( isTouched || submitCount > fsc ) ? error : false
 }
 
