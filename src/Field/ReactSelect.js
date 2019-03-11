@@ -4,7 +4,8 @@ import Label from './Label';
 import Select from 'react-select';
 import ErrorMessage from './ErrorMessage';
 import CreatableSelect from 'react-select/lib/Creatable';
-import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
 const prepareOptions = ( options ) =>
     _.reduce(options, (result, value) => {
@@ -43,25 +44,25 @@ const getSelectedOptions = ( options, values, isCreatable ) => {
     return null;
 }
 
-const ReactSelect = ({ config, formik, submitCountToValidate }) => {
+const ReactSelect = ({ config, formik, value, error }) => {
     const {
         name,
         label,
-        options: initialOptions,
-        defaultValue,
         isMulti,
-        isCreatable = false,
-        isClearable = false,
-        isDisabled = false,
+        defaultValue,
         labelClass = '',
         fieldClass = '',
-        formGroupClass = 'form-group',
         noOptionsMessage,
+        isDisabled = false,
+        isClearable = false,
+        isCreatable = false,
+        options: initialOptions,
+        formGroupClass = 'form-group',
+        template: Template = FieldTemplate
     } = config;
-    const { values, setFieldValue } = formik;
-    const error = hasError(name, submitCountToValidate, formik);
+    const { setFieldValue, handleBlur } = formik;
     const options = prepareOptions(initialOptions);
-    const selectedValue = _.get(values, name, defaultValue);
+    const selectedValue = value || defaultValue;
     const selectedOption = getSelectedOptions(options, selectedValue, isCreatable);
 
     var selectProps = {
@@ -80,6 +81,15 @@ const ReactSelect = ({ config, formik, submitCountToValidate }) => {
                 config,
                 selectedValues
             );
+        },
+        onBlur: (event) => {
+            return handleBlur({
+                ...event,
+                target: {
+                    ...event.target,
+                    name
+                }
+            });
         }
     };
     selectProps = _.assign(selectProps, { options });
@@ -90,12 +100,10 @@ const ReactSelect = ({ config, formik, submitCountToValidate }) => {
 
     const SelectComponent = isCreatable ? CreatableSelect : Select;
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             <SelectComponent { ...selectProps } />
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
-        </div>
+        </Template>
     );
 }
 
-export default ReactSelect;
+export default React.memo(ReactSelect);

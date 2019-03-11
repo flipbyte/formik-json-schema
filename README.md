@@ -173,6 +173,8 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | type | String | "field" |
+| | labelClass | String | html class for the label html element |
+| | formGroupClass | String | html class for the div that wraps the form field |
 | | validation | String | Check [yup-schema](https://github.com/flipbyte/yup-schema) |
 | | conditional | String | Check [when-condition](https://github.com/flipbyte/when-condition) |
 
@@ -186,26 +188,20 @@ Each container or field requires a renderer which can be set using "renderer": "
 | |  type | String | "field" |
 | | attributes |  {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 | | options | Array | Array of objects with keys "value" and "label" |
-| | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
-| | formGroupClass | String | html class for the div that wraps the form field |
 | code-editor | renderer | String | code-editor |
 | | name | String | html field name attribute |
 | |  label | String | the label for the field |
 | | options | {} | |
 | | defaultValue | String | default field value (untested) |
 | | attributes | {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
-| |  labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
-| | formGroupClass | String | html class for the div that wraps the form field |
 | radio | renderer | String | radio |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
 | | options | {} | |
 | | attributes | {}  | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
-| | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
-| | formGroupClass | String  | html class for the div that wraps the form field |
 | react-select | renderer | String | react-select |
 | | name | String | html field name attribute |
 | | label | String | the label for the field |
@@ -215,58 +211,33 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | isClearable | Bool | displays a clear select button on the select which will clear the selected options |
 | | isDisabled | Bool | disables the select when set to true |
 | | noOptionsMessage | Function | refer [ReactSelect Props](https://react-select.com/props) |
-| | labelClass | String | html class for the label html element |
 | | fieldClass | String  | html class for the main html/3-rd party form field |
-| | formGroupClass | String | html class for the div that wraps the form field |
 | switch | renderer | String | switch |
-| | name | String | html field name attribute |
-| | label | String | the label for the field |
-| | attributes |  {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
-| | dataOn | String | label for On. Example: in a yes/no option this would be Yes |
-| | dataOff | String | label for Off. In the above example "No" |
-| | labelClass | String  | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
-| | formGroupClass | String | html class for the div that wraps the form field |
 | text | renderer | String | text |
-| | name | String | html field name attribute |
-| | label | String | the label for the field |
-| | type | String | either "container" or "field" |
 | | attributes | {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 | | fieldType | String | HTML input type. The value that goes into <input type="{this value here}" /> |
 | | defaultValue | String | default field value (untested) |
 | | icon | String | fontawesome icon class |
-| | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
-| | formGroupClass | String | html class for the div that wraps the form field |
 | | inputGroupClass | String | html class for the div that wraps an icon and an input element together |
 | textarea | renderer | String | textarea |
-| | name | String | html field name attribute |
-| | label | String | the label for the field |
-| | type | String | either "container" or "field" |
 | | attributes | {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 | | rows | Number | Number of rows that the text-area container should show by default |
-| | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
-| | formGroupClass | String | html class for the div that wraps the form field |
 | wysiwyg | renderer | String | wysiwyg |
-| | name | String | html field name attribute |
-| |  label | String | the label for the field |
-| | type | String | either "container" or "field" |
 | | attributes | {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 | | options | {} | [React-quill wysiwyg options](https://github.com/zenoamaro/react-quill) |
 | | rows | Number | Number of rows that the wysiwyg container should show by default |
-| | labelClass | String | html class for the label html element |
 | | fieldClass | String | html class for the main html/3-rd party form field |
-| | formGroupClass | String | html class for the div that wraps the form field |
 | | textareaClass | String |  the class for the textarea that will show the raw html for the content entered in the wysiwyg |
 | autocomplete | renderer | String | autcomplete |
-| | name | String | html field name attribute |
-| | label | String | the label for the field |
-| | type | String | either "container" or "field" |
 | | attributes | {} | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 | | defaultValue | String | default field value (untested) |
 | | options | {} | Options available in [react-autosuggest plugin](https://github.com/moroshko/react-autosuggest) |
-| | labelClass | String | html class for the label html element |
+| | fieldClass | String | html class for the main html/3-rd party form field |
+| file-uploader | renderer | String | autcomplete |
+| | options | {} | Options available in [react-dropzone plugin](https://react-dropzone.js.org/) |
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
 

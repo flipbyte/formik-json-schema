@@ -3,14 +3,30 @@ import Element from '../Element';
 import { joinNames } from '../utils';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import shallowequal from 'shallowequal';
+
+const tabPaneInvalid = {
+    color: '#dc3545',
+}
+
+const tabPaneActiveInvalid = {
+    color: '#fff',
+    backgroundColor: '#dc3545',
+    border: '1px solid #dc3545'
+}
 
 class Tabs extends Component {
     constructor(props) {
         super(props);
 
         this.prepareTabs(this.props.config.elements);
-        this.state = { activeTab: this.defaultActiveTab };
+        this.state = {
+            activeTab: this.defaultActiveTab,
+            isValid: []
+        };
         this.toggle = this.toggle.bind(this);
+        this.tabId = _.uniqueId('list-tab-');
+        this.tabContentEl = React.createRef();
     }
 
     prepareTabs(tabs) {
@@ -41,6 +57,14 @@ class Tabs extends Component {
         });
     }
 
+    componentDidUpdate() {
+        const node = this.tabContentEl.current;
+        var panes = _.map(node.children, child => child.querySelector('.is-invalid') !== null)
+        if(!shallowequal(this.state.isValid, panes)) {
+            this.setState({ isValid: panes })
+        }
+    }
+
     render() {
         const {
             config: {
@@ -58,31 +82,43 @@ class Tabs extends Component {
                 tabPaneClass = 'tab-pane',
             }
         } = this.props;
+        const { activeTab, isValid } = this.state;
+        const tabValidations = _(isValid);
 
         return (
             <div className={ cardClass }>
                 <div className={ cardBodyClass }>
                     <div className={ rowClass }>
                         <div className={ tabColumnClass }>
-                            <ul id="list-tab" className={ tabListClass }>
-                                { _.map(this.tabs, ( tab, key ) =>
-                                    <li
+                            <ul id={ this.tabId } className={ tabListClass }>
+                                { _.map(this.tabs, ( tab, key ) => {
+                                    const tabInvalid = tabValidations.next().value === true;
+                                    return <li
                                         key={ key }
                                         className={
-                                            tabListItemClass + ( this.state.activeTab == key ? tabActiveClass : '' )
+                                            tabListItemClass + ( activeTab == key ? tabActiveClass : '' ) +
+                                            ( tabInvalid ? ' is-invalid ' : '' )
                                         }
-                                        onClick={ this.toggle.bind(null, key) }>{ tab }
+                                        style={ (tabInvalid
+                                            ? activeTab == key
+                                                ? tabPaneActiveInvalid
+                                                : tabPaneInvalid
+                                            : null
+                                        )}
+                                        onClick={ this.toggle.bind(null, key) }
+                                    >
+                                        { tab }
                                     </li>
-                                ) }
+                                }) }
                             </ul>
                         </div>
                         <div className={ contentColumnClass }>
-                            <div className={ tabContentClass }>
-                                { _.map(this.tabContent, ( tabContent, tabKey ) =>
+                            <div ref={ this.tabContentEl } className={ tabContentClass }>
+                                { _.map(this.tabContent, ( tabContent, tabKey, index ) =>
                                     <div
                                         key={ tabKey }
                                         className={
-                                            tabPaneClass + ' ' + ( this.state.activeTab == tabKey ? tabActiveClass : '' )
+                                            tabPaneClass + ' ' + ( activeTab == tabKey ? tabActiveClass : '' )
                                         }>
                                         { _.map(tabContent, ({ name: elementName, ...rest }, key ) => {
                                             let element = _.assign({}, rest);
@@ -92,7 +128,7 @@ class Tabs extends Component {
                                             return <Element
                                                 key={ key }
                                                 config={ element }
-                                                update={ this.state.activeTab == tabKey } />
+                                                update={ activeTab == tabKey } />
                                         }) }
                                     </div>
                                 ) }

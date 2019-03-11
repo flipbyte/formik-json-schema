@@ -44,9 +44,8 @@ class Form extends React.Component {
             <SchemaProvider value={ this.getContextValue() }>
                 <Formik
                     { ...formProps }
-                    render={ props =>
-                        <Element config={ schema } />
-                    } />
+                    render={ props => <Element config={ schema } /> }
+                />
             </SchemaProvider>
         )
     }

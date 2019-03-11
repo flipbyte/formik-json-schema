@@ -1,58 +1,51 @@
 import _ from 'lodash';
-import { connect, Field } from 'formik';
+import { connect, FastField } from 'formik';
 import React, { Component } from 'react';
 import withFormConfig from './withFormConfig';
-import { containers, fields } from './registry';
+import { containers, fields, FIELD } from './registry';
 import Rules from '@flipbyte/yup-schema';
 import when from '@flipbyte/when-condition';
-
-const FIELD = 'field';
 
 class ElementRenderer extends Component {
     constructor(props) {
         super(props);
+
+        const { type, renderer } = this.props.config;
+        this.renderer = this.getRenderer(
+            type === FIELD ? fields : containers,
+            renderer
+        );
     }
 
-    // Experimental - Needs thorough testing
-    // shouldComponentUpdate(nextProps) {
-    //     return nextProps.formik !== this.props.formik
-    // }
+    getRenderer(registry, renderer) {
+        return typeof renderer === 'string' ? registry.get(renderer) : renderer;
+    }
 
-    makeRendererComponent(props) {
-        let currentRegistry = containers;
-        if( props.config.type ===  FIELD ) {
-            currentRegistry = fields;
-        }
-
-        let Renderer = props.config.renderer;
-        if(typeof props.config.renderer === 'string') {
-            Renderer = currentRegistry.get(props.config.renderer);
-        }
-
+    renderElement(props) {
+        const Renderer = this.renderer;
         return this.validateConditional() && <Renderer { ...props } />
     }
 
     validateConditional() {
-        const { config, formik } = this.props;
+        const {
+            config: { condition },
+            formik: { values }
+        } = this.props;
 
-        if(config.condition) {
-            return when(config.condition, formik.values);
-        }
-
+        if(condition) return when(condition, values);
         return true;
     }
 
     render() {
-        const { config, validationSchema, formik, ...rest } = this.props;
-
+        const { config, error, validationSchema, formik, ...rest } = this.props;
         return config.type === FIELD
-            ? <Field
+            ? <FastField
                 name={ config.name }
-                render={ ({ form: formik, field: formikField }) =>
-                    this.makeRendererComponent({ ...rest, config, formik, formikField })
-                } />
-            : this.makeRendererComponent({ ...rest, config, formik });
+                render={({ field: { value } }) => {
+                    return this.renderElement({ config, formik, value, error })
+                }} />
+            : this.renderElement({ config, formik });
     }
 }
 
-export default connect(withFormConfig(ElementRenderer));
+export default withFormConfig(ElementRenderer);

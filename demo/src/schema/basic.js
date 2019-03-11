@@ -33,15 +33,15 @@ export default {
                     ['string'],
                     ['required'],
                     ['email']
-                ],
-                condition: ['or', ['is', 'name', undefined], ['is', 'name', '']]
+                ]
             },
             telephone: {
                 name: "telephone",
                 label: "Telephone",
                 type: "field",
                 renderer: "text",
-                fieldType: "telephone"
+                fieldType: "telephone",
+                condition: ['or', ['is', 'email', undefined], ['is', 'email', '']]
             },
             message: {
                 name: "message",

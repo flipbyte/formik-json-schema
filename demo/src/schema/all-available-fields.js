@@ -74,7 +74,8 @@ export default {
                     value: 'vanilla',
                     label: 'Vanilla'
                 }],
-                formGroupClass: "form-group mb-4"
+                formGroupClass: "form-group mb-4",
+                validation: [['array'], ['of', [['string']]]]
             },
             textarea: {
                 name: "description",
@@ -138,9 +139,7 @@ export default {
                 name: "switch",
                 label: "Switch",
                 type: "field",
-                renderer: "switch",
-                dataOn: "Yes",
-                dataOff: "No"
+                renderer: "switch"
             },
             wysiwyg: {
                 name: "wysiwyg",
@@ -152,7 +151,8 @@ export default {
                     style: {
                         height: 200
                     }
-                }
+                },
+                validation: [['string'], ['required'], ['min', 100]]
             },
             codeeditor: {
                 name: "codeeditor",
@@ -164,6 +164,20 @@ export default {
                 options: {
                     mode: "xml",
                     lineNumbers: true
+                },
+                validation: [['string'], ['required'], ['min', 100]]
+            },
+            fileUploader: {
+                name: "fileUploader",
+                label: "File Uploader",
+                type: "field",
+                renderer: "file-uploader",
+                options: {
+                    accept: ['image/*', 'text/*'],
+                    multiple: true,
+                    onDrop: (formik, config, acceptedFiles) => {
+                        console.log(formik, config, acceptedFiles);
+                    }
                 }
             },
             buttonsGroup: {

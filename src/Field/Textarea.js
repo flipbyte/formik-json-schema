@@ -2,9 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, joinNames } from '../utils';
+import { changeHandler } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
-const Textarea = ({ config, formik, submitCountToValidate }) => {
+const Textarea = ({ config, formik, value = '', error }) => {
     const {
         name,
         label,
@@ -13,24 +14,23 @@ const Textarea = ({ config, formik, submitCountToValidate }) => {
         rows,
         labelClass = '',
         fieldClass = 'form-control',
-        formGroupClass = 'form-group'
+        formGroupClass = 'form-group',
+        template: Template = FieldTemplate
     } = config;
-    const { values, handleChange } = formik;
-    const error = hasError(name, submitCountToValidate, formik);
+    const { handleChange, handleBlur } = formik;
 
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             <textarea
                 id={ name }
                 name={ name }
                 className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
-                value={ _.get(values, name, '') }
+                value={ value }
                 onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                onBlur={ handleBlur }
                 { ...attributes } />
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
-        </div>
+        </Template>
     );
 }
 
-export default Textarea;
+export default React.memo(Textarea);

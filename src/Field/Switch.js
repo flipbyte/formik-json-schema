@@ -2,41 +2,30 @@ import React from 'react';
 import Label from './Label';
 import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import FieldTemplate from '../FieldTemplate';
+import { default as ReactSwitch } from "react-switch";
+import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
-const Switch = ({ config, formik, submitCountToValidate }) => {
+const Switch = ({ config, formik, value = false, error }) => {
     const {
         name,
         label,
-        attributes,
-        dataOn,
-        dataOff,
         labelClass = '',
         fieldClass = 'switch',
-        formGroupClass = 'form-group'
+        formGroupClass = 'form-group',
+        template: Template = FieldTemplate
     } = config;
-    const { values, setFieldValue } = formik;
-    const error = hasError(name, submitCountToValidate, formik);
+    const { setFieldValue } = formik;
 
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
             <label className={ fieldClass + ( error ? ' is-invalid ' : '' ) }>
-                <input type="checkbox"
-                    className="switch-input"
-                    defaultChecked={ getIn(values, name) }
-                    onClick={
-                        () => changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, !getIn(values, name))
-                    } />
-                <span
-                    className="switch-label"
-                    data-on={ dataOn }
-                    data-off={ dataOff }></span>
-                <span className="switch-handle"></span>
+                <ReactSwitch
+                    onChange={ changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config) }
+                    checked={ value } />
             </label>
-            <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
-        </div>
+        </Template>
     );
 }
 
-export default Switch;
+export default React.memo(Switch);

@@ -1,10 +1,14 @@
 import _ from 'lodash';
 
-export const hasError = (name, submitCountToValidate = 0, {
-    errors,
-    touched,
-    submitCount
-}) => _.get(errors, name, false) && (_.get(touched, name, false) || submitCount > submitCountToValidate);
+const fieldSubmitCount = _.memoize((name, submitCount, isValidating) =>
+    isValidating ? submitCount - 1 : submitCount
+);
+export const getError = (name, { errors, touched, isValidating, submitCount }) => {
+    const error = _.get(errors, name);
+    const isTouched = _.get(touched, name);
+    const fsc = fieldSubmitCount(name, submitCount, isValidating);
+    return !_.isEmpty(error) && ( isTouched || submitCount > fsc ) ? error : false
+}
 
 export const changeHandler = (handler, formikProps, {
     onChange,

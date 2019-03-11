@@ -4,7 +4,8 @@ import Label from './Label';
 import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import FieldTemplate from '../FieldTemplate';
 
 class Wysiwyg extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class Wysiwyg extends React.Component {
     }
 
     render() {
-        const { config, formik, submitCountToValidate } = this.props;
+        const { config, formik, value = '', error } = this.props;
         const {
             name,
             label,
@@ -33,15 +34,13 @@ class Wysiwyg extends React.Component {
             rows,
             labelClass = '',
             formGroupClass = 'form-group',
-            textareaClass = 'form-control'
+            textareaClass = 'form-control',
+            template: Template = FieldTemplate
         } = config;
-        const { setFieldValue, handleChange } = formik;
-        const value = _.get(formik.values, name, '');
-        const error = hasError(name, submitCountToValidate, formik);
+        const { setFieldValue, handleChange, handleBlur } = formik;
 
         return (
-            <div className={ formGroupClass }>
-                <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+            <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
                 <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name}` }>
                     <div className="col-md-12 d-flex justify-content-end">
                         <button
@@ -51,7 +50,17 @@ class Wysiwyg extends React.Component {
                             { this.state.showHtml ? 'Show Editor' : 'View Source' }
                         </button>
                     </div>
-                    <div className={ 'col-md-12 ' + ( error ? ' is-invalid ' : '' ) }>
+                    <div className={ 'col-md-12 '  }
+                        onBlur={ event => {
+                            return handleBlur({
+                                ...event,
+                                target: {
+                                    ...event.target,
+                                    name
+                                }
+                            })
+                        }
+                    }>
                         { !this.state.showHtml && <ReactQuill
                             id={ name }
                             value={ value }
@@ -69,12 +78,12 @@ class Wysiwyg extends React.Component {
                                 className={ textareaClass }
                                 rows="10"
                                 value={ value }
-                                onChange={ changeHandler.bind(this, handleChange, formik, config) } />
+                                onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                            />
                         }
-                        <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
                     </div>
                 </div>
-            </div>
+            </Template>
         );
     }
 }
@@ -111,4 +120,4 @@ Wysiwyg.defaultOptions = {
     ]
 };
 
-export default Wysiwyg;
+export default React.memo(Wysiwyg);

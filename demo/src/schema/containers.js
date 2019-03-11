@@ -308,13 +308,16 @@ export default {
                                 type: "container",
                                 renderer: "div",
                                 htmlClass: "border p-3",
+                                name: "div",
+                                prefixNameToElement: true,
                                 elements: {
                                     title: {
                                         name: "title",
                                         label: "Title",
                                         type: "field",
                                         renderer: "text",
-                                        fieldType: "text"
+                                        fieldType: "text",
+                                        validation: [['string'], ['required']]
                                     },
                                     reactSelect: {
                                         type: "field",

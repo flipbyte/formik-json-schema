@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import Label from './Label';
-import Autosuggest from 'react-autosuggest';
 import React, { Component } from 'react';
 import ErrorMessage from './ErrorMessage';
-import { hasError, changeHandler, joinNames, setFieldValueWrapper } from '../utils';
+import Autosuggest from 'react-autosuggest';
+import FieldTemplate from '../FieldTemplate';
+import { changeHandler, joinNames, setFieldValueWrapper } from '../utils';
 // import '../css/autocomplete.css';
 
 class Autocomplete extends Component {
@@ -49,7 +50,7 @@ class Autocomplete extends Component {
     }
 
     render() {
-        const { config, formik, submitCountToValidate } = this.props;
+        const { config, formik, error, value } = this.props;
         const {
             name,
             label,
@@ -60,24 +61,23 @@ class Autocomplete extends Component {
             labelClass = '',
             fieldClass = 'form-control',
             formGroupClass = 'form-group',
+            template: Template = FieldTemplate
         } = config;
-        const { values, setFieldValue, handleChange, handleBlur } = formik;
-        const error = hasError(name, submitCountToValidate, formik);
-        const value = _.get(values, name, '');
+        const { setFieldValue, handleBlur } = formik;
 
-        this.autosuggestOptions.inputProps.value = value;
+        this.autosuggestOptions.inputProps.name = name;
+        this.autosuggestOptions.inputProps.value = value || '';
         this.autosuggestOptions.inputProps.onChange = ( event, { newValue, method } ) =>
             changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, newValue);
+        this.autosuggestOptions.inputProps.onBlur = handleBlur.bind(this);
         this.autosuggestOptions.inputProps.className = this.inputClassName + ( error ? ' is-invalid ' : '' )
 
         return (
-            <div className={ formGroupClass }>
-                <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+            <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
                 <Autosuggest suggestions={ this.state.suggestions} { ...this.autosuggestOptions } />
-                <ErrorMessage name={ name } submitCountToValidate={ submitCountToValidate } />
-            </div>
+            </Template>
         );
     }
 }
 
-export default Autocomplete;
+export default React.memo(Autocomplete);
