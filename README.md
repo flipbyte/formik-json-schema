@@ -241,7 +241,6 @@ Each container or field requires a renderer which can be set using "renderer": "
 | | fieldClass | String | html class for the main html/3-rd party form field |
 | | formGroupClass | String | html class for the div that wraps the form field |
 
-
 ## Thank You
 We would like to extend our sincere gratitude towards all members of open-source web-development community.
 Special shout-out goes to following members who inspire us to always works towards the greater good:
