@@ -11,7 +11,7 @@ formik-json is a wrapper for Formik to easily create forms using JSON / Javascri
 
 ## Examples
 
--   [Demo](https://flipbyte.github.io/formik-json)
+-   [Demo](https://flipbyte.github.io/formik-json-schema)
 
 ## Pre-requisites
 
