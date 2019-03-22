@@ -37,7 +37,7 @@ export default {
             },
             telephone: {
                 name: "telephone",
-                label: "Telephone",
+                label: "Telephone (visible if email is empty)",
                 type: "field",
                 renderer: "text",
                 fieldType: "telephone",

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { connect, FastField } from 'formik';
+import { connect, Field } from 'formik';
 import React, { Component } from 'react';
 import withFormConfig from './withFormConfig';
 import { containers, fields, FIELD } from './registry';
@@ -39,7 +39,7 @@ class ElementRenderer extends Component {
     render() {
         const { config, error, validationSchema, formik, ...rest } = this.props;
         return config.type === FIELD
-            ? <FastField
+            ? <Field
                 name={ config.name }
                 render={({ field: { value } }) => {
                     return this.renderElement({ config, formik, value, error })
