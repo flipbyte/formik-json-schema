@@ -7,6 +7,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';
 import '../../node_modules/codemirror/lib/codemirror.css';
 import '../../node_modules/react-quill/dist/quill.snow.css';
+import '../../src/css/autocomplete.css';
 import './css/simple-sidebar.css';
 import './css/styles.css';
 require('codemirror/mode/xml/xml');
