@@ -9,4 +9,4 @@ import Element from './Element';
 import * as utils from './utils';
 import * as registry from './registry';
 
-export { Form, Label, ErrorMessage, FieldTemplate, registry, utils }
+export { Form, Label, Element, ErrorMessage, FieldTemplate, registry, utils }
