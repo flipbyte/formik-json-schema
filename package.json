@@ -29,7 +29,7 @@
         "@flipbyte/when-condition": "^0.2.0",
         "@flipbyte/yup-schema": "^0.1.4",
         "codemirror": "^5.41.0",
-        "formik": "^1.5.0",
+        "formik": "^1.5.2",
         "react-autosuggest": "^9.4.3",
         "react-codemirror2": "^5.1.0",
         "react-dropzone": "^10.0.0",
@@ -41,8 +41,8 @@
     },
     "peerDependencies": {
         "lodash": "^4.17.11",
-        "react": "^16.8.4",
-        "react-dom": "^16.8.4",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
         "prop-types": "^15.6.2",
         "@fortawesome/fontawesome-free": "^5.6.3"
     },
@@ -57,8 +57,8 @@
         "inferno": "^5.0.0",
         "load-styles": "^2.0.0",
         "nwb": "0.23.x",
-        "react": "^16.8.0",
-        "react-dom": "^16.8.0",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
         "remark-lint": "^6.0.4"
     },
     "author": "",
