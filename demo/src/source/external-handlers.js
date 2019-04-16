@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 let delay = 1000;
 
 let textChangeTimeout = 0;
@@ -39,3 +41,8 @@ export const asyncFill = ( { setValues }, fieldConfig, event ) => {
         })
     }, 2000);
 }
+
+export const autosave = _.debounce(( formik ) => {
+    if(!_.isEqual(formik.values))
+    console.log('autosave', formik.values);
+}, 1000);

@@ -4,6 +4,7 @@ import externalEventHandlers from './external-event-handlers';
 import async from './async';
 import containers from './containers';
 import validation from './validation';
+import autosave from './autosave';
 import customRenderer from './custom-renderer';
 
 export default [
@@ -42,5 +43,10 @@ export default [
         id: "custom-renderer",
         className: "mb-4",
         formProps: customRenderer
+    }, {
+        title: "Autosave",
+        id: "autosave",
+        className: "mb-4",
+        formProps: autosave
     }
 ]
