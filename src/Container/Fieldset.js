@@ -39,6 +39,8 @@ class Fieldset extends Component {
                 title,
                 elements,
                 prefixNameToElement = false,
+                hasHeaderIcon = true,
+                headerIconClass = 'fa fa-align-justify',
                 cardClass = 'card flutter-fieldset',
                 cardHeaderClass = 'card-header',
                 cardHeaderIconCollapsedClass = 'fas fa-angle-down',
@@ -52,7 +54,7 @@ class Fieldset extends Component {
             <div className={ cardClass }>
                 { !!title &&
                     <div className={ cardHeaderClass } onClick={ this.toggle }>
-                        <i className="fa fa-align-justify"></i>
+                        { hasHeaderIcon && <i className={ headerIconClass }></i> }
                         { title }
                         { this.collapsible && <div className={ cardHeaderActionsClass }>
                             <a className="card-header-action btn btn-minimize">
