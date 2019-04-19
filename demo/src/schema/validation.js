@@ -72,7 +72,7 @@ export default {
                 validation: [['boolean'], ['required']]
             },
             submit: {
-                label: "Submit",
+                content: "Submit",
                 type: "field",
                 renderer: "button",
                 buttonType: "submit",

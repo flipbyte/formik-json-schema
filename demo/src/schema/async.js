@@ -21,7 +21,7 @@ export default {
                 type: "field",
                 renderer: "button",
                 name: "button",
-                label: "Async fill",
+                content: "Async fill",
                 fieldClass: "btn-danger float-right",
                 buttonType: "button",
                 onClick: asyncFill
