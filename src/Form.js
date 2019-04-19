@@ -57,7 +57,11 @@ class Form extends React.Component {
                 <Formik
                     { ...formProps }
                     render={(props) => (
-                        <FormikForm onUpdate={ onUpdate } schema={ schema } { ...props } />
+                        <FormikForm
+                            onUpdate={ onUpdate }
+                            schema={ schema }
+                            { ...props }
+                        />
                     )}
                 />
             </SchemaProvider>
