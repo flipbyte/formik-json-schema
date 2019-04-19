@@ -5,7 +5,6 @@ import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 import ErrorMessage from './ErrorMessage';
 import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
-import FieldTemplate from '../FieldTemplate';
 
 class Wysiwyg extends React.Component {
     constructor(props) {
@@ -34,56 +33,53 @@ class Wysiwyg extends React.Component {
             rows,
             labelClass = '',
             formGroupClass = 'form-group',
-            textareaClass = 'form-control',
-            template: Template = FieldTemplate
+            textareaClass = 'form-control'
         } = config;
         const { setFieldValue, handleChange, handleBlur } = formik;
 
         return (
-            <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
-                <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name}` }>
-                    <div className="col-md-12 d-flex justify-content-end">
-                        <button
-                            type="button"
-                            className="btn btn-primary pull-right"
-                            onClick={ this.toggleEditor }>
-                            { this.state.showHtml ? 'Show Editor' : 'View Source' }
-                        </button>
-                    </div>
-                    <div className={ 'col-md-12 '  }
-                        onBlur={ event => {
-                            return handleBlur({
-                                ...event,
-                                target: {
-                                    ...event.target,
-                                    name
-                                }
-                            })
-                        }
-                    }>
-                        { !this.state.showHtml && <ReactQuill
-                            id={ name }
-                            value={ value }
-                            className={ error ? ' is-invalid ' : '' }
-                            onChange={
-                                changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config)
-                            }
-                            { ...this.toolbarOptions }
-                            { ... attributes } />
-                        }
-                        { this.state.showHtml &&
-                            <textarea
-                                id={ 'ql-show-html-' + name }
-                                name={ name }
-                                className={ textareaClass }
-                                rows="10"
-                                value={ value }
-                                onChange={ changeHandler.bind(this, handleChange, formik, config) }
-                            />
-                        }
-                    </div>
+            <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name}` }>
+                <div className="col-md-12 d-flex justify-content-end">
+                    <button
+                        type="button"
+                        className="btn btn-primary pull-right"
+                        onClick={ this.toggleEditor }>
+                        { this.state.showHtml ? 'Show Editor' : 'View Source' }
+                    </button>
                 </div>
-            </Template>
+                <div className={ 'col-md-12 '  }
+                    onBlur={( event ) => (
+                        handleBlur({
+                            ...event,
+                            target: {
+                                ...event.target,
+                                name
+                            }
+                        })
+                    )
+                }>
+                    { !this.state.showHtml && <ReactQuill
+                        id={ name }
+                        value={ value }
+                        className={ error ? ' is-invalid ' : '' }
+                        onChange={
+                            changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config)
+                        }
+                        { ...this.toolbarOptions }
+                        { ... attributes } />
+                    }
+                    { this.state.showHtml &&
+                        <textarea
+                            id={ 'ql-show-html-' + name }
+                            name={ name }
+                            className={ textareaClass }
+                            rows="10"
+                            value={ value }
+                            onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                        />
+                    }
+                </div>
+            </div>
         );
     }
 }

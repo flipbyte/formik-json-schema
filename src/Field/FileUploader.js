@@ -2,7 +2,6 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useMemo, useEffect, Fragment } from 'react';
 import { useDropzone } from 'react-dropzone';
-import FieldTemplate from '../FieldTemplate';
 import { changeHandler, joinNames } from '../utils';
 
 const Thumb = ({ key, file }) => <div />
@@ -80,8 +79,7 @@ const FileUploader = ({ config, formik, value, error }) => {
         labelClass = '',
         hasThumbs = false,
         fieldClass = 'dropzone',
-        formGroupClass = 'form-group',
-        template: Template = FieldTemplate
+        formGroupClass = 'form-group'
     } = config;
     const { setFieldValue } = formik;
     const selectedValue = value;
@@ -105,26 +103,24 @@ const FileUploader = ({ config, formik, value, error }) => {
     ]);
 
     return (
-        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
-            <section>
-                <div { ...getRootProps({ style }) }>
-                    <input { ...getInputProps() } />
-                    { isDragActive
-                        ? <p>Drop the files here ...</p>
-                        : <p>Drag 'n' drop some files here, or click to select files</p>
-                     }
-                </div>
-                <aside style={ thumbsContainer }>
-                    { value && (hasThumbs ? value.map(file => (
-                        <div style={ thumb } key={ file.id }>
-                            <div style={ thumbInner }>
-                                <img src={ file.url } alt={ file.label } style={ img } />
-                            </div>
+        <section>
+            <div { ...getRootProps({ style }) }>
+                <input { ...getInputProps() } />
+                { isDragActive
+                    ? <p>Drop the files here ...</p>
+                    : <p>Drag 'n' drop some files here, or click to select files</p>
+                 }
+            </div>
+            <aside style={ thumbsContainer }>
+                { value && (hasThumbs ? value.map(file => (
+                    <div style={ thumb } key={ file.id }>
+                        <div style={ thumbInner }>
+                            <img src={ file.url } alt={ file.label } style={ img } />
                         </div>
-                    )) : <ul>{ value.map(file => <li key={ file.id }>{ file.url }</li>) }</ul> )}
-                </aside>
-            </section>
-        </Template>
+                    </div>
+                )) : <ul>{ value.map(file => <li key={ file.id }>{ file.url }</li>) }</ul> )}
+            </aside>
+        </section>
     );
 }
 

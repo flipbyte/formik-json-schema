@@ -1,51 +1,46 @@
-import _ from 'lodash';
-import { connect, Field } from 'formik';
-import React, { Component } from 'react';
+import React from 'react';
+import { Field } from 'formik';
+import { match } from './utils';
+import Rules from '@flipbyte/yup-schema';
+import FieldTemplate from './FieldTemplate';
 import withFormConfig from './withFormConfig';
 import { containers, fields, FIELD } from './registry';
-import Rules from '@flipbyte/yup-schema';
-import when from '@flipbyte/when-condition';
 
-class ElementRenderer extends Component {
-    constructor(props) {
-        super(props);
+const renderElement = ( props ) => {
+    const {
+        config: { type, renderer }
+    } = props;
+    const registry = type === FIELD ? fields : containers;
+    const Renderer = typeof renderer === 'string' ? registry.get(renderer) : renderer;
 
-        const { type, renderer } = this.props.config;
-        this.renderer = this.getRenderer(
-            type === FIELD ? fields : containers,
-            renderer
-        );
-    }
+    return <Renderer { ...props } />
+}
 
-    getRenderer(registry, renderer) {
-        return typeof renderer === 'string' ? registry.get(renderer) : renderer;
-    }
+const ElementRenderer = ({
+    config,
+    error,
+    validationSchema,
+    formik,
+    ...rest
+}) => {
+    const {
+        type,
+        name,
+        showWhen,
+        enabledWhen,
+        template: Template = FieldTemplate,
+    } = config;
+    const { values } = formik;
 
-    renderElement(props) {
-        const Renderer = this.renderer;
-        return this.validateConditional() && <Renderer { ...props } />
-    }
-
-    validateConditional() {
-        const {
-            config: { condition },
-            formik: { values }
-        } = this.props;
-
-        if(condition) return when(condition, values);
-        return true;
-    }
-
-    render() {
-        const { config, error, validationSchema, formik, ...rest } = this.props;
-        return config.type === FIELD
-            ? <Field
-                name={ config.name }
-                render={({ field: { value } }) => {
-                    return this.renderElement({ config, formik, value, error })
-                }} />
-            : this.renderElement({ config, formik });
-    }
+    return match(showWhen, values) && (
+        type === FIELD
+            ? <Field name={ name } render={({ field: { value }}) => (
+                <Template disabled={ !match(enabledWhen, values) } { ...config }>
+                    { renderElement({ config, formik, value, error }) }
+                </Template>
+            )} />
+            : renderElement({ config, formik })
+    );
 }
 
 export default withFormConfig(ElementRenderer);

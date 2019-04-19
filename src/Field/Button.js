@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { clickHandler, joinNames } from '../utils';
 
 const Button = ({ config, formik }) => {
-    const { label, fieldClass, buttonType, onClick } = config;
+    const { content, fieldClass, buttonType, onClick } = config;
     const { isSubmitting } = formik;
 
     let buttonProps = {
@@ -15,7 +15,7 @@ const Button = ({ config, formik }) => {
     if(_.isFunction(onClick)) buttonProps.onClick = onClick.bind(this, formik, config);
 
     return <button { ...buttonProps }>
-        { label } { buttonType === 'submit' && isSubmitting && <i className="fa fa-spinner fa-spin" /> }
+        { content } { buttonType === 'submit' && isSubmitting && <i className="fa fa-spinner fa-spin" /> }
     </button>
 }
 

@@ -141,6 +141,7 @@ containers and keys or use the ones that come with the module.
 | button-group                | name                | String   | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
 | editable-grid, tabs         | elements            | {}       | is an object that can hold one or more fields or containers within it.                                       |
 | editable-grid, button-group | prefixNameToElement | Bool     |                                                                                                              |
+|                             | showWhen            | String   | Check [when-condition](https://github.com/flipbyte/when-condition)                                           |
 
 #### Container specific properties
 
@@ -192,7 +193,9 @@ containers and keys or use the ones that come with the module.
 |       | labelClass     |  String  | html class for the label html element                              |
 |       | formGroupClass |  String  | html class for the div that wraps the form field                   |
 |       | validation     |  String  | Check [yup-schema](https://github.com/flipbyte/yup-schema)         |
-|       | conditional    |  String  | Check [when-condition](https://github.com/flipbyte/when-condition) |
+|       | showWhen       |  String  | Check [when-condition](https://github.com/flipbyte/when-condition) |
+|       | enabledWhen    |  String  | Check [when-condition](https://github.com/flipbyte/when-condition) |
+|       | fieldClass     |  String  | html class for the main html/3-rd party form field                 |
 
 #### Field specific properties
 
@@ -204,20 +207,17 @@ containers and keys or use the ones that come with the module.
 |               | type             |  String  | "field"                                                                                                                                                                                                                                                 |
 |               | attributes       |    {}    | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 |               | options          |   Array  | Array of objects with keys "value" and "label"                                                                                                                                                                                                          |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 | code-editor   | renderer         |  String  | code-editor                                                                                                                                                                                                                                             |
 |               | name             |  String  | html field name attribute                                                                                                                                                                                                                               |
 |               | label            |  String  | the label for the field                                                                                                                                                                                                                                 |
 |               | options          |    {}    |                                                                                                                                                                                                                                                         |
 |               | defaultValue     |  String  | default field value (untested)                                                                                                                                                                                                                          |
 |               | attributes       |    {}    | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 | radio         | renderer         |  String  | radio                                                                                                                                                                                                                                                   |
 |               | name             |  String  | html field name attribute                                                                                                                                                                                                                               |
 |               | label            |  String  | the label for the field                                                                                                                                                                                                                                 |
 |               | options          |    {}    |                                                                                                                                                                                                                                                         |
 |               | attributes       |    {}    | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 | react-select  | renderer         |  String  | react-select                                                                                                                                                                                                                                            |
 |               | name             |  String  | html field name attribute                                                                                                                                                                                                                               |
 |               | label            |  String  | the label for the field                                                                                                                                                                                                                                 |
@@ -227,35 +227,30 @@ containers and keys or use the ones that come with the module.
 |               | isClearable      |   Bool   | displays a clear select button on the select which will clear the selected options                                                                                                                                                                      |
 |               | isDisabled       |   Bool   | disables the select when set to true                                                                                                                                                                                                                    |
 |               | noOptionsMessage | Function | refer [ReactSelect Props](https://react-select.com/props)                                                                                                                                                                                               |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 | switch        | renderer         |  String  | switch                                                                                                                                                                                                                                                  |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 | text          | renderer         |  String  | text                                                                                                                                                                                                                                                    |
 |               | attributes       |    {}    | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 |               | fieldType        |  String  | HTML input type. The value that goes into <input type="{this value here}" />                                                                                                                                                                            |
 |               | defaultValue     |  String  | default field value (untested)                                                                                                                                                                                                                          |
 |               | icon             |  String  | fontawesome icon class                                                                                                                                                                                                                                  |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 |               | inputGroupClass  |  String  | html class for the div that wraps an icon and an input element together                                                                                                                                                                                 |
 | textarea      | renderer         |  String  | textarea                                                                                                                                                                                                                                                |
 |               | attributes       |    {}    | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 |               | rows             |  Number  | Number of rows that the text-area container should show by default                                                                                                                                                                                      |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 | wysiwyg       | renderer         |  String  | wysiwyg                                                                                                                                                                                                                                                 |
 |               | attributes       |    {}    | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 |               | options          |    {}    | [React-quill wysiwyg options](https://github.com/zenoamaro/react-quill)                                                                                                                                                                                 |
 |               | rows             |  Number  | Number of rows that the wysiwyg container should show by default                                                                                                                                                                                        |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 |               | textareaClass    |  String  | the class for the textarea that will show the raw html for the content entered in the wysiwyg                                                                                                                                                           |
-| autocomplete  | renderer         |  String  | autcomplete                                                                                                                                                                                                                                             |
+| autocomplete  | renderer         |  String  | autocomplete                                                                                                                                                                                                                                            |
 |               | attributes       |    {}    | is an object that can hold other html field related attributes (if any). Only ones that are not defined using any other key will be used. For example: name already has it's own key and hence "name" key inside the attributes object will do nothing. |
 |               | defaultValue     |  String  | default field value (untested)                                                                                                                                                                                                                          |
 |               | options          |    {}    | Options available in [react-autosuggest plugin](https://github.com/moroshko/react-autosuggest)                                                                                                                                                          |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
-| file-uploader | renderer         |  String  | autcomplete                                                                                                                                                                                                                                             |
+| file-uploader | renderer         |  String  | fileuploader                                                                                                                                                                                                                                            |
 |               | options          |    {}    | Options available in [react-dropzone plugin](https://react-dropzone.js.org/)                                                                                                                                                                            |
-|               | fieldClass       |  String  | html class for the main html/3-rd party form field                                                                                                                                                                                                      |
 |               | formGroupClass   |  String  | html class for the div that wraps the form field                                                                                                                                                                                                        |
+| button        | renderer         |  String  | button                                                                                                                                                                                                                                                  |
+|               | content          |  String  | button inner html                                                                                                                                                                                                                                       |
 
 ## Thank You
 
@@ -275,16 +270,21 @@ solutions, you can write to us at
 The MIT License (MIT)
 
 [build-badge]: https://travis-ci.org/flipbyte/formik-json.svg?branch=master
+
 [build]: https://travis-ci.org/flipbyte/formik-json
 
 [npm-badge]: https://img.shields.io/npm/v/@flipbyte/formik-json.svg
+
 [npm]: https://www.npmjs.com/package/@flipbyte/formik-json
 
 [coveralls-badge]: https://coveralls.io/repos/github/flipbyte/formik-json-schema/badge.svg?branch=master
+
 [coveralls]: https://coveralls.io/github/flipbyte/formik-json-schema?branch=master
 
 [license-badge]: https://badgen.now.sh/badge/license/MIT
+
 [license]: ./LICENSE
 
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/18e71277b7e94ad9aca885b5ba3d890c
+
 [codacy]: https://www.codacy.com/app/easeq/formik-json?utm_source=github.com&utm_medium=referral&utm_content=flipbyte/formik-json&utm_campaign=Badge_Grade

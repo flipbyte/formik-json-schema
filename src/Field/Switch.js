@@ -2,7 +2,6 @@ import React from 'react';
 import Label from './Label';
 import { getIn } from 'formik';
 import ErrorMessage from './ErrorMessage';
-import FieldTemplate from '../FieldTemplate';
 import { default as ReactSwitch } from "react-switch";
 import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
 
@@ -12,19 +11,17 @@ const Switch = ({ config, formik, value = false, error }) => {
         label,
         labelClass = '',
         fieldClass = 'switch',
-        formGroupClass = 'form-group',
-        template: Template = FieldTemplate
+        formGroupClass = 'form-group'
     } = config;
     const { setFieldValue } = formik;
 
     return (
-        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
-            <label className={ fieldClass + ( error ? ' is-invalid ' : '' ) }>
-                <ReactSwitch
-                    onChange={ changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config) }
-                    checked={ value } />
-            </label>
-        </Template>
+        <label className={ fieldClass + ( error ? ' is-invalid ' : '' ) }>
+            <ReactSwitch
+                checked={ value }
+                onChange={ changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config) }
+            />
+        </label>
     );
 }
 
