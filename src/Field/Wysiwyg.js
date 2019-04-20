@@ -1,10 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
-import Label from './Label';
 import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
-import ErrorMessage from './ErrorMessage';
-import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper } from '../utils';
 
 class Wysiwyg extends React.Component {
     constructor(props) {
@@ -26,13 +24,10 @@ class Wysiwyg extends React.Component {
         const { config, formik, value = '', error } = this.props;
         const {
             name,
-            label,
             type,
             attributes,
             options,
             rows,
-            labelClass = '',
-            formGroupClass = 'form-group',
             textareaClass = 'form-control'
         } = config;
         const { setFieldValue, handleChange, handleBlur } = formik;

@@ -1,9 +1,7 @@
 import _ from 'lodash';
-import Label from './Label';
 import React, { Component } from 'react';
-import ErrorMessage from './ErrorMessage';
 import Autosuggest from 'react-autosuggest';
-import { changeHandler, joinNames, setFieldValueWrapper } from '../utils';
+import { changeHandler, setFieldValueWrapper } from '../utils';
 // import '../css/autocomplete.css';
 
 class Autocomplete extends Component {
@@ -52,15 +50,10 @@ class Autocomplete extends Component {
         const { config, formik, error, value } = this.props;
         const {
             name,
-            label,
             type,
             attributes,
             defaultValue,
-            options = {},
-            disabled = false,
-            labelClass = '',
-            fieldClass = 'form-control',
-            formGroupClass = 'form-group'
+            options = {}
         } = config;
         const { setFieldValue, handleBlur } = formik;
 

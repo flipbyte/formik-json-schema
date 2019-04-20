@@ -1,21 +1,15 @@
-import _ from 'lodash';
 import React from 'react';
-import Label from './Label';
-import ErrorMessage from './ErrorMessage';
-import { changeHandler, joinNames } from '../utils';
+import { changeHandler } from '../utils';
 
-const Text = ({ disabled, config, formik, value = '', error }) => {
+const Text = ({ config, formik, value = '', error }) => {
     const {
         name,
-        label,
         type,
         attributes,
         fieldType,
         defaultValue,
         icon,
-        labelClass = '',
         fieldClass = 'form-control',
-        formGroupClass = 'form-group',
         inputGroupClass = 'input-group'
     } = config;
 

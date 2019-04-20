@@ -1,8 +1,7 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useMemo, useEffect, Fragment } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { changeHandler, joinNames } from '../utils';
+import { changeHandler } from '../utils';
 
 const Thumb = ({ key, file }) => <div />
 
@@ -71,15 +70,11 @@ const prepareFileUploderOptions = ({ onDrop, onDropAccepted, onDropRejected, ...
 const FileUploader = ({ config, formik, value, error }) => {
     const {
         name,
-        label,
         options,
         placeholder,
         disabledText,
         zoneActiveText,
-        labelClass = '',
-        hasThumbs = false,
-        fieldClass = 'dropzone',
-        formGroupClass = 'form-group'
+        hasThumbs = false
     } = config;
     const { setFieldValue } = formik;
     const selectedValue = value;

@@ -1,17 +1,11 @@
 import React from 'react';
-import Label from './Label';
-import { getIn } from 'formik';
-import ErrorMessage from './ErrorMessage';
 import { default as ReactSwitch } from "react-switch";
-import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper } from '../utils';
 
 const Switch = ({ config, formik, value = false, error }) => {
     const {
         name,
-        label,
-        labelClass = '',
-        fieldClass = 'switch',
-        formGroupClass = 'form-group'
+        fieldClass = 'switch'
     } = config;
     const { setFieldValue } = formik;
 

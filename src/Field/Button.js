@@ -1,6 +1,4 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import { clickHandler, joinNames } from '../utils';
+import React from 'react';
 
 const Button = ({ config, formik }) => {
     const { content, fieldClass, buttonType, onClick } = config;
@@ -12,7 +10,9 @@ const Button = ({ config, formik }) => {
         disabled: isSubmitting
     };
 
-    if(_.isFunction(onClick)) buttonProps.onClick = onClick.bind(this, formik, config);
+    if(typeof onClick === 'function') {
+        buttonProps.onClick = onClick.bind(this, formik, config);
+    }
 
     return <button { ...buttonProps }>
         { content } { buttonType === 'submit' && isSubmitting && <i className="fa fa-spinner fa-spin" /> }

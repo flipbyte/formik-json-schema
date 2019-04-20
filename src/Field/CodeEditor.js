@@ -1,20 +1,14 @@
-import _ from 'lodash';
 import React from 'react';
-import Label from './Label';
-import ErrorMessage from './ErrorMessage';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
-import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper } from '../utils';
 
 const CodeEditor = ({ config, formik, value, error }) => {
     const {
         name,
-        label,
         options,
         defaultValue,
         attributes,
-        labelClass = '',
-        fieldClass = '',
-        formGroupClass = 'form-group'
+        fieldClass = ''
     } = config;
     const { setFieldValue, handleBlur } = formik;
     const selectedValue = value || '';

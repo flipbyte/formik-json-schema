@@ -1,10 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
-import Label from './Label';
 import Select from 'react-select';
-import ErrorMessage from './ErrorMessage';
 import CreatableSelect from 'react-select/lib/Creatable';
-import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
+import { changeHandler, setFieldValueWrapper } from '../utils';
 
 const prepareOptions = ( options ) =>
     _.reduce(options, (result, value) => {
@@ -46,17 +44,14 @@ const getSelectedOptions = ( options, values, isCreatable ) => {
 const ReactSelect = ({ config, formik, value, error }) => {
     const {
         name,
-        label,
         isMulti,
         defaultValue,
-        labelClass = '',
         fieldClass = '',
         noOptionsMessage,
         isDisabled = false,
         isClearable = false,
         isCreatable = false,
-        options: initialOptions,
-        formGroupClass = 'form-group',
+        options: initialOptions
     } = config;
     const { setFieldValue, handleBlur } = formik;
     const options = prepareOptions(initialOptions);

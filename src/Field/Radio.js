@@ -1,18 +1,12 @@
 import React from 'react';
-import Label from './Label';
-import { getIn } from 'formik';
-import ErrorMessage from './ErrorMessage';
-import { changeHandler, joinNames } from '../utils';
+import { changeHandler } from '../utils';
 
 const Radio = ({ config, formik, value, error }) => {
     const {
         name,
         type,
-        label,
         attributes,
         options,
-        labelClass = '',
-        formGroupClass = 'form-group',
         formCheckClass = 'form-check',
         fieldClass = 'form-check-input',
         formCheckLabelClass = 'form-check-label',
