@@ -1,6 +1,6 @@
 import expect from 'expect'
 import React from 'react';
-import { configure, mount } from 'enzyme';
+import { configure, mount, render } from 'enzyme';
 import {
     checkConsoleError,
     restoreConsoleError,
@@ -206,8 +206,8 @@ describe('Tabs', () => {
                 ...tabs
             }};
             const { containerName, fieldName } = config;
-            const wrapper = mount(<Form { ...prepareForm({ elements: withNameAsPrefixForChildren }) } />);
-            expect(wrapper.find('input').props().name).toEqual(`${containerName}.${fieldName}`);
+            const wrapper = render(<Form { ...prepareForm({ elements: withNameAsPrefixForChildren }) } />);
+            expect(wrapper.find('input').attr('name')).toEqual(`${containerName}.${fieldName}`);
         });
 
         it('uses only field name when "prefixNameToElement" is true and "name" is not defined', () => {
@@ -216,8 +216,8 @@ describe('Tabs', () => {
                 ...tabs
             }};
             const { fieldName } = config;
-            const wrapper = mount(<Form { ...prepareForm({ elements: prefixWithoutName }) } />);
-            expect(wrapper.find('input').props().name).toEqual(fieldName);
+            const wrapper = render(<Form { ...prepareForm({ elements: prefixWithoutName }) } />);
+            expect(wrapper.find('input').attr('name')).toEqual(fieldName);
         });
     })
 })
