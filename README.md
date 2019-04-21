@@ -185,17 +185,18 @@ containers and keys or use the ones that come with the module.
 
 #### Common field properties
 
-| Field | Type           | Property | Description                                                        |
-| :---- | :------------- | :------: | :----------------------------------------------------------------- |
-|       | name           |  String  | html field name attribute                                          |
-|       | label          |  String  | the label for the field                                            |
-|       | type           |  String  | "field"                                                            |
-|       | labelClass     |  String  | html class for the label html element                              |
-|       | formGroupClass |  String  | html class for the div that wraps the form field                   |
-|       | validation     |  String  | Check [yup-schema](https://github.com/flipbyte/yup-schema)         |
-|       | showWhen       |  String  | Check [when-condition](https://github.com/flipbyte/when-condition) |
-|       | enabledWhen    |  String  | Check [when-condition](https://github.com/flipbyte/when-condition) |
-|       | fieldClass     |  String  | html class for the main html/3-rd party form field                 |
+| Field | Type           |     Property    | Description                                                              |
+| :---- | :------------- | :-------------: | :----------------------------------------------------------------------- |
+|       | name           |      String     | html field name attribute                                                |
+|       | label          |      String     | the label for the field                                                  |
+|       | type           |      String     | "field"                                                                  |
+|       | labelClass     |      String     | html class for the label html element                                    |
+|       | formGroupClass |      String     | html class for the div that wraps the form field                         |
+|       | validation     |      String     | Check [yup-schema](https://github.com/flipbyte/yup-schema)               |
+|       | showWhen       |      String     | Check [when-condition](https://github.com/flipbyte/when-condition)       |
+|       | enabledWhen    |      String     | Check [when-condition](https://github.com/flipbyte/when-condition)       |
+|       | fieldClass     |      String     | html class for the main html/3-rd party form field                       |
+|       | template       | React Component | define your custom template for the field (check `src/FieldTemplate.js`) |
 
 #### Field specific properties
 
