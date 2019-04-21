@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import when from '@flipbyte/when-condition';
 
 const fieldSubmitCount = _.memoize((name, submitCount, isValidating) =>
     isValidating ? submitCount - 1 : submitCount
@@ -53,3 +54,7 @@ export const prepareValidationSchema = ({ elements }, result = {}) => {
 
     return result;
 }
+
+export const match = (condition, values) => (
+    condition ? when(condition, values) : true
+);

@@ -15,7 +15,7 @@ export default {
                 type: "field",
                 renderer: "button",
                 name: "save",
-                label: "Save",
+                content: "Save",
                 fieldClass: "btn-success float-right",
                 buttonType: "submit"
             },

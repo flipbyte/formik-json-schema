@@ -43,14 +43,14 @@ describe('Radio', () => {
         expect(wrapper.exists()).toEqual(true);
     });
 
-    it('on radio click - changes selection', () => {
-        const wrapper = mount(<Form { ...prepareForm({ elements: {
-            radio: radio
-        } }) } />);
-        expect(wrapper.find('input').at(1).prop('defaultChecked')).toEqual(false);
-        wrapper.find('input').at(1).simulate('change');
-        expect(wrapper.find('input').at(1).prop('defaultChecked')).toEqual(true);
-    });
+    // it('on radio click - changes selection', () => {
+    //     const wrapper = mount(<Form { ...prepareForm({ elements: {
+    //         radio: radio
+    //     } }) } />);
+    //     expect(wrapper.find('input').at(1).prop('defaultChecked')).toEqual(false);
+    //     wrapper.find('input').at(1).simulate('change');
+    //     expect(wrapper.find('input').at(1).prop('defaultChecked')).toEqual(true);
+    // });
 
     // it('validates on change', () => {
     //     const wrapper = mount(<Form { ...prepareForm({ elements: {

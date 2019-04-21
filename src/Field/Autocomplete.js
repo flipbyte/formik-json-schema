@@ -1,10 +1,7 @@
 import _ from 'lodash';
-import Label from './Label';
 import React, { Component } from 'react';
-import ErrorMessage from './ErrorMessage';
 import Autosuggest from 'react-autosuggest';
-import FieldTemplate from '../FieldTemplate';
-import { changeHandler, joinNames, setFieldValueWrapper } from '../utils';
+import { changeHandler, setFieldValueWrapper } from '../utils';
 // import '../css/autocomplete.css';
 
 class Autocomplete extends Component {
@@ -53,15 +50,10 @@ class Autocomplete extends Component {
         const { config, formik, error, value } = this.props;
         const {
             name,
-            label,
             type,
             attributes,
             defaultValue,
-            options = {},
-            labelClass = '',
-            fieldClass = 'form-control',
-            formGroupClass = 'form-group',
-            template: Template = FieldTemplate
+            options = {}
         } = config;
         const { setFieldValue, handleBlur } = formik;
 
@@ -72,11 +64,7 @@ class Autocomplete extends Component {
         this.autosuggestOptions.inputProps.onBlur = handleBlur.bind(this);
         this.autosuggestOptions.inputProps.className = this.inputClassName + ( error ? ' is-invalid ' : '' )
 
-        return (
-            <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
-                <Autosuggest suggestions={ this.state.suggestions} { ...this.autosuggestOptions } />
-            </Template>
-        );
+        return <Autosuggest suggestions={ this.state.suggestions} { ...this.autosuggestOptions } />;
     }
 }
 

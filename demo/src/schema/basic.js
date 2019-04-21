@@ -41,7 +41,8 @@ export default {
                 type: "field",
                 renderer: "text",
                 fieldType: "telephone",
-                condition: ['or', ['is', 'email', undefined], ['is', 'email', '']]
+                // showWhen: ['or', ['is', 'email', undefined], ['is', 'email', '']],
+                enabledWhen: ['or', ['is', 'email', undefined], ['is', 'email', '']],
             },
             message: {
                 name: "message",
@@ -56,8 +57,7 @@ export default {
             save: {
                 type: "field",
                 renderer: "button",
-                name: "save",
-                label: "Save",
+                content: "Save",
                 fieldClass: "btn-success float-right",
                 buttonType: "submit"
             }

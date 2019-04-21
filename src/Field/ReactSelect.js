@@ -1,11 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
-import Label from './Label';
 import Select from 'react-select';
-import ErrorMessage from './ErrorMessage';
 import CreatableSelect from 'react-select/lib/Creatable';
-import { changeHandler, setFieldValueWrapper, joinNames } from '../utils';
-import FieldTemplate from '../FieldTemplate';
+import { changeHandler, setFieldValueWrapper } from '../utils';
 
 const prepareOptions = ( options ) =>
     _.reduce(options, (result, value) => {
@@ -47,18 +44,14 @@ const getSelectedOptions = ( options, values, isCreatable ) => {
 const ReactSelect = ({ config, formik, value, error }) => {
     const {
         name,
-        label,
         isMulti,
         defaultValue,
-        labelClass = '',
         fieldClass = '',
         noOptionsMessage,
         isDisabled = false,
         isClearable = false,
         isCreatable = false,
-        options: initialOptions,
-        formGroupClass = 'form-group',
-        template: Template = FieldTemplate
+        options: initialOptions
     } = config;
     const { setFieldValue, handleBlur } = formik;
     const options = prepareOptions(initialOptions);
@@ -99,11 +92,7 @@ const ReactSelect = ({ config, formik, value, error }) => {
     }
 
     const SelectComponent = isCreatable ? CreatableSelect : Select;
-    return (
-        <Template name={ name } label={ label } labelClass={ labelClass } formGroupClass={ formGroupClass }>
-            <SelectComponent { ...selectProps } />
-        </Template>
-    );
+    return <SelectComponent { ...selectProps } />;
 }
 
 export default React.memo(ReactSelect);

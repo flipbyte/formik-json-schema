@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { connect } from 'formik';
 import { getError } from '../utils';

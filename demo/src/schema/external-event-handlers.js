@@ -75,7 +75,7 @@ export default {
                         type: "field",
                         renderer: "button",
                         name: "save",
-                        label: "Save",
+                        content: "Save",
                         fieldClass: "btn-success float-right",
                         buttonType: "submit"
                     },
@@ -83,7 +83,7 @@ export default {
                         type: "field",
                         renderer: "button",
                         name: "reset",
-                        label: "Reset",
+                        content: "Reset",
                         fieldClass: "btn-primary float-right",
                         buttonType: "reset",
                     },
@@ -91,7 +91,7 @@ export default {
                         type: "field",
                         renderer: "button",
                         name: "button",
-                        label: "Unset autocomplete",
+                        content: "Unset autocomplete",
                         fieldClass: "btn-danger float-right",
                         buttonType: "reset",
                         onClick: unsetAutocomplete

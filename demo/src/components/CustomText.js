@@ -22,8 +22,7 @@ const CustomText = ({ config, formik, value = '', error }) => {
     const isInputGroup = icon ? true : false;
     const currentValue = value;
     return (
-        <div className={ formGroupClass }>
-            <Label htmlFor={ name } className={ labelClass }>{ label }</Label>
+        <React.Fragment>
             <input
                 id={ name }
                 name={ name }
@@ -36,8 +35,7 @@ const CustomText = ({ config, formik, value = '', error }) => {
             { currentValue && <div className="mt-2">
                 Your unique id for <strong>{ currentValue }</strong> is <strong>{ _.uniqueId() }</strong>
             </div> }
-            <ErrorMessage name={ name } />
-        </div>
+        </React.Fragment>
     );
 }
 
