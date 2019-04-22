@@ -67,7 +67,10 @@ const ReactSelect = ({ config, formik, value, error }) => {
         id: name,
         className: fieldClass + ( error ? ' is-invalid ' : '' ),
         onChange: ( selectedOptions ) => {
-            const selectedValues = !isMulti ? selectedOptions.value : _.mapValues(selectedOptions, 'value');
+            const selectedValues = !isMulti
+                ? selectedOptions.value
+                : _.reduce(selectedOptions, (result, option) => [ ...result, option.value ], []);
+
             return changeHandler(
                 setFieldValueWrapper(setFieldValue, name),
                 formik,
