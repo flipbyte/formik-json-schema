@@ -37,22 +37,22 @@ export default {
             },
             telephone: {
                 name: "telephone",
-                label: "Telephone (visible if email is empty)",
+                label: "Telephone (enabled if email is empty)",
                 type: "field",
                 renderer: "text",
                 fieldType: "telephone",
-                // showWhen: ['or', ['is', 'email', undefined], ['is', 'email', '']],
-                enabledWhen: ['or', ['is', 'email', undefined], ['is', 'email', '']],
+                enabledWhen: ['or', ['isOfType', 'email', 'undefined'], ['is', 'email', '']],
             },
             message: {
                 name: "message",
-                label: "Message",
+                label: "Message (visible if name is not empty)",
                 type: "field",
                 renderer: "textarea",
                 validation: [
                     ['string'],
                     ['required']
-                ]
+                ],
+                showWhen: ['not', ['or', ['is', 'name', ''], ['isOfType', 'name', 'undefined']]],
             },
             save: {
                 type: "field",
