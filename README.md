@@ -255,16 +255,9 @@ containers and keys or use the ones that come with the module.
 
 ## Thank You
 
-We would like to extend our sincere gratitude towards all members of
-open-source web-development community. Special shout-out goes to
-following members who inspire us to always works towards the greater
-good: [@skaterdav85](https://github.com/skaterdav85/validatorjs)
-[@zenoamaro](https://github.com/zenoamaro/react-quill)
-[@moroshko](https://github.com/moroshko/react-autosuggest)
-
 If you have suggestions, comments or ideas to develop more such
 solutions, you can write to us at
-[Flipbyte.com](https://www.flipbyte.com/#ht-top-footer)
+[Flipbyte.com](https://www.flipbyte.com/#ht-top-footer). PRs are welcome.
 
 ## License
 
