@@ -56,6 +56,7 @@ class Form extends React.Component {
             <SchemaProvider value={ this.getContextValue() }>
                 <Formik
                     { ...formProps }
+                    ref={formProps.innerRef}
                     render={(props) => (
                         <FormikForm
                             onUpdate={ onUpdate }
