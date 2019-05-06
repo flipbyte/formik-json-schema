@@ -69,4 +69,4 @@ class Form extends React.Component {
     }
 }
 
-export default Form;
+export default React.forwardRef((props, ref) => <Form innerRef={ref} {...props}/>);
