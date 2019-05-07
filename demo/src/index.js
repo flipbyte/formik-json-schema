@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import forms from './schema';
 import ExampleFormContainer from './ExampleFormContainer';
+import ExampleFormSubmitOutside from './ExampleFormSubmitOutside';
 
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';
@@ -23,6 +24,11 @@ const Demo = () =>
                         { title }
                     </a>
                 ) }
+
+              <a key={ 'outside-submit' } href={ `#outside-submit` }
+                 className="list-group-item list-group-item-action bg-light">
+                outside-submit
+              </a>
             </div>
         </div>
         <div id="page-content-wrapper">
@@ -33,6 +39,8 @@ const Demo = () =>
             <div className="container-fluid p-4 content">
                 { forms.map((form, index) =>
                     <ExampleFormContainer key={ index } { ...form }/> )}
+
+                    <ExampleFormSubmitOutside key={"outside-submit"}/>
             </div>
         </div>
     </div>
