@@ -55,7 +55,6 @@ import { Form } from '@flipbyte/formik-json';
             "renderer": "button",
             "name": "save",
             "label": "Save",
-            "position": 10,
             "htmlClass": "btn-success",
             "buttonType": "submit"
         },
@@ -69,7 +68,6 @@ import { Form } from '@flipbyte/formik-json';
                     "label": "Title",
                     "type": "field",
                     "renderer": "text",
-                    "position": 10,
                     "fieldType": "text"
                 },
                 ....
