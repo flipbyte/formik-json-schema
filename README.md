@@ -143,41 +143,41 @@ containers and keys or use the ones that come with the module.
 
 #### Container specific properties
 
-| Container     | Field                  | Property                        | Description                                                                                                  |
-| ------------- | ---------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| editable-grid | renderer               | String                          | editable-grid                                                                                                |
-|               | fields                 | {}                              | An object with one or more field definitions in a key-value pair                                             |
-|               | buttons                | `{"add": "Add", "remove": "X"}` | has 2 properties both optional to define labels for the buttons in the editable grid                         |
-|               | isSortable             | Bool                            | whether the grid rows can be dragged and sorted                                                              |
-|               | tableContainerClass    | String                          | htmlClass for the div wrapping the editable-grid                                                             |
-|               | tableClass             | String                          | htmlClass for the main editable grid                                                                         |
-| div           | renderer               | String                          | div                                                                                                          |
-|               | name                   | String                          | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
-|               | htmlClass              | String                          | htmlClass for the div element                                                                                |
-| fieldset      | renderer               | String                          | fieldset                                                                                                     |
-|               | name                   | String                          | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
-|               | title                  | String                          | label for the fieldset                                                                                       |
-|               | cardClass              | String                          | htmlClass for the main wrapping container                                                                    |
-|               | cardHeaderClass        | String                          | htmlClass for the header of the wrapping container                                                           |
-|               | cardHeaderActionsClass | String                          | htmlClass for the container holding the disclose buttons in the header of the container                      |
-|               | cardBodyClass          | String                          | htmlClass for the body of the container                                                                      |
-| form          | renderer               | String                          | form                                                                                                         |
-|               | name                   | String                          | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
-|               | htmlClass              | String                          | any character                                                                                                |
-| tabs          | renderer               | String                          | tabs                                                                                                         |
-|               | name                   | String                          | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true. |
-|               | tabs                   | {}                              | Object                                                                                                       |
-|               | cardClass              | String                          | same as fieldset                                                                                             |
-|               | rowClass               | String                          | htmlClass for the row div                                                                                    |
-|               | tabListClass           | String                          | htmlClass for tab list                                                                                       |
-|               | tabListItemClass       | String                          | htmlClass for tab list item                                                                                  |
-|               | tabContentClass        | String                          | htmlClass for tab content container                                                                          |
-|               | tabColumnClass         | String                          | htmlClass for tabs container                                                                                 |
-|               | contentColumnClass     | String                          | htmlClass for wrapping the tab content container                                                             |
-|               | tabActiveClass         | String                          | htmlClass for active tabs                                                                                    |
-|               | tabPaneClass           | String                          | htmlClass for single tab pane                                                                                |
-| button-group  | renderer               | String                          | button-group                                                                                                 |
-|               | elements               | {}                              | the elements can only be of type: "field" with renderer: "button".                                           |
+| Container     | Field                  | Property                                                  | Description                                                                                                                    |
+| ------------- | ---------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| editable-grid | renderer               | String                                                    | editable-grid                                                                                                                  |
+|               | fields                 | {}                                                        | An object with one or more field definitions in a key-value pair                                                               |
+|               | buttons                | `{"add": "Add", "remove": "X", "duplicate": "Duplicate"}` | has 3 properties, all optional. These can be either function that returns the button or string which is the label for a button |
+|               | isSortable             | Bool                                                      | whether the grid rows can be dragged and sorted                                                                                |
+|               | tableContainerClass    | String                                                    | htmlClass for the div wrapping the editable-grid                                                                               |
+|               | tableClass             | String                                                    | htmlClass for the main editable grid                                                                                           |
+| div           | renderer               | String                                                    | div                                                                                                                            |
+|               | name                   | String                                                    | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true.                   |
+|               | htmlClass              | String                                                    | htmlClass for the div element                                                                                                  |
+| fieldset      | renderer               | String                                                    | fieldset                                                                                                                       |
+|               | name                   | String                                                    | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true.                   |
+|               | title                  | String                                                    | label for the fieldset                                                                                                         |
+|               | cardClass              | String                                                    | htmlClass for the main wrapping container                                                                                      |
+|               | cardHeaderClass        | String                                                    | htmlClass for the header of the wrapping container                                                                             |
+|               | cardHeaderActionsClass | String                                                    | htmlClass for the container holding the disclose buttons in the header of the container                                        |
+|               | cardBodyClass          | String                                                    | htmlClass for the body of the container                                                                                        |
+| form          | renderer               | String                                                    | form                                                                                                                           |
+|               | name                   | String                                                    | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true.                   |
+|               | htmlClass              | String                                                    | any character                                                                                                                  |
+| tabs          | renderer               | String                                                    | tabs                                                                                                                           |
+|               | name                   | String                                                    | is used to prepend parent container's name to the children fields when "prefixNameToElement" is set to true.                   |
+|               | tabs                   | {}                                                        | Object                                                                                                                         |
+|               | cardClass              | String                                                    | same as fieldset                                                                                                               |
+|               | rowClass               | String                                                    | htmlClass for the row div                                                                                                      |
+|               | tabListClass           | String                                                    | htmlClass for tab list                                                                                                         |
+|               | tabListItemClass       | String                                                    | htmlClass for tab list item                                                                                                    |
+|               | tabContentClass        | String                                                    | htmlClass for tab content container                                                                                            |
+|               | tabColumnClass         | String                                                    | htmlClass for tabs container                                                                                                   |
+|               | contentColumnClass     | String                                                    | htmlClass for wrapping the tab content container                                                                               |
+|               | tabActiveClass         | String                                                    | htmlClass for active tabs                                                                                                      |
+|               | tabPaneClass           | String                                                    | htmlClass for single tab pane                                                                                                  |
+| button-group  | renderer               | String                                                    | button-group                                                                                                                   |
+|               | elements               | {}                                                        | the elements can only be of type: "field" with renderer: "button".                                                             |
 
 ### Following are the properties for each type of field
 

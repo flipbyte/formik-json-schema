@@ -12,16 +12,17 @@ const SortableItem = SortableElement((props) => renderTableRow(props));
 const SortableTableBody = SortableContainer((props) => renderTableBody(props));
 const SortableRowHandle = SortableHandle((props) => renderSortableHandle(props));
 
-const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) =>
+const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) => (
     <tbody>
         { hasValue ? arrayValues.map(( data, index ) =>
             isSortable
                 ? <SortableItem key={ index } index={ index } rowIndex={ index } isSortable={ isSortable } { ...rowProps } />
-                : renderTableRow({ ...rowProps, index, rowIndex: index })
+                : renderTableRow({ ...rowProps, index, rowIndex: index, value: arrayValues[index] || {} })
         ) : null }
     </tbody>
+);
 
-const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable }) =>
+const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value }) => (
     <tr key={ rowIndex }>
         { isSortable && <SortableRowHandle /> }
         { _.map(elements, ({ label, name, width, ...colProps }, key) => {
@@ -34,16 +35,36 @@ const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, butt
                 </td>
             );
         }) }
-        { !!buttons && !!buttons.remove &&
-            <td style={{ width: 50 }}>
-                <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={ arrayActions.remove.bind(this, rowIndex) }>{ buttons.remove }
-                </button>
+        { !!buttons && (
+            <td style={{ minWidth: 50 }}>
+                { !!buttons.remove && (
+                    _.isFunction(buttons.remove)
+                        ? buttons.remove(arrayActions, rowIndex, value)
+                        : (
+                            <button
+                                type="button"
+                                className="btn remove"
+                                onClick={ arrayActions.remove.bind(this, rowIndex) }>{ buttons.remove }
+                            </button>
+                        )
+                    )
+                }
+                { !!buttons.duplicate && (
+                    _.isFunction(buttons.duplicate)
+                        ? buttons.duplicate(arrayActions, value, rowIndex)
+                        : (
+                            <button
+                                type="button"
+                                className="btn duplicate"
+                                onClick={ arrayActions.push.bind(this, value) }>{ buttons.duplicate }
+                            </button>
+                        )
+                    )
+                }
             </td>
-        }
+        )}
     </tr>
+);
 
 const renderSortableHandle = ( props ) => <td><i className="fas fa-grip-vertical"></i></td>
 
@@ -119,7 +140,8 @@ EditableGrid.propTypes = {
         elements: PropTypes.object.isRequired,
         buttons: PropTypes.exact({
             add: PropTypes.string,
-            remove: PropTypes.string
+            remove: PropTypes.string,
+            duplicate: PropTypes.string,
         }),
         isSortable: PropTypes.bool,
         tableContainerClass: PropTypes.string,

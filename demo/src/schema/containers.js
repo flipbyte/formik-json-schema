@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     save
 } from '../source/external-handlers';
@@ -140,7 +141,15 @@ export default {
                                                         },
                                                         buttons: {
                                                             add: "Add Person",
-                                                            remove: "X"
+                                                            remove: "X",
+                                                            duplicate: (actions, value, index) => (
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn duplicate"
+                                                                    onClick={ actions.push.bind(this, value) }>
+                                                                    <i className="fa fa-copy" />
+                                                                </button>
+                                                            )
                                                         }
                                                     }
                                                 }
