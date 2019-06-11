@@ -13,15 +13,15 @@ const SortableRowHandle = SortableHandle((props) => renderSortableHandle(props))
 
 const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) => (
     <tbody>
-        { hasValue ? arrayValues.map(( data, index ) =>
+        { hasValue ? arrayValues.map(( value, index ) =>
             isSortable
-                ? <SortableItem key={ index } index={ index } rowIndex={ index } isSortable={ isSortable } { ...rowProps } />
-                : renderTableRow({ ...rowProps, index, rowIndex: index, value: arrayValues[index] || {} })
+                ? <SortableItem key={ index } index={ index } rowIndex={ index } value={ value } isSortable={ isSortable } { ...rowProps } />
+                : renderTableRow({ ...rowProps, index, rowIndex: index, value })
         ) : null }
     </tbody>
 );
 
-const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value }) => (
+const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value = {} }) => (
     <tr key={ rowIndex }>
         { isSortable && <SortableRowHandle /> }
         { _.map(elements, ({ label, name, width, ...colProps }, key) => {
@@ -117,8 +117,8 @@ const EditableGrid = ({
                                 <tr>
                                     { !!buttons && !!buttons.add &&
                                         <td colSpan={ _.size(elements) + additionalColumnCount }>
-                                            { _.isFunction(buttons.duplicate)
-                                                ? buttons.duplicate(arrayActions, value, rowIndex)
+                                            { _.isFunction(buttons.add)
+                                                ? buttons.add(arrayActions, arrayFields, rowIndex)
                                                 : (
                                                     <button
                                                         type="button"
