@@ -16,12 +16,12 @@ const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) => 
         { hasValue ? arrayValues.map(( value, index ) =>
             isSortable
                 ? <SortableItem key={ index } index={ index } rowIndex={ index } value={ value } isSortable={ isSortable } { ...rowProps } />
-                : renderTableRow({ ...rowProps, index, rowIndex: index, value || {} })
+                : renderTableRow({ ...rowProps, index, rowIndex: index, value })
         ) : null }
     </tbody>
 );
 
-const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value }) => (
+const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value = {} }) => (
     <tr key={ rowIndex }>
         { isSortable && <SortableRowHandle /> }
         { _.map(elements, ({ label, name, width, ...colProps }, key) => {
