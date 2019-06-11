@@ -117,8 +117,8 @@ const EditableGrid = ({
                                 <tr>
                                     { !!buttons && !!buttons.add &&
                                         <td colSpan={ _.size(elements) + additionalColumnCount }>
-                                            { _.isFunction(buttons.duplicate)
-                                                ? buttons.duplicate(arrayActions, value, rowIndex)
+                                            { _.isFunction(buttons.add)
+                                                ? buttons.add(arrayActions, arrayFields, rowIndex)
                                                 : (
                                                     <button
                                                         type="button"
