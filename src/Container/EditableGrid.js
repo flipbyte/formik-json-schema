@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React from 'react';
-import { getIn } from 'formik';
 import Element from '../Element';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'formik';
@@ -81,7 +80,7 @@ const EditableGrid = ({
 }) => {
     const { values, errors, touched } = formik;
     const arrayFields = _.mapValues(_.assign({}, elements), () => '');
-    const arrayValues = getIn(values, fieldArrayName);
+    const arrayValues = _.get(values, fieldArrayName);
     const hasValue = _.size(arrayValues) > 0;
     const tableWidth = _.map(elements, 'width').reduce(( sum, num ) => sum + num, 50) || '100%';
     const additionalColumnCount = isSortable ? 2 : 1;
@@ -118,11 +117,16 @@ const EditableGrid = ({
                                 <tr>
                                     { !!buttons && !!buttons.add &&
                                         <td colSpan={ _.size(elements) + additionalColumnCount }>
-                                            <button
-                                                type="button"
-                                                className="btn btn-secondary"
-                                                onClick={ arrayActions.push.bind(this, arrayFields) }>{ buttons.add }
-                                            </button>
+                                            { _.isFunction(buttons.duplicate)
+                                                ? buttons.duplicate(arrayActions, value, rowIndex)
+                                                : (
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-secondary"
+                                                        onClick={ arrayActions.push.bind(this, arrayFields) }>{ buttons.add }
+                                                    </button>
+                                                )
+                                            }
                                         </td>
                                     }
                                 </tr>
@@ -139,9 +143,18 @@ EditableGrid.propTypes = {
         name: PropTypes.string.isRequired,
         elements: PropTypes.object.isRequired,
         buttons: PropTypes.exact({
-            add: PropTypes.string,
-            remove: PropTypes.string,
-            duplicate: PropTypes.string,
+            add: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.func
+            ]),
+            remove: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.func
+            ]),
+            duplicate: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.func
+            ]),
         }),
         isSortable: PropTypes.bool,
         tableContainerClass: PropTypes.string,

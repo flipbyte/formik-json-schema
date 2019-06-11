@@ -161,6 +161,9 @@ export default {
                 renderer: "code-editor",
                 formGroupClass: "mt-5",
                 fieldClass: "border",
+                attributes: {
+                    autoCursor: false,
+                },
                 options: {
                     mode: "xml",
                     lineNumbers: true

@@ -32,7 +32,8 @@ const Text = ({ config, formik, value = '', error }) => {
                     value={ value }
                     onChange={ changeHandler.bind(this, handleChange, formik, config) }
                     onBlur={ handleBlur }
-                    { ...attributes } />
+                    { ...attributes }
+                />
             </div> :
             <input
                 id={ name }
