@@ -139,9 +139,18 @@ EditableGrid.propTypes = {
         name: PropTypes.string.isRequired,
         elements: PropTypes.object.isRequired,
         buttons: PropTypes.exact({
-            add: PropTypes.string,
-            remove: PropTypes.string,
-            duplicate: PropTypes.string,
+            add: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.func
+            ]),
+            remove: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.func
+            ]),
+            duplicate: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.func
+            ]),
         }),
         isSortable: PropTypes.bool,
         tableContainerClass: PropTypes.string,
