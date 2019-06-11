@@ -13,10 +13,10 @@ const SortableRowHandle = SortableHandle((props) => renderSortableHandle(props))
 
 const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) => (
     <tbody>
-        { hasValue ? arrayValues.map(( data, index ) =>
+        { hasValue ? arrayValues.map(( value, index ) =>
             isSortable
-                ? <SortableItem key={ index } index={ index } rowIndex={ index } isSortable={ isSortable } { ...rowProps } />
-                : renderTableRow({ ...rowProps, index, rowIndex: index, value: arrayValues[index] || {} })
+                ? <SortableItem key={ index } index={ index } rowIndex={ index } value={ value } isSortable={ isSortable } { ...rowProps } />
+                : renderTableRow({ ...rowProps, index, rowIndex: index, value || {} })
         ) : null }
     </tbody>
 );
