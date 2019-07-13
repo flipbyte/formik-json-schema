@@ -10,6 +10,19 @@ export default {
         label: "Basic",
         type: "container",
         renderer: "form",
+        configSource: (formik, config) => {
+            return new Promise((resolve, reject) => {
+                fetch('http://google.com') // Call the fetch function passing the url of the API as a parameter
+                    .then(function(data) {
+                        // Your code for handling the data you get from the API
+                        console.log(data);
+                        resolve();
+                    })
+                    .catch(function() {
+                        // This is where you run code if the server returns any errors
+                    })
+            })
+        },
         elements: {
             name: {
                 name: "name",
