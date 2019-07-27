@@ -32,7 +32,7 @@ const ElementRenderer = ({
     } = config;
     const { values } = formik;
 
-    return match(showWhen, values) && (
+    return !!type && match(showWhen, values) && (
         type === FIELD
             ? <Field name={ name } render={({ field: { value }}) => (
                 <Template disabled={ !match(enabledWhen, values) } { ...config }>
