@@ -1,100 +1,85 @@
 import _ from 'lodash';
 import Element from '../Element';
 import { joinNames } from '../utils';
-import React, { Component } from 'react';
+import React, { Component, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
 
 const tabPaneInvalid = {
     color: '#dc3545',
-}
+};
 
 const tabPaneActiveInvalid = {
     color: '#fff',
     backgroundColor: '#dc3545',
     border: '1px solid #dc3545'
-}
+};
 
-class Tabs extends Component {
-    constructor(props) {
-        super(props);
+const Tabs = ({ config = {} }) => {
+    const {
+        elements = {},
+        name,
+        prefixNameToElement = false,
+        cardClass = 'card',
+        cardBodyClass = 'card-body',
+        rowClass = 'row',
+        tabListClass = 'nav flex-column nav-pills',
+        tabListItemClass = 'nav-link',
+        tabContentClass = 'tab-content flutter-rjf-tab-content',
+        tabColumnClass = 'col-sm-12 col-md-3',
+        contentColumnClass = 'col-sm-12 col-md-9',
+        tabActiveClass = ' active ',
+        tabPaneClass = 'tab-pane fade show',
+    } = config;
+    const tabContentEl = useRef({});
+    const [ activeTab, setActiveTab ] = useState(_.first(_.keys(elements)));
+    const [ isValid, setIsValid ] = useState([]);
+    const [ tabs, setTabs ] = useState({});
+    const [ tabContent, setTabContent ] = useState({});
+    const [ tabId ] = useState(_.uniqueId('list-tab-'));
 
-        this.prepareTabs(this.props.config.elements);
-        this.state = {
-            activeTab: this.defaultActiveTab,
-            isValid: []
-        };
-        this.toggle = this.toggle.bind(this);
-        this.tabId = _.uniqueId('list-tab-');
-        this.tabContentEl = React.createRef();
-    }
+    const tabValidations = _(isValid);
 
-    prepareTabs(tabs) {
-        this.tabs = {}
-        this.tabContent = {}
-        this.defaultActiveTab = '';
+    useEffect(() => {
+        _.map(elements, (tab, key) => {
+            const { label, elements: content, active } = tab;
 
-        _.map(tabs, ( tab, key ) => {
-            const { label, elements, active } = tab;
+            setTabs((state) => ({
+                ...state,
+                [key]: label
+            }));
 
-            this.tabs[key] = label;
-            this.tabContent[key] = elements;
-            this.defaultActiveTab = (active) ? key : '';
-        } )
+            setTabContent((state) => ({
+                ...state,
+                [key]: content
+            }));
 
-        if( !this.defaultActiveTab ) {
-            this.defaultActiveTab = _.first(_.keys(this.tabs));
-        }
-    }
-
-    toggle(tabKey) {
-        if (this.state.activeTab === tabKey) {
-            return;
-        }
-
-        this.setState({
-            activeTab: tabKey
-        });
-    }
-
-    componentDidUpdate() {
-        const node = this.tabContentEl.current;
-        var panes = _.map(node.children, child => child.querySelector('.is-invalid') !== null)
-        if(!shallowequal(this.state.isValid, panes)) {
-            this.setState({ isValid: panes })
-        }
-    }
-
-    render() {
-        const {
-            config: {
-                name,
-                prefixNameToElement = false,
-                cardClass = 'card',
-                cardBodyClass = 'card-body',
-                rowClass = 'row',
-                tabListClass = 'list-group',
-                tabListItemClass = 'list-group-item-action list-group-item',
-                tabContentClass = 'tab-content flutter-rjf-tab-content',
-                tabColumnClass = 'col-sm-12 col-md-3',
-                contentColumnClass = 'col-sm-12 col-md-9',
-                tabActiveClass = ' active ',
-                tabPaneClass = 'tab-pane',
+            if (active) {
+                setActiveTab(key);
             }
-        } = this.props;
-        const { activeTab, isValid } = this.state;
-        const tabValidations = _(isValid);
+        });
+    }, []);
 
-        return (
-            <div className={ cardClass }>
-                <div className={ cardBodyClass }>
-                    <div className={ rowClass }>
-                        <div className={ tabColumnClass }>
-                            <ul id={ this.tabId } className={ tabListClass }>
-                                { _.map(this.tabs, ( tab, key ) => {
+    useEffect(() => {
+        const node = tabContentEl.current;
+        var panes = _.map(node.children, child => child.querySelector('.is-invalid') !== null)
+        if(!shallowequal(isValid, panes)) {
+            setIsValid(panes)
+        }
+    })
+
+    return (
+        <div className={ cardClass }>
+            <div className={ cardBodyClass }>
+                <div className={ rowClass }>
+                    <div className={ tabColumnClass }>
+                        <nav>
+                            <div id={ tabId } className={ tabListClass }>
+                                { _.map(tabs, (tab, key) => {
                                     const tabInvalid = tabValidations.next().value === true;
-                                    return <li
+                                    return <a
                                         key={ key }
+                                        href="javascript:void(null)"
                                         className={
                                             tabListItemClass + ( activeTab == key ? tabActiveClass : '' ) +
                                             ( tabInvalid ? ' is-invalid ' : '' )
@@ -105,41 +90,42 @@ class Tabs extends Component {
                                                 : tabPaneInvalid
                                             : null
                                         )}
-                                        onClick={ this.toggle.bind(null, key) }
+                                        onClick={() => setActiveTab(key)}
                                     >
                                         { tab }
-                                    </li>
+                                    </a>
                                 }) }
-                            </ul>
-                        </div>
-                        <div className={ contentColumnClass }>
-                            <div ref={ this.tabContentEl } className={ tabContentClass }>
-                                { _.map(this.tabContent, ( tabContent, tabKey, index ) =>
-                                    <div
-                                        key={ tabKey }
-                                        className={
-                                            tabPaneClass + ' ' + ( activeTab == tabKey ? tabActiveClass : '' )
-                                        }>
-                                        { _.map(tabContent, ({ name: elementName, ...rest }, key ) => {
-                                            let element = _.assign({}, rest);
-                                            element.name = prefixNameToElement
-                                                ? joinNames(name, elementName) : elementName;
-
-                                            return <Element
-                                                key={ key }
-                                                config={ element }
-                                                update={ activeTab == tabKey } />
-                                        }) }
-                                    </div>
-                                ) }
                             </div>
+                        </nav>
+                    </div>
+                    <div className={ contentColumnClass }>
+                        <div ref={ tabContentEl } className={ tabContentClass }>
+                            { _.map(tabContent, (tabContent, tabKey, index) => (
+                                <div
+                                    key={ tabKey }
+                                    className={
+                                        tabPaneClass + ' ' + ( activeTab == tabKey ? tabActiveClass : '' )
+                                    }
+                                >
+                                    { _.map(tabContent, ({ name: elementName, ...rest }, key) => {
+                                        let element = _.assign({}, rest);
+                                        element.name = prefixNameToElement
+                                            ? joinNames(name, elementName) : elementName;
+
+                                        return <Element
+                                            key={ key }
+                                            config={ element }
+                                            update={ activeTab == tabKey } />
+                                    })}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 Tabs.propTypes = {
     config: PropTypes.shape({
