@@ -5,7 +5,7 @@ import { changeHandler, setFieldValueWrapper } from '../utils';
 const Switch = ({ config, formik, value = false, error }) => {
     const {
         name,
-        fieldClass = 'switch'
+        fieldClass = 'switch d-block'
     } = config;
     const { setFieldValue } = formik;
 

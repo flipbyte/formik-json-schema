@@ -18,7 +18,7 @@ const tabPaneActiveInvalid = {
 const Tabs = ({ config = {} }) => {
     const {
         elements = {},
-        name,
+        name: tabsContainerName,
         prefixNameToElement = false,
         cardClass = 'card',
         cardBodyClass = 'card-body',
@@ -42,7 +42,7 @@ const Tabs = ({ config = {} }) => {
 
     useEffect(() => {
         _.map(elements, (tab, key) => {
-            const { label, elements: content, active } = tab;
+            const { label, elements: content, active, name } = tab;
 
             setTabs((state) => ({
                 ...state,
@@ -51,7 +51,7 @@ const Tabs = ({ config = {} }) => {
 
             setTabContent((state) => ({
                 ...state,
-                [key]: content
+                [key]: { name, content }
             }));
 
             if (active) {
@@ -66,7 +66,7 @@ const Tabs = ({ config = {} }) => {
         if(!shallowequal(isValid, panes)) {
             setIsValid(panes)
         }
-    })
+    });
 
     return (
         <div className={ cardClass }>
@@ -100,17 +100,16 @@ const Tabs = ({ config = {} }) => {
                     </div>
                     <div className={ contentColumnClass }>
                         <div ref={ tabContentEl } className={ tabContentClass }>
-                            { _.map(tabContent, (tabContent, tabKey, index) => (
+                            { _.map(tabContent, ({ name, content }, tabKey, index) => (
                                 <div
                                     key={ tabKey }
                                     className={
                                         tabPaneClass + ' ' + ( activeTab == tabKey ? tabActiveClass : '' )
                                     }
                                 >
-                                    { _.map(tabContent, ({ name: elementName, ...rest }, key) => {
+                                    { _.map(content, ({ name: elementName, ...rest }, key) => {
                                         let element = _.assign({}, rest);
-                                        element.name = prefixNameToElement
-                                            ? joinNames(name, elementName) : elementName;
+                                        element.name = prefixNameToElement ? joinNames(tabsContainerName, name, elementName) : elementName;
 
                                         return <Element
                                             key={ key }
