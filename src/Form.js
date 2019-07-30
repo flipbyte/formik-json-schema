@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { Formik } from 'formik';
 import messages from './messages';
 import Element from './Element';
@@ -13,61 +13,43 @@ const FormikForm = ({ onUpdate, schema, ...formik }) => {
         if(typeof onUpdate === 'function') {
             onUpdate(formik);
         }
-    }, [formik.values]);
+    }, [ formik.values ]);
 
     return <Element config={ schema } />;
 };
 
-class Form extends React.Component {
-    constructor(props) {
-        super(props);
+const Form = React.forwardRef(({ schema, onUpdate = () => {}, initialValues = {}, ...rest }, ref) => {
+    const [ validationSchema, setValidationSchema ] = useState(null);
+    const initValidationSchema = useCallback(() => {
+        const yupSchema = prepareValidationSchema(schema);
+        const validationSchema = !_.isEmpty(yupSchema) ? new Rules([[ 'object', yupSchema ]]).toYup() : null;
+        setValidationSchema(validationSchema);
+    }, [ schema ]);
 
-        this.initValidationSchema();
+    useEffect(() => {
+        initValidationSchema();
+    }, [ schema ]);
+
+    const formProps = { ...rest, initialValues };
+    if (null !== validationSchema) {
+        formProps.validationSchema = validationSchema;
     }
 
-    initValidationSchema() {
-        const validationSchema = prepareValidationSchema(this.props.schema);
-        this.validationSchema = !_.isEmpty(validationSchema)
-            ? new Rules([[ 'object', validationSchema ]]).toYup()
-            : null;
-    }
+    return (
+        <SchemaProvider value={{ validationSchema, schema }}>
+            <Formik
+                { ...formProps }
+                ref={ ref }
+                render={(props) => (
+                    <FormikForm
+                        onUpdate={ onUpdate }
+                        schema={ schema }
+                        { ...props }
+                    />
+                )}
+            />
+        </SchemaProvider>
+    );
+});
 
-    getContextValue() {
-        return {
-            validationSchema: this.validationSchema,
-            schema: this.props.schema
-        }
-    }
-
-    render() {
-        const {
-            schema,
-            onUpdate = () => {},
-            initialValues = {},
-            ...rest
-        } = this.props;
-
-        const formProps = { ...rest, initialValues };
-        if (null !== this.validationSchema) {
-            formProps.validationSchema = this.validationSchema;
-        }
-
-        return (
-            <SchemaProvider value={ this.getContextValue() }>
-                <Formik
-                    { ...formProps }
-                    ref={formProps.innerRef}
-                    render={(props) => (
-                        <FormikForm
-                            onUpdate={ onUpdate }
-                            schema={ schema }
-                            { ...props }
-                        />
-                    )}
-                />
-            </SchemaProvider>
-        );
-    }
-}
-
-export default React.forwardRef((props, ref) => <Form innerRef={ ref } { ...props } />);
+export default Form;
