@@ -11,7 +11,7 @@ const Div = ({
         htmlClass,
         prefixNameToElement = false
     }
-}) =>
+}) => (
     <div className={ htmlClass }>
         { _.map(elements, ({ name: elementName, ...rest }, key) => {
             let element = _.assign({}, rest);
@@ -20,6 +20,7 @@ const Div = ({
             return <Element key={ key } config={ element } containerName={ name } />
         }) }
     </div>
+);
 
 Div.propTypes = {
     config: PropTypes.shape({

@@ -9,7 +9,7 @@ const ButtonGroup = ({
         buttonsContainerClass = 'buttons-container',
         buttonGroupClass = 'btn-group'
     }
-}) =>
+}) => (
     <div className={ buttonsContainerClass }>
         <div className={ buttonGroupClass }>
             { _.map(elements, (element, key) =>
@@ -17,6 +17,7 @@ const ButtonGroup = ({
             }
         </div>
     </div>
+);
 
 ButtonGroup.propTypes = {
     config: PropTypes.shape({

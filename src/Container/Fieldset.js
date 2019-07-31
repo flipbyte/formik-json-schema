@@ -1,86 +1,69 @@
 import _ from 'lodash';
 import Element from '../Element';
 import { joinNames } from '../utils';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-class Fieldset extends Component {
-    constructor( props ) {
-        super(props);
-
-        this.state = {
-            collapsed: this.collapsible && this.collapsed ? true : false,
-        };
-
-        this.toggle = this.toggle.bind(this);
+const Fieldset = ({
+    config: {
+        name,
+        title,
+        elements,
+        collapsible = true,
+        collapsed = false,
+        prefixNameToElement = false,
+        hasHeaderIcon = true,
+        headerIconClass = 'fa fa-align-justify',
+        cardClass = 'card flutter-fieldset',
+        cardHeaderClass = 'card-header',
+        cardHeaderIconCollapsedClass = 'fas fa-angle-down',
+        cardHeaderIconDisclosedClass = 'fas fa-angle-up',
+        cardHeaderActionsClass = 'card-header-actions',
+        cardBodyClass = 'card-body'
     }
-
-    get collapsible() {
-        return this.props.config.collapsible !== false
-    }
-
-    get collapsed() {
-        return !!this.props.config.collapsed
-    }
-
-    toggle( event ) {
-        if(false === this.collapsible) {
+}) => {
+    const [ isCollapsed, setIsCollapsed ] = useState(collapsible && collapsed);
+    const toggle = (event) => {
+        if(false === collapsible) {
             event.preventDefault();
             return;
         }
-
-        this.setState({ collapsed: !this.state.collapsed });
+        setIsCollapsed(isCollapsed => !isCollapsed);
     }
 
-    render() {
-        const {
-            config: {
-                name,
-                title,
-                elements,
-                prefixNameToElement = false,
-                hasHeaderIcon = true,
-                headerIconClass = 'fa fa-align-justify',
-                cardClass = 'card flutter-fieldset',
-                cardHeaderClass = 'card-header',
-                cardHeaderIconCollapsedClass = 'fas fa-angle-down',
-                cardHeaderIconDisclosedClass = 'fas fa-angle-up',
-                cardHeaderActionsClass = 'card-header-actions',
-                cardBodyClass = 'card-body'
+    return (
+        <div className={ cardClass }>
+            { !!title &&
+                <div className={ cardHeaderClass } onClick={ toggle }>
+                    { hasHeaderIcon && <i className={ headerIconClass }></i> }
+                    { title }
+                    { collapsible && <div className={ cardHeaderActionsClass }>
+                        <a className="card-header-action btn btn-minimize">
+                            <i className={ isCollapsed ?  cardHeaderIconCollapsedClass : cardHeaderIconDisclosedClass }></i>
+                        </a>
+                    </div> }
+
+                </div>
             }
-        } = this.props;
+            <div className={ 'collapse ' + (!isCollapsed ? 'show': '') }>
+                <div className={ cardBodyClass }>
+                    { _.map(elements, ({ name: elementName, ...rest }, key) => {
+                        let element = _.assign({}, rest);
+                        element.name = prefixNameToElement ? joinNames(name, elementName) : elementName;
 
-        return (
-            <div className={ cardClass }>
-                { !!title &&
-                    <div className={ cardHeaderClass } onClick={ this.toggle }>
-                        { hasHeaderIcon && <i className={ headerIconClass }></i> }
-                        { title }
-                        { this.collapsible && <div className={ cardHeaderActionsClass }>
-                            <a className="card-header-action btn btn-minimize">
-                                <i className={ this.state.collapsed ?  cardHeaderIconCollapsedClass : cardHeaderIconDisclosedClass }></i>
-                            </a>
-                        </div> }
-
-                    </div>
-                }
-                <div className={ 'collapse ' + (!this.state.collapsed ? 'show': '') }>
-                    <div className={ cardBodyClass }>
-                        { _.map(elements, ({ name: elementName, ...rest }, key) => {
-                            let element = _.assign({}, rest);
-                            element.name = prefixNameToElement ? joinNames(name, elementName) : elementName;
-
-                            return <Element
+                        return (
+                            <Element
                                 key={ key }
                                 config={ element }
                                 containerName={ name }
-                                update={ !this.state.collapsed }/>
-                        }) }
-                    </div>
+                                update={ !isCollapsed }
+                            />
+                        );
+                    }) }
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 Fieldset.propTypes = {
