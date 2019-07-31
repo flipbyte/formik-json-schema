@@ -1,17 +1,16 @@
 import _ from 'lodash';
 import Element from '../Element';
-import { joinNames } from '../utils';
+import { getName } from '../utils';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const Fieldset = ({
     config: {
-        name,
+        name: containerName = '',
         title,
         elements,
         collapsible = true,
         collapsed = false,
-        prefixNameToElement = false,
         hasHeaderIcon = true,
         headerIconClass = 'fa fa-align-justify',
         cardClass = 'card flutter-fieldset',
@@ -47,19 +46,13 @@ const Fieldset = ({
             }
             <div className={ 'collapse ' + (!isCollapsed ? 'show': '') }>
                 <div className={ cardBodyClass }>
-                    { _.map(elements, ({ name: elementName, ...rest }, key) => {
-                        let element = _.assign({}, rest);
-                        element.name = prefixNameToElement ? joinNames(name, elementName) : elementName;
-
-                        return (
-                            <Element
-                                key={ key }
-                                config={ element }
-                                containerName={ name }
-                                update={ !isCollapsed }
-                            />
-                        );
-                    }) }
+                    { _.map(elements, ({ name, ...config }, key) => (
+                        <Element
+                            key={ key }
+                            update={ !isCollapsed }
+                            config={{ ...config, name: getName(config.type, name, containerName) }}
+                        />
+                    ))}
                 </div>
             </div>
         </div>
@@ -74,8 +67,7 @@ Fieldset.propTypes = {
         cardClass: PropTypes.string,
         cardHeaderClass: PropTypes.string,
         cardHeaderActionsClass: PropTypes.string,
-        cardBodyClass: PropTypes.string,
-        prefixNameToElement: PropTypes.bool
+        cardBodyClass: PropTypes.string
     })
 }
 
