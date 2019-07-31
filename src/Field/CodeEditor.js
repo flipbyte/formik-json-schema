@@ -1,5 +1,5 @@
 import React from 'react';
-import { UnControlled as CodeMirror } from 'react-codemirror2';
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import { changeHandler, setFieldValueWrapper } from '../utils';
 
 const CodeEditor = ({ config, formik, value, error }) => {
@@ -19,17 +19,19 @@ const CodeEditor = ({ config, formik, value, error }) => {
             name={ name }
             options={ options }
             className={ fieldClass + ( error ? ' is-invalid ' : '' ) }
-            onChange={ ( editor, data, value ) =>
+            onBeforeChange={(editor, data, value) => {
                 changeHandler(setFieldValueWrapper(setFieldValue, name), formik, config, value)
-            }
-            onBlur={ (editor, event) => {
-                return handleBlur({
-                    ...event,
-                    target: {
-                        ...event.target,
-                        name
-                    }
-                })
+            }}
+            onBlur={(editor, event) => {
+                return (
+                    handleBlur({
+                        ...event,
+                        target: {
+                            ...event.target,
+                            name
+                        }
+                    })
+                );
             }}
             value={ selectedValue }
             { ...attributes }
