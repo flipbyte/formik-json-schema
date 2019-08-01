@@ -4,7 +4,7 @@ import { match } from './utils';
 import Rules from '@flipbyte/yup-schema';
 import FieldTemplate from './FieldTemplate';
 import withFormConfig from './withFormConfig';
-import { containers, fields, FIELD } from './registry';
+import { containers, fields, templates, FIELD } from './registry';
 
 const renderElement = ( props ) => {
     const {
@@ -28,8 +28,10 @@ const ElementRenderer = ({
         name,
         showWhen,
         enabledWhen,
-        template: Template = FieldTemplate,
+        template
     } = config;
+    const Template = typeof template === 'function' ? template : typeof template === 'string' ? templates.get(template) : FieldTemplate;
+
     const { values } = formik;
 
     return !!type && match(showWhen, values) && (
