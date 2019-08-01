@@ -1,83 +1,68 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 import { changeHandler, setFieldValueWrapper } from '../utils';
 
-class Wysiwyg extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showHtml: false,
-            html: '',
-        };
+const Wysiwyg = ({ config, formik, value = '', error }) => {
+    const [ showHtml, setShowHtml ] = useState(false);
+    const [ html, setHtml ] = useState('');
+    const {
+        name,
+        type,
+        attributes,
+        options,
+        rows,
+        textareaClass = 'form-control'
+    } = config;
+    const { setFieldValue, handleChange, handleBlur } = formik;
+    const toolbarOptions = _.assign({}, options ? options : Wysiwyg.defaultOptions);
 
-        this.toolbarOptions = _.assign({}, ( this.props.options ) ? this.props.options : Wysiwyg.defaultOptions);
-        this.toggleEditor = this.toggleEditor.bind(this);
-    }
-
-    toggleEditor( event ) {
-        this.setState({ showHtml: !this.state.showHtml });
-    }
-
-    render() {
-        const { config, formik, value = '', error } = this.props;
-        const {
-            name,
-            type,
-            attributes,
-            options,
-            rows,
-            textareaClass = 'form-control'
-        } = config;
-        const { setFieldValue, handleChange, handleBlur } = formik;
-
-        return (
-            <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name}` }>
-                <div className="col-md-12 d-flex justify-content-end">
-                    <button
-                        type="button"
-                        className="btn btn-primary pull-right"
-                        onClick={ this.toggleEditor }>
-                        { this.state.showHtml ? 'Show Editor' : 'View Source' }
-                    </button>
-                </div>
-                <div className={ 'col-md-12 '  }
-                    onBlur={( event ) => (
-                        handleBlur({
-                            ...event,
-                            target: {
-                                ...event.target,
-                                name
-                            }
-                        })
-                    )
-                }>
-                    { !this.state.showHtml && <ReactQuill
-                        id={ name }
-                        value={ value }
-                        className={ error ? ' is-invalid ' : '' }
-                        onChange={
-                            changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config)
-                        }
-                        { ...this.toolbarOptions }
-                        { ... attributes } />
-                    }
-                    { this.state.showHtml &&
-                        <textarea
-                            id={ 'ql-show-html-' + name }
-                            name={ name }
-                            className={ textareaClass }
-                            rows="10"
-                            value={ value }
-                            onChange={ changeHandler.bind(this, handleChange, formik, config) }
-                        />
-                    }
-                </div>
+    return (
+        <div className={`row ql-container-wysiwyg ql-container-wysiwyg-${name}` }>
+            <div className="col-md-12 d-flex justify-content-end">
+                <button
+                    type="button"
+                    className="btn btn-primary pull-right"
+                    onClick={() => setShowHtml((showHtml) => !showHtml)}>
+                    { showHtml ? 'Show Editor' : 'View Source' }
+                </button>
             </div>
-        );
-    }
-}
+            <div className={ 'col-md-12 '  }
+                onBlur={(event) => (
+                    handleBlur({
+                        ...event,
+                        target: {
+                            ...event.target,
+                            name
+                        }
+                    })
+                )
+            }>
+                { !showHtml && <ReactQuill
+                    id={ name }
+                    value={ value }
+                    className={ error ? ' is-invalid ' : '' }
+                    onChange={
+                        changeHandler.bind(this, setFieldValueWrapper(setFieldValue, name), formik, config)
+                    }
+                    { ...toolbarOptions }
+                    { ... attributes } />
+                }
+                { showHtml &&
+                    <textarea
+                        id={ 'ql-show-html-' + name }
+                        name={ name }
+                        className={ textareaClass }
+                        rows="10"
+                        value={ value }
+                        onChange={ changeHandler.bind(this, handleChange, formik, config) }
+                    />
+                }
+            </div>
+        </div>
+    );
+};
 
 Wysiwyg.defaultOptions = {
     modules: {

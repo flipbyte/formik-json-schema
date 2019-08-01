@@ -24,16 +24,11 @@ const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) => 
 const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value = {} }) => (
     <tr key={ rowIndex }>
         { isSortable && <SortableRowHandle /> }
-        { _.map(elements, ({ label, name, width, ...colProps }, key) => {
-            let element = _.assign({}, colProps);
-            element.name = joinNames(fieldArrayName, rowIndex, name);
-
-            return (
-                <td key={ key }>
-                    <Element config={ element } />
-                </td>
-            );
-        }) }
+        { _.map(elements, ({ name, ...rest }, key) => (
+            <td key={ key }>
+                <Element config={{ ...rest, name: joinNames(fieldArrayName, rowIndex, name) }} />
+            </td>
+        ))}
         { !!buttons && (
             <td style={{ minWidth: 50 }}>
                 { !!buttons.remove && (

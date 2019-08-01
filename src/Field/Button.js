@@ -14,9 +14,11 @@ const Button = ({ config, formik }) => {
         buttonProps.onClick = onClick.bind(this, formik, config);
     }
 
-    return <button { ...buttonProps }>
-        { content } { buttonType === 'submit' && isSubmitting && <i className="fa fa-spinner fa-spin" /> }
-    </button>
+    return (
+        <button { ...buttonProps }>
+            { content } { buttonType === 'submit' && isSubmitting && <i className="fa fa-spinner fa-spin" /> }
+        </button>
+    );
 }
 
 export default Button;

@@ -18,8 +18,7 @@ const tabPaneActiveInvalid = {
 const Tabs = ({ config = {} }) => {
     const {
         elements = {},
-        name: tabsContainerName,
-        prefixNameToElement = false,
+        name: containerName = '',
         cardClass = 'card',
         cardBodyClass = 'card-body',
         rowClass = 'row',
@@ -100,22 +99,20 @@ const Tabs = ({ config = {} }) => {
                     </div>
                     <div className={ contentColumnClass }>
                         <div ref={ tabContentEl } className={ tabContentClass }>
-                            { _.map(tabContent, ({ name, content }, tabKey, index) => (
+                            { _.map(tabContent, ({ name: tabName = '', content }, tabKey, index) => (
                                 <div
                                     key={ tabKey }
                                     className={
                                         tabPaneClass + ' ' + ( activeTab == tabKey ? tabActiveClass : '' )
                                     }
                                 >
-                                    { _.map(content, ({ name: elementName, ...rest }, key) => {
-                                        let element = _.assign({}, rest);
-                                        element.name = prefixNameToElement ? joinNames(tabsContainerName, name, elementName) : elementName;
-
-                                        return <Element
+                                    { _.map(content, ({ name, ...rest }, key) => (
+                                        <Element
                                             key={ key }
-                                            config={ element }
-                                            update={ activeTab == tabKey } />
-                                    })}
+                                            config={{ ...rest, name: joinNames(containerName, tabName, name) }}
+                                            update={ activeTab == tabKey }
+                                        />
+                                    ))}
                                 </div>
                             ))}
                         </div>
@@ -129,7 +126,6 @@ const Tabs = ({ config = {} }) => {
 Tabs.propTypes = {
     config: PropTypes.shape({
         name: PropTypes.string,
-        prefixNameToElement: PropTypes.bool,
         elements: PropTypes.object.isRequired,
         cardClass: PropTypes.string,
         cardBodyClass: PropTypes.string,

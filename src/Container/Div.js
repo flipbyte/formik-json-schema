@@ -5,28 +5,23 @@ import PropTypes from 'prop-types';
 import { joinNames } from '../utils';
 
 const Div = ({
-    config: {
-        name,
-        elements,
-        htmlClass,
-        prefixNameToElement = false
-    }
-}) =>
+    config: { name: containerName = '', elements, htmlClass }
+}) => (
     <div className={ htmlClass }>
-        { _.map(elements, ({ name: elementName, ...rest }, key) => {
-            let element = _.assign({}, rest);
-            element.name = prefixNameToElement ? joinNames(name, elementName) : elementName;
-
-            return <Element key={ key } config={ element } containerName={ name } />
-        }) }
+        { _.map(elements, ({ name, ...rest }, key) => (
+            <Element
+                key={ key }
+                config={{ ...rest, name: joinNames(containerName, name) }}
+            />
+        ))}
     </div>
+);
 
 Div.propTypes = {
     config: PropTypes.shape({
         name: PropTypes.string,
         elements: PropTypes.object.isRequired,
-        htmlClass: PropTypes.string,
-        prefixNameToElement: PropTypes.bool
+        htmlClass: PropTypes.string
     })
 }
 
