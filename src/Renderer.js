@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Field } from 'formik';
 import { match } from './utils';
 import Rules from '@flipbyte/yup-schema';
-import FieldTemplate from './FieldTemplate';
 import withFormConfig from './withFormConfig';
-import { containers, fields, FIELD } from './registry';
+import { containers, fields, templates, FIELD } from './registry';
 import when from '@flipbyte/when-condition';
 
 const renderElement = ( props ) => {
@@ -29,11 +28,14 @@ const ElementRenderer = ({
         name,
         showWhen,
         enabledWhen,
-        template: Template = FieldTemplate,
+        template,
     } = config;
     const { values } = formik;
     const [ canShow, setCanShow ] = useState(showWhen ? false : true);
     const [ disabled, setDisabled ] = useState(enabledWhen ? true : false);
+    const Template = typeof template === 'function'
+        ? template
+        : templates.get(template || 'default');
 
     useEffect(() => {
         Promise.all([

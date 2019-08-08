@@ -3,6 +3,7 @@ import { Field } from 'formik';
 
 export const CONTAINER = 'container';
 export const FIELD = 'field';
+export const TEMPLATE = 'template';
 
 class Registry {
     constructor() {
@@ -25,5 +26,8 @@ export const registerField = fields.register.bind(fields);
 
 export const containers = new Registry();
 export const registerContainer = containers.register.bind(containers);
+
+export const templates = new Registry();
+export const registerTemplate = templates.register.bind(templates);
 
 export default Registry;

@@ -1,10 +1,10 @@
 import React from 'react';
-import Label from './Field/Label';
-import ErrorMessage from './Field/ErrorMessage';
+import Label from '../Field/Label';
+import ErrorMessage from '../Field/ErrorMessage';
 
 const styles = ( disabled ) => disabled ? { pointerEvents: 'none', opacity: 0.6 } : {};
 
-const FieldTemplate = ({
+const Default = ({
     disabled = false,
     name,
     label,
@@ -19,4 +19,4 @@ const FieldTemplate = ({
     </div>
 );
 
-export default FieldTemplate;
+export default Default;
