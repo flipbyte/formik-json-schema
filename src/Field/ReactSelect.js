@@ -4,7 +4,7 @@ import Select from 'react-select';
 import CreatableSelect from 'react-select/lib/Creatable';
 import { changeHandler, setFieldValueWrapper } from '../utils';
 
-const prepareOptions = ( options ) =>
+const prepareOptions = ( options ) => (
     _.reduce(options, (result, value) => {
         if(!_.isObject(value) && !_.isEmpty(value)) {
             result.push({ value: value, label: value })
@@ -14,6 +14,7 @@ const prepareOptions = ( options ) =>
 
         return result;
     }, [])
+);
 
 const getSelectedOptions = ( options, values, isCreatable ) => {
     const getSelectedOption = ( value ) => {
