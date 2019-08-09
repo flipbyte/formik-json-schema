@@ -8,6 +8,7 @@ const Default = ({
     disabled = false,
     name,
     label,
+    error,
     labelClass = '',
     formGroupClass = 'form-group',
     children
@@ -15,7 +16,7 @@ const Default = ({
     <div className={ formGroupClass } style={ styles(disabled) }>
         { label && <Label htmlFor={ name } className={ labelClass }>{ label }</Label> }
         { children }
-        <ErrorMessage name={ name } />
+        <ErrorMessage name={ name } error={ error } />
     </div>
 );
 
