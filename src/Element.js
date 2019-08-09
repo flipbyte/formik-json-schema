@@ -1,98 +1,86 @@
 import _ from 'lodash';
 import { connect } from 'formik';
-import React, { Component } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import ElementRenderer from './Renderer';
 import { FIELD } from './registry';
-import { getError } from './utils';
 import shallowequal from 'shallowequal';
 
-class Element extends Component {
-    constructor( props ) {
-        super(props);
+const Element = ({ config, update, formik }) => {
+    const { configSource, dataSource, name } = config;
+    const [ hasLoadedConfig, setHasLoadedConfig ] = useState(false);
+    const [ hasLoadedData, setHasLoadedData ] = useState(dataSource ? false : true);
+    const [ hasMounted, setHasMounted ] = useState(update !== false);
+    const [ submitCount, setSubmitCount ] = useState();
+    const [ loadedConfig, setLoadedConfig ] = useState(undefined);
 
-        const { config, update, formik } = this.props;
-        this.state = {
-            hasLoadedConfig: false,
-            hasLoadedData: config.dataSource ? false : true,
-            hasMounted: update !== false,
-            submitCountToValidate: formik.submitCount || 0,
-            value: undefined,
-            error: false
-        };
+    /**
+     * After load data
+     *
+     * @param  {mixed} value
+     * @return {void}
+     */
+    const loadDataAfter = (value) => setHasLoadedData(true);
 
-        this.loadDataAfter = this.loadDataAfter.bind(this);
-        this.loadConfigAfter = this.loadConfigAfter.bind(this);
-    }
+    /**
+     * After load config
+     *
+     * @param  {object} newConfig
+     * @return {void}
+     */
+    const loadConfigAfter = (newConfig) => {
+        setHasLoadedConfig(true);
+        setLoadedConfig(_.assign({}, config, newConfig))
+    };
 
-    componentDidMount() {
-        const { config: { configSource }, formik }  = this.props;
-
-        if( !this.state.hasLoadedConfig && configSource && _.isFunction(configSource) ) {
-            configSource(formik, this.props.config)
-                .then(this.loadConfigAfter)
-                .catch((err) => {});
+    /**
+     * On mount, load if there is a valid config source,
+     * load the data from the config source and handle
+     * whether future loads should be possible
+     */
+    useEffect(() => {
+        if (!hasLoadedConfig && typeof configSource === 'function') {
+            configSource(formik, config).then(loadConfigAfter).catch((err) => {});
         }
-    }
 
-    // Experimental - needs thorough testing
-    shouldComponentUpdate(nextProps, nextState) {
-        return !shallowequal(this.state, nextState)
-            || !shallowequal(this.props.config, nextProps.config)
-            || !shallowequal(this.props.formik, nextProps.formik)
-    }
+        return () => setHasLoadedConfig(false);
+    }, []);
 
-    loadConfigAfter(config) {
-        this.setState({
-            hasLoadedConfig: true,
-            loadedConfig: _.assign({}, this.props.config, config)
+    /**
+     * If the value of update changes or if the form is currently validating (during submission),
+     * set that value for hasMounted => true
+     */
+    useEffect(() => {
+        setHasMounted((hasMounted) => {
+            if (hasMounted) {
+                return hasMounted;
+            }
+
+            return update !== false || formik.isValidating === true;
         });
-    }
+    }, [ update, formik.isValidating ]);
 
-    componentWillReceiveProps( nextProps ) {
-        const { update, config: { name, dataSource, type }, formik }  = nextProps;
-
-        if( !this.state.hasMounted ) {
-            const canUpdate = update !== false || formik.isValidating === true;
-            // if( false === canUpdate ) {
-            //     return false;
-            // }
-
-            this.setState({ hasMounted: canUpdate });
+    /**
+     * If a valid dataSource exists, call the dataSource when the element is mounted.
+     * Also, call this when initialValues have changed and the component is mounted
+     *
+     * The latter is useful when you update the data on the server and reinitialize the
+     * values of the form top-down where the value of this particular field comes from a dataSource
+     */
+    useEffect(() => {
+        if (typeof dataSource === 'function' && hasMounted) {
+            dataSource(formik, config).then(loadDataAfter).catch((err) => {});
         }
+    }, [ hasMounted, formik.initialValues ]);
 
-        if(dataSource && _.isFunction(dataSource)) {
-            if(formik.initialValues !== this.props.formik.initialValues && this.state.hasLoadedData) {
-                dataSource(formik, nextProps.config)
-                    .then(this.loadDataAfter)
-                    .catch((err) => {});
-            }
-
-            if( this.state.hasMounted && !this.state.hasLoadedData ) {
-                dataSource(formik, nextProps.config)
-                    .then(this.loadDataAfter)
-                    .catch((err) => {});
-            }
-        }
-
-        if(type === FIELD) {
-            this.setState({
-                value: _.get(formik.values, name),
-                error: getError(name, formik)
-            })
-        }
-    }
-
-    loadDataAfter(value) {
-        this.setState({ hasLoadedData: true });
-    }
-
-    render() {
-        const { config: initialConfig, formik } = this.props;
-        const { loadedConfig, submitCountToValidate, value, error } = this.state;
-        const config = loadedConfig || initialConfig;
-        const rendererProps = { config, submitCountToValidate, value, error, formik }
-        return this.state.hasMounted && <ElementRenderer { ...rendererProps } />
-    }
+    return hasMounted && (
+        <ElementRenderer config={ loadedConfig || config } formik={ formik } />
+    );
 }
 
-export default connect(Element);
+export default connect(
+    React.memo(Element, ({ config, formik, update }, nextProps) => (
+        update === nextProps.update
+        && shallowequal(config, nextProps.config)
+        && shallowequal(formik, nextProps.formik)
+    ))
+);
