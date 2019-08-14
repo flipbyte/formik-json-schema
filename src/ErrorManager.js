@@ -9,7 +9,7 @@ import { connect } from 'formik';
  * The local submit count is used to make sure the error message is not shown on it's initial load
  *
  * The local submitcount will be set to 1 less than the value of submitCount if the form is being
- * validated when the fields are mounted. This is done so that fields (such as tab fields) that are mounted
+ * submitted when the fields are mounted. This is done so that fields (such as tab fields) that are mounted
  * for the sole purpose of showing error messages correctly, show the error message right during the first load
  *
  * The error message will be visible only after the first touch or first form submission so that
@@ -22,8 +22,8 @@ import { connect } from 'formik';
  */
 const ErrorManager = ({ name, formik, children }) => {
     // Set submitCount on initial mount.
-    const { submitCount: formikSubmitCount, isValidating, errors, touched } = formik;
-    const [ submitCount ] = useState(isValidating ? formikSubmitCount - 1 : formikSubmitCount);
+    const { submitCount: formikSubmitCount, isSubmitting, errors, touched } = formik;
+    const [ submitCount ] = useState(isSubmitting ? formikSubmitCount - 1 : formikSubmitCount);
     const isTouched = _.get(touched, name);
     const errorMessage = _.get(errors, name);
     const error = !_.isEmpty(errorMessage) && (isTouched || formikSubmitCount > submitCount) ? errorMessage : false;
