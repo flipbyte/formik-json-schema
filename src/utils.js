@@ -4,17 +4,18 @@ import { FIELD } from './registry';
 
 export const setFieldValueWrapper = (setFieldValue, name) => (value) => setFieldValue(name, value);
 export const joinNames = (...args) => _.join(_.filter(args, arg => (_.isString(arg) && arg) || _.isInteger(arg)), '.')
-export const getName = (type, name, ...args) => type === 'field' && !name ? null : joinNames(...args, name);
-export const match = (condition, values) => condition ? when(condition, values) : true;
+export const getName = (type, name, ...args) => type === FIELD && !name ? null : joinNames(...args, name);
 
-const fieldSubmitCount = _.memoize((name, submitCount, isValidating) => isValidating ? submitCount - 1 : submitCount);
-export const getError = (name, { errors, touched, isValidating, submitCount }) => {
-    const error = _.get(errors, name);
-    const isTouched = _.get(touched, name);
-    const fsc = fieldSubmitCount(name, submitCount, isValidating);
-    return !_.isEmpty(error) && ( isTouched || submitCount > fsc ) ? error : false
-}
-
+/**
+ * Handle Change and trigger callback if provided
+ *
+ * @param  {function} handler
+ * @param  {object} formikProps
+ * @param  {function} onChange
+ * @param  {object} fieldConfig
+ * @param  {object} data
+ * @return {void}
+ */
 export const changeHandler = (handler, formikProps, {
     onChange,
     ...fieldConfig
@@ -23,6 +24,13 @@ export const changeHandler = (handler, formikProps, {
     _.isFunction(onChange) && onChange(formikProps, fieldConfig, data);
 }
 
+/**
+ * Recurively prepare a complete validation schema array for yup-schema from individual
+ * validation arrays passed to fields
+ *
+ * @param  {array} schema
+ * @return {array}
+ */
 export const prepareValidationSchema = (schema) => {
     const { type, elements, name, renderer, validation, prefixNameToElement = false } = schema;
     if (type === FIELD && validation) {

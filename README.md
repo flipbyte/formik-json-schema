@@ -194,7 +194,7 @@ containers and keys or use the ones that come with the module.
 |       | showWhen       |      String     | Check [when-condition](https://github.com/flipbyte/when-condition)       |
 |       | enabledWhen    |      String     | Check [when-condition](https://github.com/flipbyte/when-condition)       |
 |       | fieldClass     |      String     | html class for the main html/3-rd party form field                       |
-|       | template       | React Component | define your custom template for the field (check `src/FieldTemplate.js`) |
+|       | template       | React Component|String | define your custom template for the field (check `src/FieldTemplate.js`) or set the template in the template registry using `registerTemplate` and pass the string key here |
 
 #### Field specific properties
 

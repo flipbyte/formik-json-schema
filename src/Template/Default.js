@@ -1,13 +1,14 @@
 import React from 'react';
-import Label from './Field/Label';
-import ErrorMessage from './Field/ErrorMessage';
+import Label from '../Field/Label';
+import ErrorMessage from '../Field/ErrorMessage';
 
 const styles = ( disabled ) => disabled ? { pointerEvents: 'none', opacity: 0.6 } : {};
 
-const FieldTemplate = ({
+const Default = ({
     disabled = false,
     name,
     label,
+    error,
     labelClass = '',
     formGroupClass = 'form-group',
     children
@@ -15,8 +16,8 @@ const FieldTemplate = ({
     <div className={ formGroupClass } style={ styles(disabled) }>
         { label && <Label htmlFor={ name } className={ labelClass }>{ label }</Label> }
         { children }
-        <ErrorMessage name={ name } />
+        <ErrorMessage name={ name } error={ error } />
     </div>
 );
 
-export default FieldTemplate;
+export default Default;

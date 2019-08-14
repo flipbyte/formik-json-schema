@@ -24,7 +24,7 @@ const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) => 
 const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value = {} }) => (
     <tr key={ rowIndex }>
         { isSortable && <SortableRowHandle /> }
-        { _.map(elements, ({ name, ...rest }, key) => (
+        { _.map(elements, ({ name, label, ...rest }, key) => (
             <td key={ key }>
                 <Element config={{ ...rest, name: joinNames(fieldArrayName, rowIndex, name) }} />
             </td>
