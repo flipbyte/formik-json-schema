@@ -148,6 +148,7 @@ containers and keys or use the ones that come with the module.
 | editable-grid | renderer               | String                                                    | editable-grid                                                                                                                  |
 |               | fields                 | {}                                                        | An object with one or more field definitions in a key-value pair                                                               |
 |               | buttons                | `{"add": "Add", "remove": "X", "duplicate": "Duplicate"}` | has 3 properties, all optional. These can be either function that returns the button or string which is the label for a button |
+|               | isObject               | Bool                                                      | whether the grid displays an object. If set to true, buttons (add, remove and duplicate) will be disabled.                      |
 |               | isSortable             | Bool                                                      | whether the grid rows can be dragged and sorted                                                                                |
 |               | tableContainerClass    | String                                                    | htmlClass for the div wrapping the editable-grid                                                                               |
 |               | tableClass             | String                                                    | htmlClass for the main editable grid                                                                                           |
@@ -183,18 +184,18 @@ containers and keys or use the ones that come with the module.
 
 #### Common field properties
 
-| Field | Type           |     Property    | Description                                                              |
-| :---- | :------------- | :-------------: | :----------------------------------------------------------------------- |
-|       | name           |      String     | html field name attribute                                                |
-|       | label          |      String     | the label for the field                                                  |
-|       | type           |      String     | "field"                                                                  |
-|       | labelClass     |      String     | html class for the label html element                                    |
-|       | formGroupClass |      String     | html class for the div that wraps the form field                         |
-|       | validation     |      String     | Check [yup-schema](https://github.com/flipbyte/yup-schema)               |
-|       | showWhen       |      String     | Check [when-condition](https://github.com/flipbyte/when-condition)       |
-|       | enabledWhen    |      String     | Check [when-condition](https://github.com/flipbyte/when-condition)       |
-|       | fieldClass     |      String     | html class for the main html/3-rd party form field                       |
-|       | template       | React Component|String | define your custom template for the field (check `src/FieldTemplate.js`) or set the template in the template registry using `registerTemplate` and pass the string key here |
+| Field | Type           |     Property    | Description                                                        |                                                                                                                                                                             |
+| :---- | :------------- | :-------------: | :----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|       | name           |      String     | html field name attribute                                          |                                                                                                                                                                             |
+|       | label          |      String     | the label for the field                                            |                                                                                                                                                                             |
+|       | type           |      String     | "field"                                                            |                                                                                                                                                                             |
+|       | labelClass     |      String     | html class for the label html element                              |                                                                                                                                                                             |
+|       | formGroupClass |      String     | html class for the div that wraps the form field                   |                                                                                                                                                                             |
+|       | validation     |      String     | Check [yup-schema](https://github.com/flipbyte/yup-schema)         |                                                                                                                                                                             |
+|       | showWhen       |      String     | Check [when-condition](https://github.com/flipbyte/when-condition) |                                                                                                                                                                             |
+|       | enabledWhen    |      String     | Check [when-condition](https://github.com/flipbyte/when-condition) |                                                                                                                                                                             |
+|       | fieldClass     |      String     | html class for the main html/3-rd party form field                 |                                                                                                                                                                             |
+|       | template       | React Component | String                                                             | define your custom template for the field (check `src/FieldTemplate.js`) or set the template in the template registry using `registerTemplate` and pass the string key here |
 
 #### Field specific properties
 
