@@ -11,25 +11,25 @@ const SortableItem = SortableElement((props) => renderTableRow(props));
 const SortableTableBody = SortableContainer((props) => renderTableBody(props));
 const SortableRowHandle = SortableHandle((props) => renderSortableHandle(props));
 
-const renderTableBody = ({ isSortable, hasValue, arrayValues, ...rowProps }) => (
+const renderTableBody = ({ isObject = false, isSortable, hasValue, arrayValues, ...rowProps }) => (
     <tbody>
-        { hasValue ? arrayValues.map(( value, index ) =>
-            isSortable
+        { hasValue ? _.map(arrayValues, ( value, index ) =>
+            isObject === false && isSortable
                 ? <SortableItem key={ index } index={ index } rowIndex={ index } value={ value } isSortable={ isSortable } { ...rowProps } />
-                : renderTableRow({ ...rowProps, index, rowIndex: index, value })
+                : renderTableRow({ ...rowProps, index, rowIndex: index, value, isObject })
         ) : null }
     </tbody>
 );
 
-const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value = {} }) => (
+const renderTableRow = ({ fieldArrayName, elements, arrayActions, rowIndex, buttons, isSortable, value = {}, isObject = false }) => (
     <tr key={ rowIndex }>
-        { isSortable && <SortableRowHandle /> }
+        { isObject === false && isSortable && <SortableRowHandle /> }
         { _.map(elements, ({ name, label, ...rest }, key) => (
             <td key={ key }>
                 <Element config={{ ...rest, name: joinNames(fieldArrayName, rowIndex, name) }} />
             </td>
         ))}
-        { !!buttons && (
+        { isObject === false && !!buttons && (
             <td style={{ minWidth: 50 }}>
                 { !!buttons.remove && (
                     _.isFunction(buttons.remove)
@@ -65,6 +65,7 @@ const renderSortableHandle = ( props ) => <td><i className="fas fa-grip-vertical
 const EditableGrid = ({
     config: {
         name: fieldArrayName,
+        isObject = false,
         elements,
         buttons,
         isSortable = true,
@@ -85,7 +86,7 @@ const EditableGrid = ({
             name={ fieldArrayName }
             render={( arrayActions ) => {
                 const bodyProps = {
-                    arrayValues, hasValue, elements, fieldArrayName, arrayActions, buttons, isSortable
+                    arrayValues, hasValue, elements, fieldArrayName, arrayActions, buttons, isSortable, isObject
                 };
 
                 return (
@@ -93,24 +94,25 @@ const EditableGrid = ({
                         <table className={ tableClass } style={{ width: tableWidth }}>
                             <thead>
                                 <tr>
-                                    { isSortable && <th></th>}
+                                    { isObject === false && isSortable && <th></th>}
                                     { _.map(elements, ({ label, width }, key) =>
                                         <th key={ key } style={{ width: width }}>{ label }</th>
                                     ) }
-                                    { !!buttons && !!buttons.remove && <th></th> }
+                                    { isObject === false && !!buttons && !!buttons.remove && <th></th> }
                                 </tr>
                             </thead>
-                            { isSortable
+                            { isObject === false && isSortable
                                 ? <SortableTableBody
                                     distance={ 10 }
                                     onSortEnd={ onSortEnd.bind(this, arrayActions.move) }
                                     useDragHandle={ true }
-                                    { ...bodyProps } />
+                                    { ...bodyProps }
+                                />
                                 : renderTableBody(bodyProps)
                             }
                             <tfoot>
                                 <tr>
-                                    { !!buttons && !!buttons.add &&
+                                    { isObject === false && !!buttons && !!buttons.add &&
                                         <td colSpan={ _.size(elements) + additionalColumnCount }>
                                             { _.isFunction(buttons.add)
                                                 ? buttons.add(arrayActions, arrayFields, rowIndex)

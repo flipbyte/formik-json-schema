@@ -5,7 +5,20 @@ import {
 
 export default {
     onSubmit: save.bind(this),
-    initialValues: {},
+    initialValues: {
+        tabs: {
+            simple: {
+                first: {
+                    name: 'John Doe',
+                    age: 33
+                },
+                second: {
+                    name: 'Jane Doe',
+                    age: 47
+                }
+            }
+        }
+    },
     schema: {
         id: "containers",
         label: "Containers",
@@ -197,6 +210,7 @@ export default {
                                         renderer: "editable-grid",
                                         name: "simple",
                                         isSortable: true,
+                                        isObject: true,
                                         elements: {
                                             name: {
                                                 type: "field",
@@ -530,6 +544,7 @@ export default {
                                         renderer: "editable-grid",
                                         name: "simple",
                                         isSortable: true,
+                                        isObject: true,
                                         elements: {
                                             name: {
                                                 type: "field",
