@@ -78,7 +78,7 @@ const Tabs = ({ config = {} }) => {
                                     const tabInvalid = tabValidations.next().value === true;
                                     return <a
                                         key={ key }
-                                        href="javascript:void(null)"
+                                        href="#"
                                         className={
                                             tabListItemClass + ( activeTab == key ? tabActiveClass : '' ) +
                                             ( tabInvalid ? ' is-invalid ' : '' )
@@ -89,7 +89,7 @@ const Tabs = ({ config = {} }) => {
                                                 : tabPaneInvalid
                                             : null
                                         )}
-                                        onClick={() => setActiveTab(key)}
+                                        onClick={(e) => {e.preventDefault(); setActiveTab(key)}}
                                     >
                                         { tab }
                                     </a>
