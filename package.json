@@ -1,6 +1,6 @@
 {
     "name": "@flipbyte/formik-json",
-    "version": "0.4.1",
+    "version": "0.4.1-beta.1",
     "description": "formik-json is a wrapper for Formik to easily create forms using JSON / Javascript Object for defining the elements",
     "main": "lib/index.js",
     "module": "es/index.js",
@@ -10,10 +10,6 @@
         "lib",
         "umd"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/flipbyte/formik-json-schema.git"
-    },
     "scripts": {
         "build": "nwb build-react-component --copy-files",
         "clean": "nwb clean-module && nwb clean-demo",

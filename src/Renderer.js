@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { Field } from 'formik';
+import { FastField, Field } from 'formik';
 import withFormConfig from './withFormConfig';
 import { containers, fields, templates, FIELD } from './registry';
 import when from '@flipbyte/when-condition';
@@ -45,11 +45,13 @@ const ElementRenderer = ({
         showWhen,
         enabledWhen,
         template,
+        fastField = true
     } = config;
     const { values } = formik;
     const [ canShow, setCanShow ] = useState(showWhen ? false : true);
     const [ disabled, setDisabled ] = useState(enabledWhen ? true : false);
     const currentValue = _.get(values, name);
+    const FormikFieldComponent = fastField ? FastField : Field;
 
     /**
      * If the template is function, assuming it is a react component, use it
@@ -75,7 +77,7 @@ const ElementRenderer = ({
 
     return !!type && canShow && (
         type === FIELD
-            ? <Field name={ name } render={({ field: { value }}) => (
+            ? <FormikFieldComponent name={ name } render={({ field: { value }}) => (
                 <ErrorManager name={ name }>
                     {(error) => (
                         <Template disabled={ disabled } error={ error } { ...config }>
