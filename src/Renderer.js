@@ -80,11 +80,11 @@ const ElementRenderer = ({
         nextProps.name !== props.name ||
         nextProps.disabled !== props.disabled ||
         getIn(nextProps.formik.values, props.name) !==
-          getIn(props.values, props.name) ||
+          getIn(props.formik.values, props.name) ||
         getIn(nextProps.formik.errors, props.name) !==
-          getIn(props.errors, props.name) ||
+          getIn(props.formik.errors, props.name) ||
         getIn(nextProps.formik.touched, props.name) !==
-          getIn(props.touched, props.name) ||
+          getIn(props.formik.touched, props.name) ||
         Object.keys(nextProps).length !== Object.keys(props).length ||
         nextProps.isSubmitting !== props.isSubmitting
       ) {
