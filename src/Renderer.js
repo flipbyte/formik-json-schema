@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { FastField, Field } from 'formik';
+import { FastField, Field, getIn } from 'formik';
 import withFormConfig from './withFormConfig';
 import { containers, fields, templates, FIELD } from './registry';
 import when from '@flipbyte/when-condition';
@@ -75,9 +75,28 @@ const ElementRenderer = ({
         })
     }, [ values ]);
 
+    const shouldUpdate = (nextProps, props) => {
+      if (
+        nextProps.name !== props.name ||
+        nextProps.disabled !== props.disabled ||
+        getIn(nextProps.formik.values, props.name) !==
+          getIn(props.values, props.name) ||
+        getIn(nextProps.formik.errors, props.name) !==
+          getIn(props.errors, props.name) ||
+        getIn(nextProps.formik.touched, props.name) !==
+          getIn(props.touched, props.name) ||
+        Object.keys(nextProps).length !== Object.keys(props).length ||
+        nextProps.isSubmitting !== props.isSubmitting
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     return !!type && canShow && (
         type === FIELD
-            ? <FormikFieldComponent name={ name } render={({ field: { value }}) => (
+            ? <FormikFieldComponent name={ name } disabled={ disabled } shouldUpdate={ shouldUpdate } render={({ field: { value }}) => (
                 <ErrorManager name={ name }>
                     {(error) => (
                         <Template disabled={ disabled } error={ error } { ...config }>
