@@ -73,15 +73,17 @@ const ElementRenderer = ({
 
     return !!type && canShow && (
         type === FIELD
-            ? <Field name={ name } render={({ field: { value }}) => (
-                <ErrorManager name={ name }>
-                    {(error) => (
-                        <Template disabled={ disabled } error={ error } { ...config }>
-                            { renderElement({ config, formik, value, error }) }
-                        </Template>
-                    )}
-                </ErrorManager>
-            )} />
+            ? <Field name={ name }>
+                {({ field: { value }}) => (
+                    <ErrorManager name={ name }>
+                        {(error) => (
+                            <Template disabled={ disabled } error={ error } { ...config }>
+                                { renderElement({ config, formik, value, error }) }
+                            </Template>
+                        )}
+                    </ErrorManager>
+                )}
+            </Field>
             : renderElement({ config, formik })
     );
 }
