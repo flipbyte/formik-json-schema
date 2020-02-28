@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Element from '../Element';
 import { joinNames } from '../utils';
-import React, { Component, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
 
@@ -80,11 +80,11 @@ const Tabs = ({ config = {} }) => {
                                         key={ key }
                                         href="javascript:void(null)"
                                         className={
-                                            tabListItemClass + ( activeTab == key ? tabActiveClass : '' ) +
+                                            tabListItemClass + ( activeTab === key ? tabActiveClass : '' ) +
                                             ( tabInvalid ? ' is-invalid ' : '' )
                                         }
                                         style={ (tabInvalid
-                                            ? activeTab == key
+                                            ? activeTab === key
                                                 ? tabPaneActiveInvalid
                                                 : tabPaneInvalid
                                             : null
@@ -103,14 +103,14 @@ const Tabs = ({ config = {} }) => {
                                 <div
                                     key={ tabKey }
                                     className={
-                                        tabPaneClass + ' ' + ( activeTab == tabKey ? tabActiveClass : '' )
+                                        tabPaneClass + ' ' + ( activeTab === tabKey ? tabActiveClass : '' )
                                     }
                                 >
                                     { _.map(content, ({ name, ...rest }, key) => (
                                         <Element
                                             key={ key }
                                             config={{ ...rest, name: joinNames(containerName, tabName, name) }}
-                                            update={ activeTab == tabKey }
+                                            update={ activeTab === tabKey }
                                         />
                                     ))}
                                 </div>
