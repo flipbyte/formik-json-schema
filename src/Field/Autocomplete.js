@@ -50,10 +50,6 @@ class Autocomplete extends Component {
         const { config, formik, error, value } = this.props;
         const {
             name,
-            type,
-            attributes,
-            defaultValue,
-            options = {}
         } = config;
         const { setFieldValue, handleBlur } = formik;
 

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { Field } from 'formik';
 import withFormConfig from './withFormConfig';
@@ -49,7 +48,6 @@ const ElementRenderer = ({
     const { values } = formik;
     const [ canShow, setCanShow ] = useState(showWhen ? false : true);
     const [ disabled, setDisabled ] = useState(enabledWhen ? true : false);
-    const currentValue = _.get(values, name);
 
     /**
      * If the template is function, assuming it is a react component, use it
@@ -75,15 +73,17 @@ const ElementRenderer = ({
 
     return !!type && canShow && (
         type === FIELD
-            ? <Field name={ name } render={({ field: { value }}) => (
-                <ErrorManager name={ name }>
-                    {(error) => (
-                        <Template disabled={ disabled } error={ error } { ...config }>
-                            { renderElement({ config, formik, value, error }) }
-                        </Template>
-                    )}
-                </ErrorManager>
-            )} />
+            ? <Field name={ name }>
+                {({ field: { value }}) => (
+                    <ErrorManager name={ name }>
+                        {(error) => (
+                            <Template disabled={ disabled } error={ error } { ...config }>
+                                { renderElement({ config, formik, value, error }) }
+                            </Template>
+                        )}
+                    </ErrorManager>
+                )}
+            </Field>
             : renderElement({ config, formik })
     );
 }
