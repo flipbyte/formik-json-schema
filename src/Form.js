@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { useEffect, useCallback, useState } from 'react';
 import { Formik } from 'formik';
-import messages from './messages';
 import Element from './Element';
 import { SchemaProvider } from './withFormConfig';
 import { prepareValidationSchema } from './utils';

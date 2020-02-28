@@ -1,9 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { useMemo, useEffect, Fragment } from 'react';
+import React, { useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { changeHandler } from '../utils';
-
-const Thumb = ({ key, file }) => <div />
 
 const thumbsContainer = {
     display: 'flex',
@@ -69,17 +65,10 @@ const prepareFileUploderOptions = ({ onDrop, onDropAccepted, onDropRejected, ...
 
 const FileUploader = ({ config, formik, value, error }) => {
     const {
-        name,
         options,
-        placeholder,
-        disabledText,
-        zoneActiveText,
         hasThumbs = false
     } = config;
-    const { setFieldValue } = formik;
-    const selectedValue = value;
     const {
-        acceptedFiles,
         getRootProps,
         getInputProps,
         isDragActive,

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { connect } from 'formik';
 
 /**
