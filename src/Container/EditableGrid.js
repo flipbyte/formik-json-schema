@@ -115,7 +115,7 @@ const EditableGrid = ({
                                     { isObject === false && !!buttons && !!buttons.add &&
                                         <td colSpan={ _.size(elements) + additionalColumnCount }>
                                             { _.isFunction(buttons.add)
-                                                ? buttons.add(arrayActions, arrayFields, rowIndex)
+                                                ? buttons.add(arrayActions, arrayFields) // FIXME: rowIndex error: rowIndex is not defined
                                                 : (
                                                     <button
                                                         type="button"
