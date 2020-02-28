@@ -12,7 +12,14 @@ export default {
         renderer: "form",
         configSource: (formik, config) => {
             return new Promise((resolve, reject) => {
-                fetch('http://google.com') // Call the fetch function passing the url of the API as a parameter
+                fetch('https://jsonplaceholder.typicode.com/todos/1', 
+                {
+                    mode: 'cors',
+                    headers: {
+                        'Access-Control-Allow-Origin': '*'
+                    }
+                }
+                ) // Call the fetch function passing the url of the API as a parameter
                     .then(function(data) {
                         // Your code for handling the data you get from the API
                         console.log(data);
