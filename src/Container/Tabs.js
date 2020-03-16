@@ -41,7 +41,7 @@ const Tabs = ({ config = {} }) => {
 
     useEffect(() => {
         _.map(elements, (tab, key) => {
-            const { label, elements: content, active, name } = tab;
+            const { label, elements: content, active, name, comment, commentClass } = tab;
 
             setTabs((state) => ({
                 ...state,
@@ -50,7 +50,7 @@ const Tabs = ({ config = {} }) => {
 
             setTabContent((state) => ({
                 ...state,
-                [key]: { name, content }
+                [key]: { name, content, comment, commentClass }
             }));
 
             if (active) {
@@ -99,13 +99,18 @@ const Tabs = ({ config = {} }) => {
                     </div>
                     <div className={ contentColumnClass }>
                         <div ref={ tabContentEl } className={ tabContentClass }>
-                            { _.map(tabContent, ({ name: tabName = '', content }, tabKey, index) => (
+                            { _.map(tabContent, (
+                                { name: tabName = '', content, comment, commentClass = 'text-muted d-block mb-3' },
+                                tabKey,
+                                index
+                            ) => (
                                 <div
                                     key={ tabKey }
                                     className={
                                         tabPaneClass + ' ' + ( activeTab == tabKey ? tabActiveClass : '' )
                                     }
                                 >
+                                    { comment && <small className={ commentClass }>{ comment }</small> }
                                     { _.map(content, ({ name, ...rest }, key) => (
                                         <Element
                                             key={ key }

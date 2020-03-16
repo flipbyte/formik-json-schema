@@ -69,6 +69,8 @@ const EditableGrid = ({
         elements,
         buttons,
         isSortable = true,
+        comment,
+        commentClass = 'text-muted d-block mb-3',
         tableContainerClass = 'table-responsive',
         tableClass = 'table table-bordered flutter-editable-grid'
     },
@@ -91,6 +93,7 @@ const EditableGrid = ({
 
                 return (
                     <div className={ tableContainerClass }>
+                        { comment && <small className={ commentClass }>{ comment }</small> }
                         <table className={ tableClass } style={{ width: tableWidth }}>
                             <thead>
                                 <tr>

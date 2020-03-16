@@ -12,6 +12,8 @@ const Fieldset = ({
         collapsible = true,
         collapsed = false,
         hasHeaderIcon = true,
+        comment,
+        commentClass = 'text-muted d-block mb-3',
         headerIconClass = 'fa fa-align-justify',
         cardClass = 'card flutter-fieldset',
         cardHeaderClass = 'card-header',
@@ -46,6 +48,7 @@ const Fieldset = ({
             }
             <div className={ 'collapse ' + (!isCollapsed ? 'show': '') }>
                 <div className={ cardBodyClass }>
+                    { comment && <small className={ commentClass }>{ comment }</small> }
                     { _.map(elements, ({ name, ...config }, key) => (
                         <Element
                             key={ key }

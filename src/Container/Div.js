@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import { joinNames } from '../utils';
 
 const Div = ({
-    config: { name: containerName = '', elements, htmlClass }
+    config: { name: containerName = '', elements, htmlClass, comment, commentClass = 'text-muted d-block mb-3' }
 }) => (
     <div className={ htmlClass }>
+        { comment && <small className={ commentClass }>{ comment }</small> }
         { _.map(elements, ({ name, ...rest }, key) => (
             <Element
                 key={ key }

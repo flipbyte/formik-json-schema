@@ -8,14 +8,17 @@ const Default = ({
     disabled = false,
     name,
     label,
+    comment,
     error,
     labelClass = '',
     formGroupClass = 'form-group',
+    commentClass = 'text-muted',
     children
 }) => (
     <div className={ formGroupClass } style={ styles(disabled) }>
         { label && <Label htmlFor={ name } className={ labelClass }>{ label }</Label> }
         { children }
+        { comment && <small className={ commentClass }>{ comment }</small> }
         <ErrorMessage name={ name } error={ error } />
     </div>
 );
