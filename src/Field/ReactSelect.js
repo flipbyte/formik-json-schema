@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import Select from 'react-select';
-import CreatableSelect from 'react-select/lib/Creatable';
+import CreatableSelect from 'react-select/creatable';
 import { changeHandler, setFieldValueWrapper } from '../utils';
 
 const prepareOptions = ( options ) => (
