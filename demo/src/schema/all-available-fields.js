@@ -79,6 +79,21 @@ export default {
                 formGroupClass: "form-group mb-4",
                 validation: [['array'], ['of', [['string']]]]
             },
+            reactSelectCreatableMulti: {
+                type: "field",
+                renderer: "react-select",
+                name: "react-select-multi",
+                label: "React Select Creatable Multi",
+                isMulti: true,
+                isCreatable: true,
+                options: [],
+                menuIsOpen: false,
+                components: {
+                    DropdownIndicator: null
+                },
+                formGroupClass: "form-group mb-4",
+                validation: [['array'], ['of', [['string']]]]
+            },
             textarea: {
                 name: "description",
                 label: "Description",
