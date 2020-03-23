@@ -71,7 +71,6 @@ const ReactSelect = ({ config, formik, value, error }) => {
         inputValue,
         className: fieldClass + ( error ? ' is-invalid ' : '' ),
         onChange: ( selectedOptions ) => {
-            console.log('onChange');
             const selectedValues = !isMulti
                 ? selectedOptions.value
                 : _.reduce(selectedOptions, (result, option) => [ ...result, option.value ], []);
@@ -97,8 +96,6 @@ const ReactSelect = ({ config, formik, value, error }) => {
             changeHandler(setInputValue, formik, config, inputValue, 'onInputChange');
         },
         onKeyDown: (event) => {
-            console.log('onKeyDown');
-
             if (!isMulti || !inputValue || selectedValue.indexOf(inputValue) > -1) {
                 return;
             }
