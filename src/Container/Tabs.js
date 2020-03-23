@@ -78,7 +78,7 @@ const Tabs = ({ config = {} }) => {
                                     const tabInvalid = tabValidations.next().value === true;
                                     return <a
                                         key={ key }
-                                        href="javascript:void(null)"
+                                        href={ null }
                                         className={
                                             tabListItemClass + ( activeTab == key ? tabActiveClass : '' ) +
                                             ( tabInvalid ? ' is-invalid ' : '' )
