@@ -52,7 +52,8 @@ const ReactSelect = ({ config, formik, value, error }) => {
         isDisabled = false,
         isClearable = false,
         isCreatable = false,
-        options: initialOptions
+        options: initialOptions,
+        ...attributes
     } = config;
     const { setFieldValue, handleBlur } = formik;
     const options = prepareOptions(initialOptions);
@@ -87,7 +88,8 @@ const ReactSelect = ({ config, formik, value, error }) => {
                     name
                 }
             });
-        }
+        },
+        ...attributes
     };
     selectProps = _.assign(selectProps, { options });
 
