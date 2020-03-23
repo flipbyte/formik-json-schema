@@ -81,6 +81,7 @@ export default connect(
     React.memo(Element, ({ config, formik, update }, nextProps) => (
         update === nextProps.update
         && shallowequal(config, nextProps.config)
-        && shallowequal(formik, nextProps.formik)
+        && formik.initialValues === nextProps.formik.initialValues
+        && formik.isValidating === nextProps.formik.isValidating
     ))
 );
