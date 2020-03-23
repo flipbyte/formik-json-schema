@@ -11,18 +11,15 @@ export const getName = (type, name, ...args) => type === FIELD && !name ? null :
  *
  * @param  {function} handler
  * @param  {object} formikProps
- * @param  {function} onChange
- * @param  {object} fieldConfig
+ * @param  {object} config
  * @param  {object} data
+ * @param  {string} key
  * @return {void}
  */
-export const changeHandler = (handler, formikProps, {
-    onChange,
-    ...fieldConfig
-}, data) => {
+export const changeHandler = (handler, formikProps, config, data, key = 'onChange') => {
     handler(data);
-    _.isFunction(onChange) && onChange(formikProps, fieldConfig, data);
-}
+    _.isFunction(config[key]) && config[key](formikProps, config, data);
+};
 
 /**
  * Recurively prepare a complete validation schema array for yup-schema from individual

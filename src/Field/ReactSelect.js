@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/lib/Creatable';
 import { changeHandler, setFieldValueWrapper } from '../utils';
@@ -24,7 +24,7 @@ const getSelectedOptions = ( options, values, isCreatable ) => {
             : isCreatable ? [{ value, label: value }] : null;
     }
 
-    if (values && !_.isEmpty(options)) {
+    if (values) {
         if(!_.isObject(values)) {
             return getSelectedOption(values)
         }
@@ -59,6 +59,7 @@ const ReactSelect = ({ config, formik, value, error }) => {
     const options = prepareOptions(initialOptions);
     const selectedValue = value || defaultValue;
     const selectedOption = getSelectedOptions(options, selectedValue, isCreatable);
+    const [inputValue, setInputValue] = useState('');
 
     var selectProps = {
         name,
@@ -67,11 +68,14 @@ const ReactSelect = ({ config, formik, value, error }) => {
         isClearable,
         isDisabled,
         id: name,
+        inputValue,
         className: fieldClass + ( error ? ' is-invalid ' : '' ),
         onChange: ( selectedOptions ) => {
+            console.log('onChange');
             const selectedValues = !isMulti
                 ? selectedOptions.value
                 : _.reduce(selectedOptions, (result, option) => [ ...result, option.value ], []);
+
 
             return changeHandler(
                 setFieldValueWrapper(setFieldValue, name),
@@ -89,11 +93,35 @@ const ReactSelect = ({ config, formik, value, error }) => {
                 }
             });
         },
+        onInputChange: (inputValue) => {
+            changeHandler(setInputValue, formik, config, inputValue, 'onInputChange');
+        },
+        onKeyDown: (event) => {
+            console.log('onKeyDown');
+
+            if (!isMulti || !inputValue || selectedValue.indexOf(inputValue) > -1) {
+                return;
+            }
+
+            switch (event.key) {
+                case 'Enter':
+                case 'Tab':
+                    changeHandler(
+                        setFieldValueWrapper(setFieldValue, name),
+                        formik,
+                        config,
+                        [ ...selectedValue, inputValue ],
+                        'onChange'
+                    );
+                    setInputValue('');
+                    event.preventDefault();
+            }
+        },
         ...attributes
     };
     selectProps = _.assign(selectProps, { options });
 
-    if(selectedOption) {
+    if (selectedOption) {
         selectProps.value = selectedOption;
     }
 
