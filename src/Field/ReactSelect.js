@@ -96,7 +96,7 @@ const ReactSelect = ({ config, formik, value, error }) => {
             changeHandler(setInputValue, formik, config, inputValue, 'onInputChange');
         },
         onKeyDown: (event) => {
-            if (!isMulti || !inputValue || selectedValue.indexOf(inputValue) > -1) {
+            if (!isMulti || !inputValue || !selectedValue || selectedValue.indexOf(inputValue) > -1) {
                 return;
             }
 
