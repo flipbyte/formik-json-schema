@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Label from '../Field/Label';
 import ErrorMessage from '../Field/ErrorMessage';
 
@@ -11,16 +11,25 @@ const Default = ({
     comment,
     error,
     labelClass = '',
-    formGroupClass = 'form-group',
+    wrapAs = 'div',
+    htmlClass = 'form-group',
     commentClass = 'text-muted',
     children
-}) => (
-    <div className={ formGroupClass } style={ styles(disabled) }>
-        { label && <Label htmlFor={ name } className={ labelClass }>{ label }</Label> }
-        { children }
-        { comment && <small className={ commentClass }>{ comment }</small> }
-        <ErrorMessage name={ name } error={ error } />
-    </div>
-);
+}) => {
+    const Component = !wrapAs ? Fragment : wrapAs;
+    const componentProps = !wrapAs ? {} : {
+        className: htmlClass,
+        style: styles(disabled)
+    };
+
+    return (
+        <Component { ...componentProps }>
+            { label && <Label htmlFor={ name } className={ labelClass }>{ label }</Label> }
+            { children }
+            { comment && <small className={ commentClass }>{ comment }</small> }
+            <ErrorMessage name={ name } error={ error } />
+        </Component>
+    );
+};
 
 export default Default;
