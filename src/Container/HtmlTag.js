@@ -33,4 +33,4 @@ HtmlTag.propTypes = {
     })
 }
 
-export default Div;
+export default HtmlTag;
