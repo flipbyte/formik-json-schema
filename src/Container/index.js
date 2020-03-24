@@ -1,13 +1,14 @@
 import { registerContainer } from '../registry';
 
-import Div from './Div';
+import HtmlTag from './HtmlTag';
 import Form from './Form';
 import Tabs from './Tabs';
 import Fieldset from './Fieldset';
 import ButtonGroup from './ButtonGroup';
 import EditableGrid from './EditableGrid';
 
-registerContainer('div', Div);
+registerContainer('div', HtmlTag);
+registerContainer('html-tag', HtmlTag);
 registerContainer('form', Form);
 registerContainer('tabs', Tabs);
 registerContainer('fieldset', Fieldset);
