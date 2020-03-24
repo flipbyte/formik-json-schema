@@ -13,14 +13,12 @@ import ErrorManager from './ErrorManager';
  * @param  {object} props
  * @return {Component}
  */
-const renderElement = ( props ) => {
-    const {
-        config: { type, renderer }
-    } = props;
+const renderElement = ({ config, formik, value, error }) => {
+    const { type, renderer, wrapAs, ...rest } = config;
     const registry = type === FIELD ? fields : containers;
     const Renderer = typeof renderer === 'string' ? registry.get(renderer) : renderer;
 
-    return <Renderer { ...props } />
+    return <Renderer config={{ type, ...rest }} formik={ formik } value={ value } error={ error } />
 }
 
 /**
@@ -44,7 +42,7 @@ const ElementRenderer = ({
         name,
         showWhen,
         enabledWhen,
-        template,
+        template
     } = config;
     const { values } = formik;
     const [ canShow, setCanShow ] = useState(showWhen ? false : true);
