@@ -28,6 +28,58 @@ export default {
                 fieldType: "text",
                 comment: "This is a field comment. You can add your text here."
             },
+            inputGroup: {
+                type: 'container',
+                renderer: 'div',
+                htmlClass: 'input-group',
+                elements: {
+                    prepend: {
+                        type: 'container',
+                        renderer: 'div',
+                        htmlClass: 'input-group-prepend',
+                        elements: {
+                            innerText: {
+                                type: 'field',
+                                renderer: 'inner-text',
+                                name: 'prependInnerText',
+                                htmlClass: 'input-group-text',
+                                defaultValue: '@',
+                                wrapAs: null
+                            }
+                        }
+                    },
+                    text: {
+                        name: "text",
+                        type: "field",
+                        renderer: "text",
+                        fieldType: "text",
+                        wrapAs: null
+                    },
+                    append: {
+                        type: 'container',
+                        renderer: 'div',
+                        htmlClass: 'input-group-append',
+                        elements: {
+                            innerText: {
+                                type: 'field',
+                                renderer: 'inner-text',
+                                name: 'appendInnerText',
+                                htmlClass: 'input-group-text',
+                                defaultValue: 'pixels',
+                                wrapAs: null
+                            }
+                        }
+                    }
+                }
+            },
+            innerText: {
+                type: 'field',
+                renderer: 'inner-text',
+                name: 'innerText',
+                as: 'small',
+                htmlClass: 'text-muted d-block mb-3 mt-1',
+                defaultValue: 'This is a field comment. You can add your text here'
+            },
             autocomplete: {
                 name: "autocomplete",
                 label: "Autocomplete",

@@ -4,10 +4,17 @@ import Element from '../Element';
 import PropTypes from 'prop-types';
 import { joinNames } from '../utils';
 
-const Div = ({
-    config: { name: containerName = '', elements, htmlClass, comment, commentClass = 'text-muted d-block mb-3' }
+const HtmlTag = ({
+    config: {
+        name: containerName = '',
+        as: Component = 'div',
+        elements,
+        htmlClass,
+        comment,
+        commentClass = 'text-muted d-block mb-3'
+    }
 }) => (
-    <div className={ htmlClass }>
+    <Component className={ htmlClass }>
         { comment && <small className={ commentClass }>{ comment }</small> }
         { _.map(elements, ({ name, ...rest }, key) => (
             <Element
@@ -15,10 +22,10 @@ const Div = ({
                 config={{ ...rest, name: joinNames(containerName, name) }}
             />
         ))}
-    </div>
+    </Component>
 );
 
-Div.propTypes = {
+HtmlTag.propTypes = {
     config: PropTypes.shape({
         name: PropTypes.string,
         elements: PropTypes.object.isRequired,
@@ -26,4 +33,4 @@ Div.propTypes = {
     })
 }
 
-export default Div;
+export default HtmlTag;
