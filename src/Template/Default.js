@@ -13,7 +13,10 @@ const Default = ({
     labelClass = '',
     wrapAs = 'div',
     htmlClass = 'form-group',
-    commentClass = 'text-muted',
+    commentClass = 'text-muted order-last',
+    commentAs: CommentComponent = 'small',
+    errorClass,
+    errorAs,
     children
 }) => {
     const Component = !wrapAs ? Fragment : wrapAs;
@@ -26,8 +29,8 @@ const Default = ({
         <Component { ...componentProps }>
             { label && <Label htmlFor={ name } className={ labelClass }>{ label }</Label> }
             { children }
-            { comment && <small className={ commentClass }>{ comment }</small> }
-            <ErrorMessage name={ name } error={ error } />
+            { comment && <CommentComponent className={ commentClass }>{ comment }</CommentComponent> }
+            <ErrorMessage name={ name } error={ error } className={ errorClass } as={ errorAs } />
         </Component>
     );
 };

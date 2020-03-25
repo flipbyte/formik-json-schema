@@ -53,7 +53,11 @@ export default {
                         type: "field",
                         renderer: "text",
                         fieldType: "text",
-                        wrapAs: null
+                        wrapAs: null,
+                        comment: 'This is a field comment. You can add your text here',
+                        commentAs: 'small',
+                        commentClass: 'd-block text-muted order-last w-100',
+                        validation: [['string'], ['required'], ['min', 100]]
                     },
                     append: {
                         type: 'container',
@@ -76,9 +80,9 @@ export default {
                 type: 'field',
                 renderer: 'inner-text',
                 name: 'innerText',
-                as: 'small',
+                as: 'p',
                 htmlClass: 'text-muted d-block mb-3 mt-1',
-                defaultValue: 'This is a field comment. You can add your text here'
+                defaultValue: 'This is some raw html text content: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
             },
             autocomplete: {
                 name: "autocomplete",
