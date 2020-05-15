@@ -35,7 +35,7 @@ const Form = React.forwardRef(({ schema, onUpdate = () => {}, initialValues = {}
     }, [ schema ]);
 
     /**
-     * Everytime the schema changes re-initialize validationSchema
+     * Everytime the schema changes, re-initialize validationSchema
      *
      * This is has to be done everytime schema changes because,
      * certain cases may involve dynamically changing form fields based on
@@ -54,7 +54,7 @@ const Form = React.forwardRef(({ schema, onUpdate = () => {}, initialValues = {}
         <SchemaProvider value={{ validationSchema, schema }}>
             <Formik
                 { ...formProps }
-                ref={ ref }
+                innerRef={ ref }
                 render={(props) => (
                     <FormikForm
                         onUpdate={ onUpdate }

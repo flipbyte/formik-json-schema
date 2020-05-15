@@ -29,7 +29,7 @@
         "@flipbyte/when-condition": "^0.6.0",
         "@flipbyte/yup-schema": "^0.1.5",
         "codemirror": "^5.41.0",
-        "formik": "^1.5.2",
+        "formik": "^2.1.4",
         "react-autosuggest": "^9.4.3",
         "react-codemirror2": "^7.0.0",
         "react-dropzone": "^10.2.1",
