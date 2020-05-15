@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
-import { connect } from 'formik';
+import { useFormikContext } from 'formik';
 
 /**
  * Error manager component that displays error only when it's right
@@ -20,9 +20,10 @@ import { connect } from 'formik';
  * @param {object} formik
  * @param {function} children
  */
-const ErrorManager = ({ name, formik, children }) => {
+const ErrorManager = ({ name, children }) => {
     // Set submitCount on initial mount.
-    const { submitCount: formikSubmitCount, isSubmitting, errors, touched } = formik;
+    const formik = useFormikContext();
+    const { submitCount: formikSubmitCount, isSubmitting, errors, touched } = useFormikContext();
     const [ submitCount ] = useState(isSubmitting ? formikSubmitCount - 1 : formikSubmitCount);
     const isTouched = _.get(touched, name);
     const errorMessage = _.get(errors, name);
@@ -31,4 +32,4 @@ const ErrorManager = ({ name, formik, children }) => {
     return children(error);
 };
 
-export default connect(ErrorManager);
+export default ErrorManager;
