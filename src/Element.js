@@ -83,5 +83,6 @@ export default connect(
         && shallowequal(config, nextProps.config)
         && formik.initialValues === nextProps.formik.initialValues
         && formik.isValidating === nextProps.formik.isValidating
+        && formik.isSubmitting === nextProps.formik.isSubmitting
     ))
 );
