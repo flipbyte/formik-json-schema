@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Element from '../Element';
 import { joinNames } from '../utils';
-import React, { Component, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import shallowequal from 'shallowequal';
 
@@ -80,14 +80,16 @@ const Tabs = ({ config = {} }) => {
                                         key={ key }
                                         href={ null }
                                         className={
-                                            tabListItemClass + ( activeTab == key ? tabActiveClass : '' ) +
-                                            ( tabInvalid ? ' is-invalid ' : '' )
+                                            tabListItemClass 
+                                            + ( activeTab === key ? tabActiveClass : '' ) 
+                                            + ( tabInvalid ? ' is-invalid ' : '' )
                                         }
-                                        style={ (tabInvalid
-                                            ? activeTab == key
+                                        style={(
+                                            tabInvalid ? (
+                                                activeTab === key
                                                 ? tabPaneActiveInvalid
                                                 : tabPaneInvalid
-                                            : null
+                                            ) : null
                                         )}
                                         onClick={() => setActiveTab(key)}
                                     >
@@ -107,7 +109,7 @@ const Tabs = ({ config = {} }) => {
                                 <div
                                     key={ tabKey }
                                     className={
-                                        tabPaneClass + ' ' + ( activeTab == tabKey ? tabActiveClass : '' )
+                                        `${tabPaneClass} ${activeTab === tabKey ? tabActiveClass : ''}` 
                                     }
                                 >
                                     { comment && <small className={ commentClass }>{ comment }</small> }
@@ -115,7 +117,7 @@ const Tabs = ({ config = {} }) => {
                                         <Element
                                             key={ key }
                                             config={{ ...rest, name: joinNames(containerName, tabName, name) }}
-                                            update={ activeTab == tabKey }
+                                            update={ activeTab === tabKey }
                                         />
                                     ))}
                                 </div>
