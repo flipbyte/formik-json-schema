@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import React, { useMemo, useEffect, Fragment } from 'react';
+import React, { useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { changeHandler } from '../utils';
 

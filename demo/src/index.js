@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import forms from './schema';
 import ExampleFormContainer from './ExampleFormContainer';
