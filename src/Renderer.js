@@ -1,6 +1,5 @@
-import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
-import { Field } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import withFormConfig from './withFormConfig';
 import { containers, fields, templates, FIELD } from './registry';
 import when from '@flipbyte/when-condition';
@@ -44,10 +43,9 @@ const ElementRenderer = ({
         enabledWhen,
         template
     } = config;
-    const { values } = formik;
+    const { values } = useFormikContext();
     const [ canShow, setCanShow ] = useState(showWhen ? false : true);
     const [ disabled, setDisabled ] = useState(enabledWhen ? true : false);
-    const currentValue = _.get(values, name);
 
     /**
      * If the template is function, assuming it is a react component, use it
@@ -73,15 +71,19 @@ const ElementRenderer = ({
 
     return !!type && canShow && (
         type === FIELD
-            ? <Field name={ name } render={({ field: { value }}) => (
-                <ErrorManager name={ name }>
-                    {(error) => (
-                        <Template disabled={ disabled } error={ error } { ...config }>
-                            { renderElement({ config, formik, value, error }) }
-                        </Template>
+            ? (
+                <Field name={ name }>
+                    {({ field: { value }}) => (
+                        <ErrorManager name={ name }>
+                            {(error) => (
+                                <Template disabled={ disabled } error={ error } { ...config }>
+                                    { renderElement({ config, formik, value, error }) }
+                                </Template>
+                            )}
+                        </ErrorManager>
                     )}
-                </ErrorManager>
-            )} />
+                </Field>
+            ) 
             : renderElement({ config, formik })
     );
 }
