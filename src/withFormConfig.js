@@ -1,6 +1,4 @@
-import messages from './messages';
-import React, { Component } from 'react';
-import { prepareValidationSchema } from './utils';
+import React from 'react'; 
 
 const SchemaContext = React.createContext({});
 export const SchemaProvider = ({ value, children }) => (

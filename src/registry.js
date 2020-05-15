@@ -1,6 +1,3 @@
-import React, { Component } from 'react';
-import { Field } from 'formik';
-
 export const CONTAINER = 'container';
 export const FIELD = 'field';
 export const TEMPLATE = 'template';

@@ -48,13 +48,7 @@ class Autocomplete extends Component {
 
     render() {
         const { config, formik, error, value } = this.props;
-        const {
-            name,
-            type,
-            attributes,
-            defaultValue,
-            options = {}
-        } = config;
+        const { name } = config;
         const { setFieldValue, handleBlur } = formik;
 
         this.autosuggestOptions.inputProps.name = name;

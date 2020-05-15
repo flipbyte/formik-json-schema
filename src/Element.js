@@ -1,16 +1,15 @@
 import _ from 'lodash';
 import { connect } from 'formik';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ElementRenderer from './Renderer';
 import { FIELD } from './registry';
 import shallowequal from 'shallowequal';
 
 const Element = ({ config, update, formik }) => {
-    const { configSource, dataSource, name } = config;
+    const { configSource, dataSource } = config;
     const [ hasLoadedConfig, setHasLoadedConfig ] = useState(false);
     const [ hasLoadedData, setHasLoadedData ] = useState(dataSource ? false : true);
     const [ hasMounted, setHasMounted ] = useState(update !== false);
-    const [ submitCount, setSubmitCount ] = useState();
     const [ loadedConfig, setLoadedConfig ] = useState(undefined);
 
     /**
