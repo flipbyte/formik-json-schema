@@ -52,6 +52,7 @@ const ReactSelect = ({ config, formik, value, error }) => {
         isDisabled = false,
         isClearable = false,
         isCreatable = false,
+        delimiter= '',
         options: initialOptions,
         ...attributes
     } = config;
@@ -103,15 +104,25 @@ const ReactSelect = ({ config, formik, value, error }) => {
             switch (event.key) {
                 case 'Enter':
                 case 'Tab':
-                    changeHandler(
+                     if (delimiter && inputValue.indexOf(delimiter) > 1) {
+                      changeHandler(
                         setFieldValueWrapper(setFieldValue, name),
                         formik,
                         config,
-                        [ ...selectedValue, inputValue ],
+                        [...selectedValue, ...inputValue.split(delimiter)],
                         'onChange'
-                    );
-                    setInputValue('');
-                    event.preventDefault();
+                      );
+                    } else {
+                      changeHandler(
+                        setFieldValueWrapper(setFieldValue, name),
+                        formik,
+                        config,
+                        [...selectedValue, inputValue],
+                        'onChange'
+                      );
+                    }
+                     setInputValue('');
+                     event.preventDefault();
             }
         },
         ...attributes
