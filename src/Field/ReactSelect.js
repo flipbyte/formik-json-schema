@@ -104,7 +104,7 @@ const ReactSelect = ({ config, formik, value, error }) => {
             switch (event.key) {
                 case 'Enter':
                 case 'Tab':
-                     if (delimiter && inputValue.indexOf(delimiter) > 1) {
+                     if (delimiter && inputValue.indexOf(delimiter) >= 1) {
                       changeHandler(
                         setFieldValueWrapper(setFieldValue, name),
                         formik,
