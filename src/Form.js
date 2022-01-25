@@ -11,16 +11,16 @@ const FormikForm = ({ onUpdate, schema, ...formik }) => {
      * Callback if provided will be vcalled when form values change
      */
     useEffect(() => {
-        if(typeof onUpdate === 'function') {
+        if (typeof onUpdate === 'function') {
             onUpdate(formik);
         }
-    }, [ formik.values ]);
+    }, [formik.values]);
 
-    return <Element config={ schema } />;
+    return <Element config={schema} />;
 };
 
-const Form = React.forwardRef(({ schema, onUpdate = () => {}, initialValues = {}, ...rest }, ref) => {
-    const [ validationSchema, setValidationSchema ] = useState(null);
+const Form = React.forwardRef(({ schema, onUpdate = () => { }, initialValues = {}, ...rest }, ref) => {
+    const [validationSchema, setValidationSchema] = useState(null);
 
     /**
      * Initialize validation schema.
@@ -29,9 +29,9 @@ const Form = React.forwardRef(({ schema, onUpdate = () => {}, initialValues = {}
      */
     const initValidationSchema = useCallback(() => {
         const yupSchema = prepareValidationSchema(schema);
-        const validationSchema = !_.isEmpty(yupSchema) ? new Rules([[ 'object', yupSchema ]]).toYup() : null;
+        const validationSchema = !_.isEmpty(yupSchema) ? new Rules([['object', yupSchema]]).toYup() : null;
         setValidationSchema(validationSchema);
-    }, [ schema ]);
+    }, [schema]);
 
     /**
      * Everytime the schema changes, re-initialize validationSchema
@@ -42,7 +42,7 @@ const Form = React.forwardRef(({ schema, onUpdate = () => {}, initialValues = {}
      */
     useEffect(() => {
         initValidationSchema();
-    }, [ schema ]);
+    }, [schema]);
 
     const formProps = { ...rest, initialValues };
     if (null !== validationSchema) {
@@ -52,16 +52,17 @@ const Form = React.forwardRef(({ schema, onUpdate = () => {}, initialValues = {}
     return (
         <SchemaProvider value={{ validationSchema, schema }}>
             <Formik
-                { ...formProps }
-                innerRef={ ref }
-                render={(props) => (
+                {...formProps}
+                innerRef={ref}
+            >
+                {(props) => (
                     <FormikForm
-                        onUpdate={ onUpdate }
-                        schema={ schema }
-                        { ...props }
+                        onUpdate={onUpdate}
+                        schema={schema}
+                        {...props}
                     />
                 )}
-            />
+            </Formik>
         </SchemaProvider>
     );
 });
