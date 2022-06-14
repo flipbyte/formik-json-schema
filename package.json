@@ -41,8 +41,8 @@
     },
     "peerDependencies": {
         "lodash": "^4.17.13",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
         "prop-types": "^15.6.2",
         "@fortawesome/fontawesome-free": "^5.6.3"
     },
@@ -57,8 +57,8 @@
         "inferno": "^5.0.0",
         "load-styles": "^2.0.0",
         "nwb": "0.23.x",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
         "remark-lint": "^6.0.4"
     },
     "author": "",
