@@ -56,7 +56,7 @@
         "gh-pages": "^2.0.1",
         "inferno": "^5.0.0",
         "load-styles": "^2.0.0",
-        "nwb": "0.23.x",
+        "nwb": "0.25.x",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "remark-lint": "^6.0.4"
