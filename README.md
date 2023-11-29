@@ -1,13 +1,5 @@
 # formik-json
 
-[Developed by Flipbyte](https://www.flipbyte.com/)
-
-[![Build Status][build-badge]][build]
-[![npm package][npm-badge]][npm]
-[![Coverage Status][coveralls-badge]][coveralls]
-[![license][license-badge]][license]
-[![Codacy Badge][codacy-badge]][codacy]
-
 formik-json is a wrapper for Formik to easily create forms using JSON /
 Javascript Object for defining the elements.
 
@@ -291,7 +283,6 @@ The MIT License (MIT)
 
 [license-badge]: https://badgen.now.sh/badge/license/MIT
 
-[license]: ./LICENSE
 
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/18e71277b7e94ad9aca885b5ba3d890c
 
